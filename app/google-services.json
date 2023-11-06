@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "734505193506",
+    "project_id": "call-of-cthulhu-1219a",
+    "storage_bucket": "call-of-cthulhu-1219a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734505193506:android:c78d9cac44311c26007a7b",
+        "android_client_info": {
+          "package_name": "com.app.callofcthulhu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbFpUyg5IUEiQuERfjxFlt9O7YxXbOWqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
