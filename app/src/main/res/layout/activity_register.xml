@@ -50,14 +50,14 @@
         android:id="@+id/progressBar"
         android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ProgressBar>
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_register"
         android:text="@string/register"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
     </Button>
 
     <TextView

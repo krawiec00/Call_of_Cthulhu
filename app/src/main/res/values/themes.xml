@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.CallOfCthulhu" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

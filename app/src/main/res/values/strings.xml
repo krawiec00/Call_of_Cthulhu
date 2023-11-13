@@ -6,5 +6,9 @@
     <string name="register">Register</string>
     <string name="click_to_login">Click to login</string>
     <string name="click_to_register">Click to register</string>
-    <string name="logut">Logut</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="addcard">addCard</string>
 </resources>
