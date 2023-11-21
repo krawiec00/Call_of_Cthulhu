@@ -1,4 +1,4 @@
-package com.app.callofcthulhu.ui.theme
+package com.app.callofcthulhu
 
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth

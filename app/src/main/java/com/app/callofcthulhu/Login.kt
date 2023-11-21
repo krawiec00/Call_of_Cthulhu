@@ -42,7 +42,7 @@ class Login : AppCompatActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar);
         val textView = findViewById<TextView>(R.id.registerNow)
 
-        textView.setOnClickListener(){
+        textView.setOnClickListener() {
             val intent = Intent(this, Register::class.java);
             startActivity(intent);
             finish();
