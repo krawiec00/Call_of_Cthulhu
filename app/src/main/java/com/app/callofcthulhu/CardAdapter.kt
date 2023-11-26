@@ -16,12 +16,12 @@ class CardAdapter(options: FirestoreRecyclerOptions<Card>, var context: Context)
 
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int, card: Card) {
-        holder.titleTextView.text = card.title
-        holder.contentTextView.text = card.content
+        holder.imieEditText.text = card.imie
+        holder.nazwiskoEditText.text = card.nazwisko
         holder.itemView.setOnClickListener() {
             val intent = Intent(context, CardDetailsActivity::class.java)
-            intent.putExtra("title", card.title)
-            intent.putExtra("content", card.content)
+            intent.putExtra("imie", card.imie)
+            intent.putExtra("nazwisko", card.nazwisko)
             val docId = this.snapshots.getSnapshot(position).id
             intent.putExtra("docId", docId)
             context.startActivity(intent)
@@ -35,12 +35,12 @@ class CardAdapter(options: FirestoreRecyclerOptions<Card>, var context: Context)
     }
 
     inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var titleTextView: TextView
-        var contentTextView: TextView
+        var imieEditText: TextView
+        var nazwiskoEditText: TextView
 
         init {
-            titleTextView = itemView.findViewById(R.id.card_title_view)
-            contentTextView = itemView.findViewById(R.id.card_content_view)
+            imieEditText = itemView.findViewById(R.id.card_imie_view)
+            nazwiskoEditText = itemView.findViewById(R.id.card_nazwisko_view)
         }
     }
 }

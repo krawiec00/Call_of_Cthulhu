@@ -1,73 +1,121 @@
 package com.app.callofcthulhu
 
+import SharedViewModel
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.firebase.firestore.DocumentReference
 
 
 class CardDetailsActivity : AppCompatActivity() {
 
 
-    private lateinit var titleEditText: EditText
-    private lateinit var contentEditText: EditText
-    private lateinit var saveCardBtn: ImageButton
-    lateinit var pageTitleTextView: TextView
-    private var title: String? = null
-    var content: String? = null
-     private var docId: String = ""
-    private var isEdited: Boolean = false
-    lateinit var deleteCardBtn: ImageButton
+    private lateinit var sharedViewModel: SharedViewModel
 
+    lateinit var tabLayout: TabLayout
+    lateinit var viewPager2: ViewPager2
+    private lateinit var myViewPagerAdapter: MyViewPagerAdapter
+
+    private var saveCard: Card? = null
+
+    private lateinit var pageTitleTextView: TextView
+    private var isEdited: Boolean = false
+    private lateinit var deleteCardBtn: ImageButton
+    private lateinit var saveCardBtn: ImageButton
+    private var imie: String? = null
+    private var nazwisko: String? = null
+    companion object {
+        var docId: String = ""
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_details)
 
+        //tabela i fragmenty
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager2 = findViewById(R.id.view_pager);
+        myViewPagerAdapter = MyViewPagerAdapter(this);
+        viewPager2.adapter = myViewPagerAdapter;
+
+        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewPager2.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
+        viewPager2.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                tabLayout.getTabAt(position)!!.select()
+            }
+        })
+
         pageTitleTextView = findViewById(R.id.page_title)
-        titleEditText = findViewById(R.id.notes_title_text)
-        contentEditText = findViewById(R.id.notes_content_text)
         saveCardBtn = findViewById(R.id.save_note_btn)
         deleteCardBtn = findViewById(R.id.delete_card_btn)
 
         //pobrane dane do wyświetlenia do edycji
-        title = intent.getStringExtra("title")
-        content = intent.getStringExtra("content")
+//        imie = intent.getStringExtra("imie")
+//        nazwisko = intent.getStringExtra("nazwisko")
         docId = intent.getStringExtra("docId") ?: ""
 
         if (docId.isNotEmpty()) {
             isEdited = true
         }
 
-        titleEditText.setText(title)
-        contentEditText.setText(content)
+//        imieEditText.setText(imie)
+//        nazwiskoEditText.setText(nazwisko)
         if (isEdited) {
             pageTitleTextView.setText("Edit note")
             deleteCardBtn.visibility = View.VISIBLE
         }
 
+        //viewModel przekazuje dane z modelu, cała instancja card
+        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
 
-        saveCardBtn.setOnClickListener { saveCard() }
+        sharedViewModel.card.observe(this) { card ->
+            saveCard = card
+        }
 
-        deleteCardBtn.setOnClickListener{ showDeleteConfirmationDialog()}
+
+        saveCardBtn.setOnClickListener {
+            if (sharedViewModel.areFieldsNotEmpty()) {
+                saveCard()
+            } else {
+                Toast.makeText(this, "Imię i nazwisko nie mogą być puste", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+        deleteCardBtn.setOnClickListener { showDeleteConfirmationDialog() }
 
     }
 
+
     fun saveCard() {
-        val noteTile = titleEditText.text.toString()
-        val noteContent = contentEditText.text.toString()
-        if (noteTile == null || noteTile.isEmpty()) {
-            titleEditText.setError("Title is required")
-            return;
-        }
-        val card = Card()
-        card.title = noteTile
-        card.content = noteContent
-        saveCardToFireBase(card)
+//        val noteTile = imieEditText.text.toString()
+//        val noteContent = nazwiskoEditText.text.toString()
+//        if (noteTile == null || noteTile.isEmpty()) {
+//            imieEditText.setError("Name")
+//            return;
+//        }
+//        val card = Card()
+//        card.imie = imieEdit
+//        card.nazwisko = nazwiskoEdit
+
+        saveCard?.let { saveCardToFireBase(it) }
     }
 
     fun saveCardToFireBase(card: Card) {
@@ -122,4 +170,6 @@ class CardDetailsActivity : AppCompatActivity() {
         dialog.show()
 
     }
+
+
 }

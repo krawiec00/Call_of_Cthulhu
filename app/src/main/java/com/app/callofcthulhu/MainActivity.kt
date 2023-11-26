@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                 Toast.makeText(baseContext, "niezalogowany", Toast.LENGTH_SHORT).show()
             }
         }
-        //wyświetlanie listy kart
+        //wyświetlanie karty
         cardButton.setOnClickListener() {
             startActivity(Intent(this@MainActivity, CardDetailsActivity::class.java))
         }
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
 
     fun setupRecyclerView() {
         val query: Query =
-            Utility.getCollectionReferenceForNotes().orderBy("title", Query.Direction.DESCENDING)
+            Utility.getCollectionReferenceForNotes().orderBy("imie", Query.Direction.DESCENDING)
         val options: FirestoreRecyclerOptions<Card> = FirestoreRecyclerOptions.Builder<Card>()
             .setQuery(query, Card::class.java)
             .build()
