@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.app.callofcthulhu.fragments.BasicInfoFragment
 import com.app.callofcthulhu.fragments.EqFragment
 import com.app.callofcthulhu.fragments.StatsFragment
+import com.app.callofcthulhu.fragments.StoryFragment
 import com.app.callofcthulhu.fragments.TraitFragment
 
 
@@ -19,11 +20,12 @@ class MyViewPagerAdapter( fragmentActivity: FragmentActivity?) :
             1 -> TraitFragment()
             2 -> StatsFragment()
             3 -> EqFragment()
+            4 -> StoryFragment()
             else -> BasicInfoFragment()
         }
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return 5
     }
 }

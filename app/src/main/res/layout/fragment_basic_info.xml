@@ -10,14 +10,14 @@
         android:id="@+id/content_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="26dp"
+        android:layout_marginVertical="0dp"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="5dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Imie: "
+            android:text="@string/imie"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/card_imie"
@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nazwisko: "
+            android:text="@string/nazwisko"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/card_nazwisko"
@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profesja: "
+            android:text="@string/profesja"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/card_profesja"
@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Wiek: "
+            android:text="@string/wiek"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/card_wiek"
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Płeć: "
+            android:text="@string/p_e"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/card_plec"
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Miejsce zamieszkania: "
+            android:text="@string/miejsce_zamieszkania"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/card_mZamieszkania"
@@ -78,7 +78,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Miejsce urodzenia: "
+            android:text="@string/miejsce_urodzenia"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/card_mUrodzenia"

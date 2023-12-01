@@ -1,0 +1,7 @@
+<resources>
+    <!-- Styl dla tekstu w tabach -->
+    <style name="MyTabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item> <!-- Rozmiar czcionki -->
+        <!-- Dodaj inne atrybuty stylu, jeśli są potrzebne -->
+    </style>
+</resources>

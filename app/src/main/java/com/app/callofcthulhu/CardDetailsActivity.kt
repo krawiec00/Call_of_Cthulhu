@@ -1,8 +1,8 @@
 package com.app.callofcthulhu
 
 import SharedViewModel
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
@@ -37,6 +37,7 @@ class CardDetailsActivity : AppCompatActivity() {
     companion object {
         var docId: String = ""
     }
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_details)
@@ -68,8 +69,8 @@ class CardDetailsActivity : AppCompatActivity() {
         deleteCardBtn = findViewById(R.id.delete_card_btn)
 
         //pobrane dane do wyświetlenia do edycji
-//        imie = intent.getStringExtra("imie")
-//        nazwisko = intent.getStringExtra("nazwisko")
+        imie = intent.getStringExtra("imie")
+        nazwisko = intent.getStringExtra("nazwisko")
         docId = intent.getStringExtra("docId") ?: ""
 
         if (docId.isNotEmpty()) {
@@ -79,7 +80,7 @@ class CardDetailsActivity : AppCompatActivity() {
 //        imieEditText.setText(imie)
 //        nazwiskoEditText.setText(nazwisko)
         if (isEdited) {
-            pageTitleTextView.setText("Edit note")
+            pageTitleTextView.text = "$imie $nazwisko"
             deleteCardBtn.visibility = View.VISIBLE
         }
 
@@ -92,14 +93,18 @@ class CardDetailsActivity : AppCompatActivity() {
 
 
         saveCardBtn.setOnClickListener {
-            if (sharedViewModel.areFieldsNotEmpty()) {
+            val requiredFields = listOf("imie", "nazwisko")
+            if (sharedViewModel.areFieldsNotEmpty(requiredFields)) {
                 saveCard()
             } else {
-                Toast.makeText(this, "Imię i nazwisko nie mogą być puste", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Imię i nazwisko nie może być puste", Toast.LENGTH_SHORT).show()
             }
         }
+
         deleteCardBtn.setOnClickListener { showDeleteConfirmationDialog() }
+
+
+
 
     }
 
@@ -121,10 +126,10 @@ class CardDetailsActivity : AppCompatActivity() {
     fun saveCardToFireBase(card: Card) {
         val documentReference: DocumentReference = if (isEdited) {
             // Update the note
-            Utility.getCollectionReferenceForNotes().document(docId)
+            Utility.getCollectionReferenceForCards().document(docId)
         } else {
             // Create new note
-            Utility.getCollectionReferenceForNotes().document()
+            Utility.getCollectionReferenceForCards().document()
         }
 
         documentReference.set(card).addOnCompleteListener { task ->
@@ -139,7 +144,7 @@ class CardDetailsActivity : AppCompatActivity() {
 
     fun deleteCardFromFirebase() {
         val documentReference: DocumentReference
-        documentReference = Utility.getCollectionReferenceForNotes().document(docId)
+        documentReference = Utility.getCollectionReferenceForCards().document(docId)
         documentReference.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 //note is deleted

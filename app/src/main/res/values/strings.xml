@@ -13,4 +13,11 @@
     <string name="addcard">addCard</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="imie">Imie:</string>
+    <string name="nazwisko">Nazwisko:</string>
+    <string name="profesja">Profesja:</string>
+    <string name="wiek">Wiek:</string>
+    <string name="p_e">Płeć:</string>
+    <string name="miejsce_zamieszkania">Miejsce zamieszkania:</string>
+    <string name="miejsce_urodzenia">Miejsce urodzenia:</string>
 </resources>

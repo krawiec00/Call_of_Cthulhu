@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.app.callofcthulhu.CardDetailsActivity
 import com.app.callofcthulhu.R
@@ -34,7 +32,7 @@ class StatsFragment : Fragment() {
 
         val id = CardDetailsActivity.docId
         if (id.isNotEmpty()) {
-            val docReference = Utility.getCollectionReferenceForNotes().document(id)
+            val docReference = Utility.getCollectionReferenceForCards().document(id)
             docReference.get().addOnSuccessListener { document ->
                 if (document.exists()) {
 

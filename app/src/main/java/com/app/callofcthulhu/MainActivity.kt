@@ -19,9 +19,9 @@ class MainActivity : ComponentActivity() {
 
 
     private lateinit var auth: FirebaseAuth
-    lateinit var recyclerView: RecyclerView
-    lateinit var button: Button
-    lateinit var cardAdapter: CardAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var button: Button
+    private lateinit var cardAdapter: CardAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -61,9 +61,9 @@ class MainActivity : ComponentActivity() {
 
     }
 
-    fun setupRecyclerView() {
+    private fun setupRecyclerView() {
         val query: Query =
-            Utility.getCollectionReferenceForNotes().orderBy("imie", Query.Direction.DESCENDING)
+            Utility.getCollectionReferenceForCards().orderBy("imie", Query.Direction.DESCENDING)
         val options: FirestoreRecyclerOptions<Card> = FirestoreRecyclerOptions.Builder<Card>()
             .setQuery(query, Card::class.java)
             .build()

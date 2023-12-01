@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="5dp"
     android:theme="@style/Theme.CallOfCthulhu"
     tools:context=".CardDetailsActivity"
     >
@@ -14,7 +14,8 @@
     <RelativeLayout
         android:id="@+id/title_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#7DA19A">
 
         <TextView
             android:id="@+id/page_title"
@@ -22,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="Nowa postać"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
 
@@ -34,8 +35,8 @@
 
             <ImageButton
                 android:id="@+id/delete_card_btn"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginEnd="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/baseline_delete_24"
@@ -44,8 +45,8 @@
 
             <ImageButton
                 android:id="@+id/save_note_btn"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginEnd="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/baseline_done_25"
@@ -54,6 +55,8 @@
 
         </LinearLayout>
     </RelativeLayout>
+
+
 
 
     <androidx.viewpager2.widget.ViewPager2
@@ -69,27 +72,33 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:tabIndicatorColor="@color/purple_200"
-        app:tabTextColor="@color/black">
+        app:tabTextColor="@color/black"
+        app:tabTextAppearance="@style/MyTabTextStyle">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Info" />
+            android:text="Postać" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Traits" />
+            android:text="Cechy" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Stats" />
+            android:text="Umiej.." />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Equipment" />
+            android:text="Ekwip.." />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historia" />
 
 
     </com.google.android.material.tabs.TabLayout>

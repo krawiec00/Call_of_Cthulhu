@@ -6,13 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.app.callofcthulhu.CardDetailsActivity
 import com.app.callofcthulhu.R
-import com.app.callofcthulhu.Utility.Companion.getCollectionReferenceForNotes
+import com.app.callofcthulhu.Utility.Companion.getCollectionReferenceForCards
 
 
 class BasicInfoFragment : Fragment() {
@@ -69,7 +68,7 @@ class BasicInfoFragment : Fragment() {
 
         val id = CardDetailsActivity.docId
         if (id.isNotEmpty()) {
-            val docReference = getCollectionReferenceForNotes().document(id)
+            val docReference = getCollectionReferenceForCards().document(id)
             docReference.get().addOnSuccessListener { document ->
                 if (document.exists()) {
                     val imie = document.getString("imie")
