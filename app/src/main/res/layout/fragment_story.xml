@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".fragments.StoryFragment">
 
 
@@ -167,6 +168,46 @@
             android:layout_height="wrap_content"
             android:background="#77368871" />
 
+        <LinearLayout
+            android:id="@+id/notatki"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="40dp"
+            android:paddingBottom="30dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notatki"
+                android:textSize="40sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:paddingBottom="10dp"/>
+
+            <ImageButton
+                android:id="@+id/save_note_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Notatka"
+                android:src="@drawable/baseline_note_add_24"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notatki"
+            android:id="@+id/recycler_view"
+            android:visibility="gone"/>
+
+
     </LinearLayout>
+
+
+
+
 
 </ScrollView>

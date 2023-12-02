@@ -224,6 +224,7 @@ class TraitFragment : Fragment() {
             zycieEditText.isFocusable = false
             magiaEditText.isFocusable = false
             poczytalnoscEditText.isFocusable = false
+            ruchEditText.isFocusable = false
 
         }
 
