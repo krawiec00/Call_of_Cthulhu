@@ -38,4 +38,12 @@ class Card {
     var ksiegi: String? = null
     var istoty: String? = null
 
+
+
+//    var weapons: MutableList<Weapon> = mutableListOf()
+//
+//    class Weapon {
+//        var name: String = ""
+//        var damage: String = ""
+//    }
 }

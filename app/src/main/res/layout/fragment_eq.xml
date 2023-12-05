@@ -1,16 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.EqFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/lista"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        android:layout_centerInParent="true"
+        android:padding="5dp"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lista broni"
+        android:textSize="20sp"
+        android:gravity="center"
         />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/weapon_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Dodaj broń"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lista" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lista zaklęć"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:paddingTop="50dp"/>
+
+        <Button
+            android:id="@+id/spell_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Dodaj zaklęcie"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    </LinearLayout>
+</ScrollView>

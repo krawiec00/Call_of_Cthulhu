@@ -45,8 +45,8 @@ class NoteDetailsActivity : AppCompatActivity() {
         }
 
 
-        title = getIntent().getStringExtra("title")
-        content = getIntent().getStringExtra("content")
+        title = intent.getStringExtra("title")
+        content = intent.getStringExtra("content")
         noteId = intent.getStringExtra("noteId") ?: ""
 
         titleEditText.setText(title)

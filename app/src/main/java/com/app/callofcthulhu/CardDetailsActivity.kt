@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.Query
 
 
 class CardDetailsActivity : AppCompatActivity() {
@@ -143,8 +144,7 @@ class CardDetailsActivity : AppCompatActivity() {
     }
 
     fun deleteCardFromFirebase() {
-        val documentReference: DocumentReference
-        documentReference = Utility.getCollectionReferenceForCards().document(docId)
+        val documentReference: DocumentReference = Utility.getCollectionReferenceForCards().document(docId)
         documentReference.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 //note is deleted
@@ -163,7 +163,8 @@ class CardDetailsActivity : AppCompatActivity() {
         builder.setMessage("Czy na pewno chcesz usunąć tę kartę?")
 
         builder.setPositiveButton("Tak") { dialog, _ ->
-            deleteCardFromFirebase() // Wywołaj funkcję usuwania po potwierdzeniu
+            deleteCardFromFirebase()
+            deleteAllNotesForCardFromFirebase(docId)// Wywołaj funkcję usuwania po potwierdzeniu
             dialog.dismiss()
         }
 
@@ -175,6 +176,25 @@ class CardDetailsActivity : AppCompatActivity() {
         dialog.show()
 
     }
+
+    private fun deleteAllNotesForCardFromFirebase(cardId: String) {
+        val notesCollection = Utility.getCollectionReferenceForNotes()
+        notesCollection
+            .whereEqualTo("id", cardId) // Zmodyfikuj to pole na odpowiednie
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        document.reference.delete()
+                    }
+                    // Usunięto wszystkie notatki dla karty
+                    Toast.makeText(baseContext, "All notes for the card deleted successfully", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(baseContext, "Failed to delete notes for the card", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
 
 
 }

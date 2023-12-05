@@ -25,6 +25,21 @@ class Utility {
                 .collection("my_notes")
         }
 
+        fun getCollectionReferenceForWeapons(): CollectionReference {
+            val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+            return FirebaseFirestore.getInstance().collection("cards")
+                .document(currentUser?.uid ?: "")
+                .collection("my_weapons")
+        }
+
+
+        fun getCollectionReferenceForSpells(): CollectionReference {
+            val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+            return FirebaseFirestore.getInstance().collection("cards")
+                .document(currentUser?.uid ?: "")
+                .collection("my_spells")
+        }
+
 
 
 

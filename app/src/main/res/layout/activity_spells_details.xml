@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/spell_nazwa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="placeholder"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/spell_koszt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="placeholder2"/>
+
+            <TextView
+                android:id="@+id/spell_czas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="placeholder3"
+                android:paddingTop="10dp"/>
+
+            <TextView
+                android:id="@+id/spell_opis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="placeholder4"
+                android:paddingTop="10dp"/>
+
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_spell_to_card_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dodaj do karty" />
+
+        <Button
+            android:id="@+id/delete_spell_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Usun bron"
+            android:visibility="invisible"/>
+
+
+    </LinearLayout>
+</RelativeLayout>

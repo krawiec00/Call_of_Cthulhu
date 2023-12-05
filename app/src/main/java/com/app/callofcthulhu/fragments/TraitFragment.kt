@@ -284,13 +284,13 @@ class TraitFragment : Fragment() {
                                 }
                             }
 
-                            is TextView -> {
+                            // Obsłuż inne typy pól jeśli istnieją
+                            else -> {
                                 val intValue = document.getLong(field)?.toInt()
                                 intValue?.let {
                                     view.text = it.toString()
                                 }
                             }
-                            // Obsłuż inne typy pól jeśli istnieją
                         }
                     }
                 }
