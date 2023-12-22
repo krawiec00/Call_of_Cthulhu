@@ -1,12 +1,15 @@
 package com.app.callofcthulhu.fragments
 
-import SharedViewModel
+import com.app.callofcthulhu.SharedViewModel
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Spinner
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.app.callofcthulhu.CardDetailsActivity
@@ -20,11 +23,12 @@ class BasicInfoFragment : Fragment() {
     private lateinit var imieEditText: EditText
     private lateinit var nazwiskoEditText: EditText
     private lateinit var profesjaEditText: EditText
+    lateinit var professionSpinner: Spinner
     private lateinit var wiekEditText: EditText
     private lateinit var plecEditText: EditText
     private lateinit var mieszkanieEditText: EditText
     private lateinit var urodzenieEditText: EditText
-
+    val id = CardDetailsActivity.docId
 
     private lateinit var sharedViewModel: SharedViewModel
 
@@ -39,7 +43,8 @@ class BasicInfoFragment : Fragment() {
 
         imieEditText = view.findViewById(R.id.card_imie)
         nazwiskoEditText = view.findViewById(R.id.card_nazwisko)
-        profesjaEditText = view.findViewById(R.id.card_profesja)
+       profesjaEditText = view.findViewById(R.id.card_profesja)
+
         wiekEditText = view.findViewById(R.id.card_wiek)
         plecEditText = view.findViewById(R.id.card_plec)
         mieszkanieEditText = view.findViewById(R.id.card_mZamieszkania)
@@ -58,7 +63,7 @@ class BasicInfoFragment : Fragment() {
 // Wywołanie funkcji attachTextWatcher dla każdego EditText
         attachTextWatcher(imieEditText, "imie")
         attachTextWatcher(nazwiskoEditText, "nazwisko")
-        attachTextWatcher(profesjaEditText, "profesja")
+       // attachTextWatcher(profesjaEditText, "profesja")
         attachTextWatcher(wiekEditText, "wiek")
         attachTextWatcher(plecEditText, "plec")
         attachTextWatcher(mieszkanieEditText, "mZamieszkania")
@@ -66,8 +71,36 @@ class BasicInfoFragment : Fragment() {
 
 
 
-        val id = CardDetailsActivity.docId
+        fun setupSpinner() {
+            // Inicjalizacja Spinnera i adaptera
+            professionSpinner = view.findViewById(R.id.card_spinner_profesja)
+            val professions = arrayOf("Detektyw Policyjny", "Duchowny", "Zolnierz") // Twoja lista profesji
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, professions)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            professionSpinner.adapter = adapter
+
+            // Listener dla wyboru elementu w Spinnerze
+            professionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val selectedProfession = professions[position]
+                    sharedViewModel.updateCardField("profesja", selectedProfession)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Obsługa sytuacji, gdy nie jest wybrany żaden element
+                }
+            }
+            }
+
+
+        setupSpinner()
+
+
+
+
         if (id.isNotEmpty()) {
+            professionSpinner.visibility = View.GONE
+            profesjaEditText.visibility = View.VISIBLE
             val docReference = getCollectionReferenceForCards().document(id)
             docReference.get().addOnSuccessListener { document ->
                 if (document.exists()) {
@@ -94,13 +127,11 @@ class BasicInfoFragment : Fragment() {
             }
         }
 
-
-
-
-
-
         return view
     }
+
+
+
 
 
 }

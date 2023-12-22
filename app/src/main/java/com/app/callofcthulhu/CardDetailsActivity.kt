@@ -1,6 +1,5 @@
 package com.app.callofcthulhu
 
-import SharedViewModel
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
@@ -15,7 +14,6 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.Query
 
 
 class CardDetailsActivity : AppCompatActivity() {
@@ -35,35 +33,15 @@ class CardDetailsActivity : AppCompatActivity() {
     private lateinit var saveCardBtn: ImageButton
     private var imie: String? = null
     private var nazwisko: String? = null
+
     companion object {
         var docId: String = ""
     }
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_details)
-
-        //tabela i fragmenty
-        tabLayout = findViewById(R.id.tab_layout);
-        viewPager2 = findViewById(R.id.view_pager);
-        myViewPagerAdapter = MyViewPagerAdapter(this);
-        viewPager2.adapter = myViewPagerAdapter;
-
-        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                viewPager2.currentItem = tab.position
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
-        viewPager2.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                tabLayout.getTabAt(position)!!.select()
-            }
-        })
 
         pageTitleTextView = findViewById(R.id.page_title)
         saveCardBtn = findViewById(R.id.save_note_btn)
@@ -98,28 +76,41 @@ class CardDetailsActivity : AppCompatActivity() {
             if (sharedViewModel.areFieldsNotEmpty(requiredFields)) {
                 saveCard()
             } else {
-                Toast.makeText(this, "Imię i nazwisko nie może być puste", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Imię i nazwisko nie może być puste", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
         deleteCardBtn.setOnClickListener { showDeleteConfirmationDialog() }
 
 
+        //tabela i fragmenty
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager2 = findViewById(R.id.view_pager);
+        myViewPagerAdapter = MyViewPagerAdapter(this);
+        viewPager2.adapter = myViewPagerAdapter;
+
+        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewPager2.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
+        viewPager2.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                tabLayout.getTabAt(position)!!.select()
+            }
+        })
 
 
     }
 
 
     fun saveCard() {
-//        val noteTile = imieEditText.text.toString()
-//        val noteContent = nazwiskoEditText.text.toString()
-//        if (noteTile == null || noteTile.isEmpty()) {
-//            imieEditText.setError("Name")
-//            return;
-//        }
-//        val card = Card()
-//        card.imie = imieEdit
-//        card.nazwisko = nazwiskoEdit
 
         saveCard?.let { saveCardToFireBase(it) }
     }
@@ -135,16 +126,17 @@ class CardDetailsActivity : AppCompatActivity() {
 
         documentReference.set(card).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(baseContext, "Note added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Card added successfully", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                Toast.makeText(baseContext, "Failed while adding note", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Failed while adding card", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     fun deleteCardFromFirebase() {
-        val documentReference: DocumentReference = Utility.getCollectionReferenceForCards().document(docId)
+        val documentReference: DocumentReference =
+            Utility.getCollectionReferenceForCards().document(docId)
         documentReference.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 //note is deleted
@@ -164,7 +156,9 @@ class CardDetailsActivity : AppCompatActivity() {
 
         builder.setPositiveButton("Tak") { dialog, _ ->
             deleteCardFromFirebase()
-            deleteAllNotesForCardFromFirebase(docId)// Wywołaj funkcję usuwania po potwierdzeniu
+            deleteAllNotesForCardFromFirebase(docId)
+            deleteAllSpellsForCardFromFirebase(docId)
+            deleteAllWeaponsForCardFromFirebase(docId)
             dialog.dismiss()
         }
 
@@ -187,14 +181,41 @@ class CardDetailsActivity : AppCompatActivity() {
                     for (document in task.result!!) {
                         document.reference.delete()
                     }
-                    // Usunięto wszystkie notatki dla karty
-                    Toast.makeText(baseContext, "All notes for the card deleted successfully", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(baseContext, "Failed to delete notes for the card", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
+    private fun deleteAllSpellsForCardFromFirebase(cardId: String) {
+        val spellsCollection = Utility.getCollectionReferenceForSpells()
+        spellsCollection
+            .whereEqualTo("id", cardId) // Zmodyfikuj to pole na odpowiednie
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        document.reference.delete()
+                    }
+                    // Usunięto wszystkie notatki dla karty
+
+                }
+            }
+    }
+
+    private fun deleteAllWeaponsForCardFromFirebase(cardId: String) {
+        val weaponsCollection = Utility.getCollectionReferenceForWeapons()
+        weaponsCollection
+            .whereEqualTo("id", cardId) // Zmodyfikuj to pole na odpowiednie
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        document.reference.delete()
+                    }
+                    // Usunięto wszystkie notatki dla karty
+
+                }
+            }
+    }
 
 
 }

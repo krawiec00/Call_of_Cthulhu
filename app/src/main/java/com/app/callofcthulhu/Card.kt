@@ -38,6 +38,16 @@ class Card {
     var ksiegi: String? = null
     var istoty: String? = null
 
+    var Bron_Palna: Int? = null
+    var Korzystanie_z_Bibliotek: Int? = null
+    var Nasluchiwanie: Int? = null
+    var Nawigacja: Int? = null
+    var Perswazja: Int? = null
+    var Pierwsza_Pomoc: Int? = null
+    var Psychologia: Int? = null
+    var Spostrzegawczosc: Int? = null
+    var Sztuka_Przetrwania: Int? = null
+    var Wiedza_o_Naturze: Int? = null
 
 
 //    var weapons: MutableList<Weapon> = mutableListOf()

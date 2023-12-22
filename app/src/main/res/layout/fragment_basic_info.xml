@@ -39,10 +39,18 @@
             android:layout_height="wrap_content"
             android:text="@string/profesja"
             android:textSize="20sp" />
+        <Spinner
+            android:id="@+id/card_spinner_profesja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="15dp" />
+
         <EditText
             android:id="@+id/card_profesja"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="match_parent"

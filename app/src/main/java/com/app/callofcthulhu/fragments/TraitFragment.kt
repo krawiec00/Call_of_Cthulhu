@@ -1,6 +1,6 @@
 package com.app.callofcthulhu.fragments
 
-import SharedViewModel
+import com.app.callofcthulhu.SharedViewModel
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -305,6 +305,16 @@ class TraitFragment : Fragment() {
             magiaEditText.addTextChangedListener {
                 statMagicController()
             }
+
+            buttonSila.visibility = View.GONE
+            buttonKondycja.visibility = View.GONE
+            buttonBciala.visibility = View.GONE
+            buttonZrecznosc.visibility = View.GONE
+            buttonWyglad.visibility = View.GONE
+            buttonInteligencja.visibility = View.GONE
+            buttonMoc.visibility = View.GONE
+            buttonWyksztalcenie.visibility = View.GONE
+
         }
 
 
@@ -344,7 +354,8 @@ class TraitFragment : Fragment() {
 
     private fun updateMaxMagia() {
         var value = mocEditText.text.toString().toIntOrNull() ?: 0
-        poczytalnoscEditText.setText(value.toString())
+        if(id.isEmpty())
+            poczytalnoscEditText.setText(value.toString())
         value /= 5
         if (id.isEmpty()) {
             magiaEditText.setText(value.toString())

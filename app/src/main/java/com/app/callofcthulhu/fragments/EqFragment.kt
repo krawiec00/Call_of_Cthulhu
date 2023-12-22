@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,9 @@ class EqFragment : Fragment() {
     private lateinit var recyclerView2: RecyclerView
     lateinit var weaponAdapter: WeaponsAdapter
     lateinit var spellAdapter: SpellsAdapter
+    lateinit var eqList: LinearLayout
+
+    val id = CardDetailsActivity.docId
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +56,8 @@ class EqFragment : Fragment() {
 
         weapontBtn = view.findViewById(R.id.weapon_btn)
         spellBtn = view.findViewById(R.id.spell_btn)
+
+        eqList = view.findViewById(R.id.lista)
 
         weapontBtn.setOnClickListener {
             val intent = Intent(activity, WeaponsList::class.java)
@@ -66,8 +72,14 @@ class EqFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView2 = view.findViewById(R.id.recycler_view2)
 
+        if(id.isEmpty())
+            eqList.visibility = View.GONE
+
+
         setupRecyclerView()
         setupRecyclerView2()
+
+
 
         return view
     }

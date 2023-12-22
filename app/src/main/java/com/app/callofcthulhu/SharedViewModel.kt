@@ -1,6 +1,7 @@
+package com.app.callofcthulhu
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.app.callofcthulhu.Card
 
 class SharedViewModel : ViewModel() {
 
@@ -114,6 +115,36 @@ class SharedViewModel : ViewModel() {
             }
             "istoty" -> {
                 if (fieldValue is String) currentCard.istoty = fieldValue
+            }
+            "Bron_Palna" -> {
+                if (fieldValue is Int) currentCard.Bron_Palna = fieldValue
+            }
+            "Korzystanie_z_Bibliotek" -> {
+                if (fieldValue is Int) currentCard.Korzystanie_z_Bibliotek = fieldValue
+            }
+            "Nasluchiwanie" -> {
+                if (fieldValue is Int) currentCard.Nasluchiwanie = fieldValue
+            }
+            "Nawigacja" -> {
+                if (fieldValue is Int) currentCard.Nawigacja = fieldValue
+            }
+            "Perswazja" -> {
+                if (fieldValue is Int) currentCard.Perswazja = fieldValue
+            }
+            "Pierwsza_Pomoc" -> {
+                if (fieldValue is Int) currentCard.Pierwsza_Pomoc = fieldValue
+            }
+            "Psychologia" -> {
+                if (fieldValue is Int) currentCard.Psychologia = fieldValue
+            }
+            "Spostrzegawczosc" -> {
+                if (fieldValue is Int) currentCard.Spostrzegawczosc = fieldValue
+            }
+            "Sztuka_Przetrwania" -> {
+                if (fieldValue is Int) currentCard.Sztuka_Przetrwania = fieldValue
+            }
+            "Wiedza_o_Naturze" -> {
+                if (fieldValue is Int) currentCard.Wiedza_o_Naturze = fieldValue
             }
 
 
