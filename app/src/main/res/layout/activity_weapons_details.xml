@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,78 +9,221 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/weapon_nazwa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:text="placeholder"/>
+        android:text="placeholder"
+        android:layout_marginBottom="15dp"/>
 
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <TextView
-        android:id="@+id/weapon_obrazenia"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+<!--OBRAZENIA!-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text="placeholder2"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="start"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="Obrażenia: "/>
+    <TextView
+        android:id="@+id/weapon_obrazenia"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:text="placeholder2"
+        tools:ignore="RtlHardcoded" />
+
+    </LinearLayout>
+
+        <!--ATAKI!-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="Ataki: "/>
 
         <TextView
             android:id="@+id/weapon_ataki"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textSize="20sp"
             android:text="placeholder3"
             android:paddingTop="10dp"/>
 
-        <TextView
-            android:id="@+id/weapon_koszt"
+        </LinearLayout>
+
+
+        <!--ATAKI!-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="Koszt: "/>
+
+
+        <TextView
+            android:id="@+id/weapon_koszt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textSize="20sp"
             android:text="placeholder4"
             android:paddingTop="10dp"/>
 
-        <TextView
-            android:id="@+id/weapon_pociski"
+        </LinearLayout>
+
+
+        <!--ATAKI!-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="Pociski: "/>
+
+        <TextView
+            android:id="@+id/weapon_pociski"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textSize="20sp"
             android:text="placeholder5"
             android:paddingTop="10dp"/>
 
-        <TextView
-            android:id="@+id/weapon_umiejetnosci"
+
+        </LinearLayout>
+
+
+        <!--ATAKI!-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="Umiejętność: "/>
+
+        <TextView
+            android:id="@+id/weapon_umiejetnosci"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textSize="20sp"
             android:text="placeholder6"
             android:paddingTop="10dp"/>
 
-        <TextView
-            android:id="@+id/weapon_zasieg"
+        </LinearLayout>
+
+
+
+        <!--ATAKI!-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="Zasięg: "/>
+
+        <TextView
+            android:id="@+id/weapon_zasieg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textSize="20sp"
             android:text="placeholder7"
             android:paddingTop="10dp"/>
 
-        <TextView
-            android:id="@+id/weapon_zawodnosc"
+
+        </LinearLayout>
+
+        <!--ATAKI!-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="Zawodność: "/>
+
+        <TextView
+            android:id="@+id/weapon_zawodnosc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textSize="20sp"
             android:text="placeholder8"
             android:paddingTop="10dp"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -87,6 +231,7 @@
             android:id="@+id/add_to_card_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="Dodaj do karty" />
 
         <Button

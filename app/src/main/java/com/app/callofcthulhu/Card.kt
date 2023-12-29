@@ -49,6 +49,10 @@ class Card {
     var Sztuka_Przetrwania: Int? = null
     var Wiedza_o_Naturze: Int? = null
 
+    var gotowka: String? = null
+    var dobytek: String? = null
+    var przedmioty: String? = null
+    var wydatki: String? = null
 
 //    var weapons: MutableList<Weapon> = mutableListOf()
 //

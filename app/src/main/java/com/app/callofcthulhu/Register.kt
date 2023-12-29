@@ -22,11 +22,11 @@ class Register : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        if (currentUser != null) {
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        if (currentUser != null) {
+//            val intent = Intent(applicationContext, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
     }
 
     private lateinit var auth: FirebaseAuth
@@ -35,17 +35,17 @@ class Register : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        val editTextEmail = findViewById<TextInputEditText>(R.id.email);
-        val editTextPassword = findViewById<TextInputEditText>(R.id.password);
-        val buttonReg = findViewById<Button>(R.id.btn_register);
+        val editTextEmail = findViewById<TextInputEditText>(R.id.registerEmail)
+        val editTextPassword = findViewById<TextInputEditText>(R.id.registerPassword)
+        val buttonReg = findViewById<Button>(R.id.btn_register)
         auth = Firebase.auth
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar);
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val textView = findViewById<TextView>(R.id.loginNow)
 
         textView.setOnClickListener(){
-            val intent = Intent(this, Login::class.java);
-            startActivity(intent);
-            finish();
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
 
         }
 
@@ -62,11 +62,29 @@ class Register : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Rejestracja powiodła się
-                            Toast.makeText(baseContext, "Authentication successful.", Toast.LENGTH_SHORT).show()
+                            val user = auth.currentUser
+                            user?.sendEmailVerification()
+                                ?.addOnCompleteListener { emailTask ->
+                                    if (emailTask.isSuccessful) {
+                                        Toast.makeText(
+                                            baseContext,
+                                            "Email verification sent to ${user.email}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        // Obsługa błędu podczas wysyłania maila z potwierdzeniem
+                                        Toast.makeText(
+                                            baseContext,
+                                            "Failed to send verification email.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
                             progressBar.visibility = View.GONE
-                            val intent = Intent(this, Login::class.java);
-                            startActivity(intent);
-                            finish();
+                            // Przejdź do ekranu logowania po rejestracji
+                            val intent = Intent(this, Login::class.java)
+                            startActivity(intent)
+                            finish()
                         } else {
                             // Rejestracja nie powiodła się
                             val error = task.exception?.message ?: "Authentication failed."

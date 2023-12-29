@@ -2,7 +2,6 @@ package com.app.callofcthulhu
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -52,7 +51,7 @@ class SpellsDetailsActivity : AppCompatActivity() {
         val deleteWeaponButton: Button = findViewById(R.id.delete_spell_button)
 
         if(added){
-            addToCardButton.visibility = View.INVISIBLE
+            addToCardButton.visibility = View.GONE
             deleteWeaponButton.visibility = View.VISIBLE
         }
 

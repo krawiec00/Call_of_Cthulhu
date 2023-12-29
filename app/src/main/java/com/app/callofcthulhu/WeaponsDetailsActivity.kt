@@ -68,7 +68,7 @@ class WeaponsDetailsActivity : AppCompatActivity() {
         val deleteWeaponButton: Button = findViewById(R.id.delete_weapon_button)
 
         if(added){
-            addToCardButton.visibility = View.INVISIBLE
+            addToCardButton.visibility = View.GONE
             deleteWeaponButton.visibility = View.VISIBLE
         }
 

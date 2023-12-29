@@ -3,19 +3,20 @@ package com.app.callofcthulhu.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.app.callofcthulhu.Card
-import com.app.callofcthulhu.CardAdapter
 import com.app.callofcthulhu.CardDetailsActivity
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.SharedViewModel
 import com.app.callofcthulhu.Spell
 import com.app.callofcthulhu.SpellsAdapter
 import com.app.callofcthulhu.SpellsList
@@ -23,27 +24,23 @@ import com.app.callofcthulhu.Utility
 import com.app.callofcthulhu.Utility.Companion.getCollectionReferenceForCards
 import com.app.callofcthulhu.Weapon
 import com.app.callofcthulhu.WeaponsAdapter
-import com.app.callofcthulhu.WeaponsDetailsActivity
 import com.app.callofcthulhu.WeaponsList
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.toObject
 
 
 class EqFragment : Fragment() {
+
+    private lateinit var sharedViewModel: SharedViewModel
 
     private lateinit var weapontBtn: Button
     private lateinit var spellBtn: Button
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerView2: RecyclerView
-    lateinit var weaponAdapter: WeaponsAdapter
-    lateinit var spellAdapter: SpellsAdapter
-    lateinit var eqList: LinearLayout
+    private lateinit var weaponAdapter: WeaponsAdapter
+    private lateinit var spellAdapter: SpellsAdapter
+    private lateinit var eqList: LinearLayout
+    private lateinit var editTextArray: Array<EditText>
 
     val id = CardDetailsActivity.docId
 
@@ -53,6 +50,7 @@ class EqFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_eq, container, false)
 
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         weapontBtn = view.findViewById(R.id.weapon_btn)
         spellBtn = view.findViewById(R.id.spell_btn)
@@ -72,9 +70,23 @@ class EqFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView2 = view.findViewById(R.id.recycler_view2)
 
+        editTextArray = arrayOf(
+            view.findViewById(R.id.poziomWydatkow),
+            view.findViewById(R.id.gotowka),
+            view.findViewById(R.id.dobytek),
+            view.findViewById(R.id.ekwipunek)
+        )
+
+        attachTextWatcher(editTextArray[0], "poziomWydatkow")
+        attachTextWatcher(editTextArray[1], "gotowka")
+        attachTextWatcher(editTextArray[2], "dobytek")
+        attachTextWatcher(editTextArray[3], "ekwipunek")
+
+
         if(id.isEmpty())
             eqList.visibility = View.GONE
-
+        else
+            readData()
 
         setupRecyclerView()
         setupRecyclerView2()
@@ -132,6 +144,31 @@ class EqFragment : Fragment() {
         spellAdapter.notifyDataSetChanged()
     }
 
+    private fun attachTextWatcher(editText: EditText, fieldName: String) {
+        editText.addTextChangedListener { editable ->
+            sharedViewModel.updateCardField(fieldName, editable.toString())
+        }
+    }
+
+    private fun readData() {
+        val docReference = getCollectionReferenceForCards().document(id)
+        docReference.get().addOnSuccessListener { document ->
+            document?.let {
+                if (it.exists()) {
+                    val fields = mapOf(
+                        "wydatki" to editTextArray[0],
+                        "gotowka" to editTextArray[1],
+                        "dobytek" to editTextArray[2],
+                        "przedmioty" to editTextArray[3]
+                    )
+
+                    fields.forEach { (key, editText) ->
+                        editText.setText(document.getString(key))
+                    }
+                }
+            }
+        }
+    }
 
 
 

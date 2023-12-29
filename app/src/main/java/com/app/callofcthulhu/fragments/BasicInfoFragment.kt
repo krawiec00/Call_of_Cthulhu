@@ -23,7 +23,7 @@ class BasicInfoFragment : Fragment() {
     private lateinit var imieEditText: EditText
     private lateinit var nazwiskoEditText: EditText
     private lateinit var profesjaEditText: EditText
-    lateinit var professionSpinner: Spinner
+    private lateinit var professionSpinner: Spinner
     private lateinit var wiekEditText: EditText
     private lateinit var plecEditText: EditText
     private lateinit var mieszkanieEditText: EditText
@@ -63,7 +63,7 @@ class BasicInfoFragment : Fragment() {
 // Wywołanie funkcji attachTextWatcher dla każdego EditText
         attachTextWatcher(imieEditText, "imie")
         attachTextWatcher(nazwiskoEditText, "nazwisko")
-       // attachTextWatcher(profesjaEditText, "profesja")
+        attachTextWatcher(profesjaEditText, "profesja")
         attachTextWatcher(wiekEditText, "wiek")
         attachTextWatcher(plecEditText, "plec")
         attachTextWatcher(mieszkanieEditText, "mZamieszkania")

@@ -442,34 +442,7 @@
                     android:background="@drawable/edittext_background" />
 
                 <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
 
-                    <TextView
-                        android:id="@+id/wiedzaONaturze"
-                        android:layout_width="100dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:background="@drawable/edittext_background"/>
-
-                    <TextView
-                        android:id="@+id/wiedzaONaturze2"
-                        android:layout_width="100dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:text=""
-                        android:gravity="center"
-                        android:background="@drawable/edittext_background"/>
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

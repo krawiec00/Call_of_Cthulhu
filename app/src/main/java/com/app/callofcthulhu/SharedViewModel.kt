@@ -146,6 +146,18 @@ class SharedViewModel : ViewModel() {
             "Wiedza_o_Naturze" -> {
                 if (fieldValue is Int) currentCard.Wiedza_o_Naturze = fieldValue
             }
+            "poziomWydatkow" -> {
+                if (fieldValue is String) currentCard.wydatki = fieldValue
+            }
+            "gotowka" -> {
+                if (fieldValue is String) currentCard.gotowka = fieldValue
+            }
+            "dobytek" -> {
+                if (fieldValue is String) currentCard.dobytek = fieldValue
+            }
+            "ekwipunek" -> {
+                if (fieldValue is String) currentCard.przedmioty = fieldValue
+            }
 
 
             // Dodaj więcej pól w miarę potrzeb

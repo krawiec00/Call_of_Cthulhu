@@ -22,9 +22,20 @@ class Login : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (currentUser.isEmailVerified) {
+                // Użytkownik jest zalogowany i potwierdził swój adres email
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                // Użytkownik jest zalogowany, ale nie potwierdził swój adres email
+                Toast.makeText(
+                    baseContext,
+                    "Please verify your email first.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                // Możesz tu dodać dodatkową obsługę, np. przekierowanie do ekranu wysyłającego ponownie maila z potwierdzeniem
+            }
         }
     }
 
@@ -35,18 +46,26 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val editTextEmail = findViewById<TextInputEditText>(R.id.email);
-        val editTextPassword = findViewById<TextInputEditText>(R.id.password);
-        val buttonLogin = findViewById<Button>(R.id.btn_login);
+        val editTextEmail = findViewById<TextInputEditText>(R.id.loginEmail)
+        val editTextPassword = findViewById<TextInputEditText>(R.id.loginPassword)
+        val buttonLogin = findViewById<Button>(R.id.btn_login)
         auth = Firebase.auth
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar);
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val textView = findViewById<TextView>(R.id.registerNow)
+        val textResetPassword = findViewById<TextView>(R.id.passwordNow)
 
-        textView.setOnClickListener() {
-            val intent = Intent(this, Register::class.java);
-            startActivity(intent);
-            finish();
 
+        textView.setOnClickListener {
+            val intent = Intent(this, Register::class.java)
+            startActivity(intent)
+            finish()
+
+        }
+
+        textResetPassword.setOnClickListener {
+            val intent = Intent(this, PasswordResetActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         buttonLogin.setOnClickListener {
@@ -61,10 +80,19 @@ class Login : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Logowanie powiodło się
-                            val intent = Intent(applicationContext, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            val user = auth.currentUser
+                            if (user != null && user.isEmailVerified) {
+                                // Logowanie powiodło się i e-mail został zweryfikowany
+                                val intent = Intent(applicationContext, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                // E-mail nie został zweryfikowany, uniemożliwienie logowania
+                                Toast.makeText(baseContext,"Please verify your email before logging in.", Toast.LENGTH_SHORT
+                                ).show()
+                                progressBar.visibility = View.GONE
+                                auth.signOut() // Wylogowanie użytkownika, który nie zweryfikował e-maila
+                            }
                         } else {
                             // Logowanie nie powiodło się
                             val error = task.exception?.message ?: "Authentication failed."

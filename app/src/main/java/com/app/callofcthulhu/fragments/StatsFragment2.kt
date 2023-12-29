@@ -142,7 +142,7 @@ class StatsFragment2 : Fragment() {
 
 // Obserwowanie zmian w karcie
         sharedViewModel.card.observe(viewLifecycleOwner) { card ->
-            val newProfessionName = card?.profesja ?: "defaultProfession"
+            val newProfessionName = card?.profesja ?: "Detektyw Policyjny"
             if (currentProfession != newProfessionName) {
                 currentProfession = newProfessionName
 
@@ -200,7 +200,7 @@ class StatsFragment2 : Fragment() {
                                                             availablePoints -= previousValueChange
                                                             availablePoints += newValueChange
 
-                                                            previousSila = value // Przypisanie previousSila po otrzymaniu wartości z bazy
+                                                            previousSila = value
                                                             readData()
                                                         }
                                                 }
@@ -221,13 +221,11 @@ class StatsFragment2 : Fragment() {
                                                             val newValueChange = value * (skillModifierInt ?: 0)
                                                             availablePoints -= previousValueChange
                                                             availablePoints += newValueChange
-                                                            Log.d("Professions", "Wartość pola 'previousValueChange' z dokumentu professions: $previousValueChange")
-                                                            Log.d("Professions", "Wartość pola 'newValueChange' z dokumentu professions: $newValueChange")
-                                                           // Log.d("Professions", "Wartość pola 'wyksztalcenie' z dokumentu professions: $newValueChange")
 
-                                                            previousWyksztalcenie = value // Przypisanie previousSila po otrzymaniu wartości z bazy
+
+                                                            previousWyksztalcenie = value
                                                             readData()
-                                                          //  Log.d("Professions", "Wartość pola 'wyksztalcenie' z dokumentu professions: $newValueChange")
+
                                                         }
 
 
@@ -238,7 +236,13 @@ class StatsFragment2 : Fragment() {
                                     }
                                 }
 
+                            }.addOnFailureListener { e ->
+                                Log.e("Firestore", "Error fetching skills document: $e")
+                                // Obsługa błędu pobierania dokumentu 'skills'
                             }
+                    }.addOnFailureListener { e ->
+                        Log.e("Firestore", "Error fetching skills document: $e")
+                        // Obsługa błędu pobierania dokumentu 'skills'
                     }
             }
         }
