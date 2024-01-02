@@ -2,6 +2,7 @@ package com.app.callofcthulhu.fragments
 
 import com.app.callofcthulhu.SharedViewModel
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +53,7 @@ class BasicInfoFragment : Fragment() {
 
 
 
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         fun attachTextWatcher(editText: EditText, fieldName: String) {
             editText.addTextChangedListener { editable ->
@@ -84,6 +85,7 @@ class BasicInfoFragment : Fragment() {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val selectedProfession = professions[position]
                     sharedViewModel.updateCardField("profesja", selectedProfession)
+                    Log.e("TEST", "PROFESJA Z SPINNERA: $selectedProfession")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -4,4 +4,10 @@
         <item name="android:textSize">12sp</item> <!-- Rozmiar czcionki -->
         <!-- Dodaj inne atrybuty stylu, jeśli są potrzebne -->
     </style>
+
+    <style name="NoHighlightSelectedItem">
+        <item name="android:colorControlHighlight">@android:color/transparent</item>
+    </style>
+
+
 </resources>

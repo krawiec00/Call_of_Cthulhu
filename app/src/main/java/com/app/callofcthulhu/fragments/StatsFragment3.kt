@@ -111,7 +111,7 @@ class StatsFragment3 : Fragment() {
 // Obserwowanie zmian w karcie
         sharedViewModel.card.observe(viewLifecycleOwner) { card ->
             val newProfessionName = card?.profesja ?: "defaultProfession"
-            if (currentProfession != newProfessionName) {
+            if (currentProfession != newProfessionName && newProfessionName != "") {
                 currentProfession = newProfessionName
                 readData()
                 professionsCollection.document(newProfessionName).get()

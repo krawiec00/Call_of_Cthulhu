@@ -1,12 +1,14 @@
 package com.app.callofcthulhu
 
-import android.annotation.SuppressLint
+
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import java.text.SimpleDateFormat
-import java.util.Date
+import com.google.firebase.firestore.firestore
+
 
 class Utility {
 
@@ -38,6 +40,22 @@ class Utility {
             return FirebaseFirestore.getInstance().collection("cards")
                 .document(currentUser?.uid ?: "")
                 .collection("my_spells")
+        }
+
+
+        fun writeLogToFirebase(logName: String){
+            val user = FirebaseAuth.getInstance().currentUser
+            val db = Firebase.firestore
+
+            val logData = hashMapOf(
+                "actionName" to logName,
+                "timestamp" to FieldValue.serverTimestamp()
+            )
+
+            if (user != null) {
+                db.collection("user_logs").document(user.uid)
+                    .collection("actions").add(logData)
+            }
         }
 
 

@@ -38,6 +38,7 @@ class StatsFragment2 : Fragment() {
     private lateinit var Nawigacja: LinearLayout
     private lateinit var Nasluchiwanie: LinearLayout
     private lateinit var skillPoints: TextView
+    var check: Boolean = false
 
     var currentProfession: String? = null
     var linearLayouts = mutableListOf<LinearLayout>()
@@ -136,16 +137,31 @@ class StatsFragment2 : Fragment() {
             }
         }
 
+        readData()
 
+        setEditTextChangeListener(editTextArray[0],20)
+        setEditTextChangeListener(editTextArray[1],20)
+        setEditTextChangeListener(editTextArray[2],20)
+        setEditTextChangeListener(editTextArray[3],10)
+        setEditTextChangeListener(editTextArray[4],10)
+        setEditTextChangeListener(editTextArray[5],30)
+        setEditTextChangeListener(editTextArray[6],10)
+        setEditTextChangeListener(editTextArray[7],25)
+        setEditTextChangeListener(editTextArray[8],10)
+        setEditTextChangeListener(editTextArray[9],10)
 
 
 
 // Obserwowanie zmian w karcie
         sharedViewModel.card.observe(viewLifecycleOwner) { card ->
             val newProfessionName = card?.profesja ?: "Detektyw Policyjny"
-            if (currentProfession != newProfessionName) {
+            if (currentProfession != newProfessionName && newProfessionName != "") {
                 currentProfession = newProfessionName
 
+                if(check)
+                    availablePoints = 0
+
+                check=true
 
                 professionsCollection.document(newProfessionName).get()
                     .addOnSuccessListener { professionDocument ->
@@ -154,7 +170,7 @@ class StatsFragment2 : Fragment() {
                         db.collection("skills").document("skills").get()
                             .addOnSuccessListener { skillsDocument ->
                                 val skillsFields = getFieldsFromDocument(skillsDocument)
-                                Log.e("TEST", "POLA TO: $professionsFields")
+
                                 val commonFields =
                                     skillsFields.intersect(professionsFields.toSet()).toList()
                                 val differentFields =
@@ -265,19 +281,15 @@ class StatsFragment2 : Fragment() {
 
 
 
-        setEditTextChangeListener(editTextArray[0],20)
-        setEditTextChangeListener(editTextArray[1],20)
-        setEditTextChangeListener(editTextArray[2],20)
-        setEditTextChangeListener(editTextArray[3],10)
-        setEditTextChangeListener(editTextArray[4],10)
-        setEditTextChangeListener(editTextArray[5],30)
-        setEditTextChangeListener(editTextArray[6],10)
-        setEditTextChangeListener(editTextArray[7],25)
-        setEditTextChangeListener(editTextArray[8],10)
-        setEditTextChangeListener(editTextArray[9],10)
+
 
 
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        sharedViewModel.card.removeObservers(viewLifecycleOwner)
     }
 
 

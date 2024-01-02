@@ -3,6 +3,8 @@ package com.app.callofcthulhu
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +29,9 @@ import com.app.callofcthulhu.Utility.Companion.getCollectionReferenceForWeapons
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -68,6 +73,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             userText.text = user.email
         }
 
+        val menu: Menu = navigationView.menu
+        val menuItem: MenuItem? = menu.findItem(R.id.nav_panel)
+
+
+        val uid = user?.uid
+
+        val db = FirebaseFirestore.getInstance()
+
+        if (uid != null) {
+            val userLogRef = db.collection("user_logs").document(uid)
+
+            userLogRef.get()
+                .addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists()) {
+                        val role = documentSnapshot.getString("role")
+                        // Tutaj możesz wykorzystać pobraną rolę (np. wyświetlić, przekazać dalej, etc.)
+                        if (role != "admin")
+                            menuItem?.isVisible = false
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    // Wystąpił błąd podczas pobierania danych
+                }
+        }
+
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -87,37 +117,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_reset -> {
-                if (user != null) {
-                    val email = user.email
-                    if (email != null) {
-                        auth.sendPasswordResetEmail(email)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    logout()
-                                    Toast.makeText(
-                                        this,
-                                        "Wysłano maila z resetem hasła",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        this,
-                                        "Wystąpił problem z wysłaniem maila",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                    }
-
-                }
-            }
+            R.id.nav_reset -> passwordReset()
 
 
             R.id.nav_delete -> deleteUser()
 
 
             R.id.nav_logout -> logout()
+
+            R.id.nav_panel -> {
+                val intent = Intent(applicationContext, UsersListActivity::class.java)
+                startActivity(intent)
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -150,6 +161,49 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    private fun passwordReset() {
+
+        if (user != null) {
+            val email = user.email
+            if (email != null) {
+
+                val user = auth.currentUser
+                val db = Firebase.firestore
+
+                val logData = hashMapOf(
+                    "actionName" to "Reset hasła",
+                    "timestamp" to FieldValue.serverTimestamp()
+                )
+
+                if (user != null) {
+                    db.collection("user_logs").document(user.uid)
+                        .collection("actions").add(logData)
+                }
+
+                auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            logout()
+                            Toast.makeText(
+                                this,
+                                "Wysłano maila z resetem hasła",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Wystąpił problem z wysłaniem maila",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
+
+        }
+
+    }
+
+
     private fun deleteUser() {
         val collectionRef = getCollectionReferenceForCards()
         val collectionRefNotes = getCollectionReferenceForNotes()
@@ -170,7 +224,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ).addOnSuccessListener {
             // Po zakończeniu usuwania wszystkich kolekcji, usuń użytkownika
             deleteUserAccount()
-        }.addOnFailureListener { exception ->
+        }.addOnFailureListener {
 //            // Obsłuż błąd usuwania kolekcji
 //            Toast.makeText(this, "Błąd podczas usuwania kolekcji: $exception", Toast.LENGTH_SHORT)
 //                .show()
@@ -183,8 +237,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun deleteUserAccount() {
         val userProfile = FirebaseAuth.getInstance().currentUser
+        Utility.writeLogToFirebase("Usunięto konto")
+
         userProfile?.delete()?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
+
                 goToLoginPage()
                 Toast.makeText(this, "Usunięto konto", Toast.LENGTH_SHORT).show()
             } else {
@@ -202,6 +259,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun logout() {
         if (auth.currentUser != null) {
+
+            Utility.writeLogToFirebase("Wylogowanie")
+
             Firebase.auth.signOut()
             goToLoginPage()
         } else {

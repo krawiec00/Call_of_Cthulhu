@@ -79,7 +79,8 @@
         android:id="@+id/nav_view"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu"/>
+        app:menu="@menu/nav_menu"
+        android:theme="@style/NoHighlightSelectedItem"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

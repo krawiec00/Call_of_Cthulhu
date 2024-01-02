@@ -13,6 +13,10 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentReference
 
 
@@ -24,9 +28,9 @@ class CardDetailsActivity : AppCompatActivity() {
     lateinit var tabLayout: TabLayout
     lateinit var viewPager2: ViewPager2
     private lateinit var myViewPagerAdapter: MyViewPagerAdapter
-
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private var saveCard: Card? = null
-
+    private lateinit var auth: FirebaseAuth
     private lateinit var pageTitleTextView: TextView
     private var isEdited: Boolean = false
     private lateinit var deleteCardBtn: ImageButton
@@ -46,6 +50,8 @@ class CardDetailsActivity : AppCompatActivity() {
         pageTitleTextView = findViewById(R.id.page_title)
         saveCardBtn = findViewById(R.id.save_note_btn)
         deleteCardBtn = findViewById(R.id.delete_card_btn)
+        auth = Firebase.auth
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         //pobrane dane do wyświetlenia do edycji
         imie = intent.getStringExtra("imie")
@@ -85,10 +91,10 @@ class CardDetailsActivity : AppCompatActivity() {
 
 
         //tabela i fragmenty
-        tabLayout = findViewById(R.id.tab_layout);
-        viewPager2 = findViewById(R.id.view_pager);
-        myViewPagerAdapter = MyViewPagerAdapter(this);
-        viewPager2.adapter = myViewPagerAdapter;
+        tabLayout = findViewById(R.id.tab_layout)
+        viewPager2 = findViewById(R.id.view_pager)
+        myViewPagerAdapter = MyViewPagerAdapter(this)
+        viewPager2.adapter = myViewPagerAdapter
 
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -116,9 +122,12 @@ class CardDetailsActivity : AppCompatActivity() {
     }
 
     fun saveCardToFireBase(card: Card) {
+
+
         val documentReference: DocumentReference = if (isEdited) {
             // Update the note
             Utility.getCollectionReferenceForCards().document(docId)
+
         } else {
             // Create new note
             Utility.getCollectionReferenceForCards().document()
@@ -126,8 +135,24 @@ class CardDetailsActivity : AppCompatActivity() {
 
         documentReference.set(card).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(baseContext, "Card added successfully", Toast.LENGTH_SHORT).show()
-                finish()
+
+                if (docId.isNotEmpty()) {
+                    Utility.writeLogToFirebase("Aktualizacja karty")
+
+                    Toast.makeText(baseContext, "Zaktualizowano kartę", Toast.LENGTH_SHORT).show()
+                } else {
+                    Utility.writeLogToFirebase("Stworzenie karty")
+
+                    Toast.makeText(baseContext, "Dodano kartę", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Stworzenie karty")
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundle)
+
+//                Toast.makeText(baseContext, "Card added successfully", Toast.LENGTH_SHORT).show()
+//                finish()
             } else {
                 Toast.makeText(baseContext, "Failed while adding card", Toast.LENGTH_SHORT).show()
             }
@@ -139,11 +164,12 @@ class CardDetailsActivity : AppCompatActivity() {
             Utility.getCollectionReferenceForCards().document(docId)
         documentReference.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                //note is deleted
-                Toast.makeText(baseContext, "Card deleted successfully", Toast.LENGTH_SHORT).show()
+                Utility.writeLogToFirebase("Usunięcie karty")
+
+                Toast.makeText(baseContext, "Usunięto karte", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                Toast.makeText(baseContext, "Card failed to delete", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Błąd przy usuwaniu karty", Toast.LENGTH_SHORT).show()
 
             }
         }
@@ -195,7 +221,6 @@ class CardDetailsActivity : AppCompatActivity() {
                     for (document in task.result!!) {
                         document.reference.delete()
                     }
-                    // Usunięto wszystkie notatki dla karty
 
                 }
             }
@@ -211,7 +236,6 @@ class CardDetailsActivity : AppCompatActivity() {
                     for (document in task.result!!) {
                         document.reference.delete()
                     }
-                    // Usunięto wszystkie notatki dla karty
 
                 }
             }

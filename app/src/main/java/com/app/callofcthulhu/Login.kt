@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
@@ -39,7 +40,7 @@ class Login : AppCompatActivity() {
         }
     }
 
-
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +54,11 @@ class Login : AppCompatActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val textView = findViewById<TextView>(R.id.registerNow)
         val textResetPassword = findViewById<TextView>(R.id.passwordNow)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+
+
+
 
 
         textView.setOnClickListener {
@@ -86,9 +92,19 @@ class Login : AppCompatActivity() {
                                 val intent = Intent(applicationContext, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
+
+                                Utility.writeLogToFirebase("Logowanie")
+
+
+                                val bundle = Bundle()
+                                bundle.putString(FirebaseAnalytics.Param.METHOD, "email_password")
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
                             } else {
                                 // E-mail nie został zweryfikowany, uniemożliwienie logowania
-                                Toast.makeText(baseContext,"Please verify your email before logging in.", Toast.LENGTH_SHORT
+                                Toast.makeText(
+                                    baseContext,
+                                    "Please verify your email before logging in.",
+                                    Toast.LENGTH_SHORT
                                 ).show()
                                 progressBar.visibility = View.GONE
                                 auth.signOut() // Wylogowanie użytkownika, który nie zweryfikował e-maila

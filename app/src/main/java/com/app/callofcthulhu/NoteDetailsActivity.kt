@@ -11,9 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.app.callofcthulhu.CardDetailsActivity.Companion.docId
 import com.google.firebase.firestore.DocumentReference
-import java.security.Timestamp
-import java.time.Instant
-import java.util.Date
 
 
 class NoteDetailsActivity : AppCompatActivity() {
@@ -97,10 +94,10 @@ class NoteDetailsActivity : AppCompatActivity() {
 
         documentReference.set(note).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(baseContext, "Note added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Notatka dodana", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                Toast.makeText(baseContext, "Failed while adding note", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Usunięto notatkę", Toast.LENGTH_SHORT).show()
             }
         }
     }

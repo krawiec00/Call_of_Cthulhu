@@ -1,0 +1,47 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Email użytkownika -->
+    <TextView
+        android:id="@+id/userMail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="placeholder"
+        android:textColor="@color/black"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:background="@color/cthulhu_Green"/>
+
+    <!-- Przycisk do czyszczenia logów -->
+    <Button
+        android:id="@+id/btn_log_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wyczyść logi"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Przycisk do usuwania użytkownika -->
+    <Button
+        android:id="@+id/btn_user_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usuń użytkownika"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <!-- CheckBox -->
+    <CheckBox
+        android:id="@+id/checkbox_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin"
+        android:checked="false"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"/>
+</LinearLayout>

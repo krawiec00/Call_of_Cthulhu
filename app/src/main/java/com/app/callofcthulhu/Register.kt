@@ -11,17 +11,18 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.firestore
 
 class Register : AppCompatActivity() {
 
 
-
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
+//        val currentUser = auth.currentUser
 //        if (currentUser != null) {
 //            val intent = Intent(applicationContext, MainActivity::class.java)
 //            startActivity(intent)
@@ -30,7 +31,7 @@ class Register : AppCompatActivity() {
     }
 
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,9 @@ class Register : AppCompatActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val textView = findViewById<TextView>(R.id.loginNow)
 
-        textView.setOnClickListener(){
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        textView.setOnClickListener() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
@@ -71,6 +74,32 @@ class Register : AppCompatActivity() {
                                             "Email verification sent to ${user.email}",
                                             Toast.LENGTH_SHORT
                                         ).show()
+
+                                        val db = Firebase.firestore
+                                        val userData = hashMapOf(
+                                            "userId" to user.uid,
+                                            "email" to user.email,
+                                            "role" to "user"
+                                        )
+
+                                        // Dodawanie dokumentu użytkownika
+                                        db.collection("user_logs").document(user.uid)
+                                            .set(userData)
+                                            .addOnSuccessListener {
+                                                // Dodawanie aktywności rejestracji do podkolekcji 'actions'
+                                                val logData = hashMapOf(
+                                                    "actionName" to "Rejestracja",
+                                                    "timestamp" to FieldValue.serverTimestamp()
+                                                )
+
+                                                db.collection("user_logs").document(user.uid)
+                                                    .collection("actions").add(logData)
+                                            }
+
+                                        val bundle = Bundle()
+                                        bundle.putString(FirebaseAnalytics.Param.METHOD, "email_password")
+                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
+
                                     } else {
                                         // Obsługa błędu podczas wysyłania maila z potwierdzeniem
                                         Toast.makeText(

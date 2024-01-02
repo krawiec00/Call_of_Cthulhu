@@ -15,9 +15,17 @@
         android:theme="@style/Theme.AppCompat.Light"
         tools:targetApi="31">
         <activity
+            android:name=".UserActionsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".UsersListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
             android:name=".PasswordResetActivity"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Dark.NoActionBar"/>
+            android:theme="@style/Theme.Material3.Dark.NoActionBar" />
         <activity
             android:name=".SpellsDetailsActivity"
             android:exported="false"
