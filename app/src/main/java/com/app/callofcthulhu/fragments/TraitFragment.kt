@@ -13,13 +13,14 @@ import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.app.callofcthulhu.CardDetailsActivity
+import com.app.callofcthulhu.MyApp
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.Utility
 
 
 class TraitFragment : Fragment() {
 
-    private lateinit var sharedViewModel: SharedViewModel
+    val sharedViewModel = MyApp.sharedViewModel
 
     private lateinit var silaEditText: EditText
     private lateinit var silaTextView: TextView
@@ -118,7 +119,7 @@ class TraitFragment : Fragment() {
         maxZycieTextView = view.findViewById(R.id.maxzycie)
         maxMagiaTextView = view.findViewById(R.id.maxmagia)
 
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
 
 
 // Wywołanie funkcji attachTextWatcher dla każdego EditText

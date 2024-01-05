@@ -1,5 +1,6 @@
 package com.app.callofcthulhu
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -118,6 +119,7 @@ class SharedViewModel : ViewModel() {
             }
             "Bron_Palna" -> {
                 if (fieldValue is Int) currentCard.Bron_Palna = fieldValue
+                Log.e("TEST", "BRON PALNA: ${card.value?.Bron_Palna}")
             }
             "Korzystanie_z_Bibliotek" -> {
                 if (fieldValue is Int) currentCard.Korzystanie_z_Bibliotek = fieldValue

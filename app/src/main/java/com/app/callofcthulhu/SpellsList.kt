@@ -6,82 +6,92 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.firebase.firestore.FirebaseFirestore
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.IOException
+import java.nio.charset.Charset
 import java.util.UUID
-
-
 
 
 class SpellsList : AppCompatActivity() {
 
-    private lateinit var listView: ListView
-    private lateinit var firestore: FirebaseFirestore
-    private val spellsList = mutableListOf<String>() // Lista broni
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spells_list)
 
-        listView = findViewById(R.id.spell_list)
+        val spellList = findViewById<ListView>(R.id.spell_list)
+        val spellNames = mutableListOf<String>()
 
-        // Inicjalizacja bazy danych Firestore
-        firestore = FirebaseFirestore.getInstance()
+        try {
+            val spellsJson = loadJSONFromAsset() // Load JSON data from file
+            val spellsArray = spellsJson.getJSONArray("spells")
 
-        // Pobieranie broni z kolekcji "weapons"
-        fetchSpells()
-    }
+            for (i in 0 until spellsArray.length()) {
+                val spellObject = spellsArray.getJSONObject(i)
+                val spellName = spellObject.getString("nazwa")
+                spellNames.add(spellName)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
 
-    private fun fetchSpells() {
-        // Pobranie danych z kolekcji "weapons"
-        firestore.collection("spells")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val weaponName = document.getString("nazwa") // Zakładając, że atrybut z nazwą broni to "name"
-                    weaponName?.let {
-                        spellsList.add(it)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, spellNames)
+        spellList.adapter = adapter
+
+        spellList.setOnItemClickListener { _, _, position, _ ->
+            val clickedSpellName = spellNames[position] // Nazwa klikniętego zaklęcia
+
+            try {
+                val spellsJson = loadJSONFromAsset() // Load JSON data from file
+                val spellsArray = spellsJson.getJSONArray("spells")
+
+                for (i in 0 until spellsArray.length()) {
+                    val spellObject = spellsArray.getJSONObject(i)
+                    val spellName = spellObject.getString("nazwa")
+
+                    if (spellName == clickedSpellName) {
+                        // Pobierz pozostałe parametry zaklęcia
+                        val spellId = UUID.randomUUID().toString()
+                        val spellNazwa = spellObject.getString("nazwa") ?: ""
+                        val spellCzas = spellObject.getString("czas") ?: ""
+                        val spellKoszt = spellObject.getString("koszt") ?: ""
+                        val spellOpis = spellObject.getString("opis") ?: ""
+
+                        // Przekazanie parametrów do nowej aktywności
+                        val intent = Intent(this, SpellsDetailsActivity::class.java)
+                        intent.putExtra("nazwa", spellNazwa)
+                        intent.putExtra("czas", spellCzas)
+                        intent.putExtra("koszt", spellKoszt)
+                        intent.putExtra("opis", spellOpis)
+
+                        intent.putExtra("id", spellId)
+
+                        startActivity(intent) // Uruchomienie nowej aktywności
+                        break
                     }
                 }
-
-                // Utworzenie adaptera i wyświetlenie danych w ListView
-                val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, spellsList)
-                listView.adapter = adapter
-
-
-                // Obsługa kliknięcia elementu listy
-                listView.setOnItemClickListener { parent, _, position, _ ->
-                    val selectedSpell = parent.getItemAtPosition(position) as String
-
-                    // Pobierz dane broni z bazy danych na podstawie jej nazwy
-                    firestore.collection("spells")
-                        .whereEqualTo("nazwa", selectedSpell)
-                        .get()
-                        .addOnSuccessListener { documents ->
-                            if (!documents.isEmpty) {
-                                val document = documents.first()
-                                val spellId = UUID.randomUUID().toString()
-                                val spellNazwa = document.getString("nazwa") ?: ""
-                                val spellCzas = document.getString("czas") ?: ""
-                                val spellKoszt = document.getString("koszt") ?: ""
-                                val spellOpis = document.getString("opis") ?: ""
-
-
-                                // Przekazanie danych do nowego Activity za pomocą Intentu
-                                val intent = Intent(this, SpellsDetailsActivity::class.java)
-                                intent.putExtra("nazwa", spellNazwa)
-                                intent.putExtra("czas", spellCzas)
-                                intent.putExtra("koszt", spellKoszt)
-                                intent.putExtra("opis", spellOpis)
-
-                                intent.putExtra("id", spellId)
-                                startActivity(intent)
-                            }
-                        }
-                        .addOnFailureListener { exception ->
-                            // Obsługa błędu pobierania danych z Firestore
-                        }
-                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
             }
+        }
+    }
+
+    private fun loadJSONFromAsset(): JSONObject {
+        val json: String?
+        try {
+            val inputStream = assets.open("spells.json")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            json = String(buffer, Charset.defaultCharset())
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return JSONObject()
+        }
+        return JSONObject(json)
     }
 
 

@@ -23,7 +23,7 @@ import com.google.firebase.firestore.DocumentReference
 class CardDetailsActivity : AppCompatActivity() {
 
 
-    private lateinit var sharedViewModel: SharedViewModel
+    //private lateinit var sharedViewModel: SharedViewModel
 
     lateinit var tabLayout: TabLayout
     lateinit var viewPager2: ViewPager2
@@ -70,7 +70,7 @@ class CardDetailsActivity : AppCompatActivity() {
         }
 
         //viewModel przekazuje dane z modelu, cała instancja card
-        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        val sharedViewModel = MyApp.sharedViewModel
 
         sharedViewModel.card.observe(this) { card ->
             saveCard = card
@@ -116,25 +116,24 @@ class CardDetailsActivity : AppCompatActivity() {
     }
 
 
-    fun saveCard() {
+    private fun saveCard() {
 
         saveCard?.let { saveCardToFireBase(it) }
     }
 
-    fun saveCardToFireBase(card: Card) {
-
+    private fun saveCardToFireBase(card: Card) {
 
         val documentReference: DocumentReference = if (isEdited) {
-            // Update the note
+            // Update
             Utility.getCollectionReferenceForCards().document(docId)
 
         } else {
-            // Create new note
+            // Create new
             Utility.getCollectionReferenceForCards().document()
         }
 
-        documentReference.set(card).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
+        documentReference.set(card)
+
 
                 if (docId.isNotEmpty()) {
                     Utility.writeLogToFirebase("Aktualizacja karty")
@@ -151,31 +150,24 @@ class CardDetailsActivity : AppCompatActivity() {
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Stworzenie karty")
                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundle)
 
-//                Toast.makeText(baseContext, "Card added successfully", Toast.LENGTH_SHORT).show()
-//                finish()
-            } else {
-                Toast.makeText(baseContext, "Failed while adding card", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
-    fun deleteCardFromFirebase() {
+        }
+
+
+    private fun deleteCardFromFirebase() {
         val documentReference: DocumentReference =
             Utility.getCollectionReferenceForCards().document(docId)
-        documentReference.delete().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
+        documentReference.delete()
+
                 Utility.writeLogToFirebase("Usunięcie karty")
 
                 Toast.makeText(baseContext, "Usunięto karte", Toast.LENGTH_SHORT).show()
                 finish()
-            } else {
-                Toast.makeText(baseContext, "Błąd przy usuwaniu karty", Toast.LENGTH_SHORT).show()
 
-            }
-        }
+
     }
 
-    fun showDeleteConfirmationDialog() {
+    private fun showDeleteConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Potwierdzenie")
         builder.setMessage("Czy na pewno chcesz usunąć tę kartę?")

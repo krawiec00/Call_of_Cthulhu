@@ -14,6 +14,7 @@ import android.widget.Spinner
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.app.callofcthulhu.CardDetailsActivity
+import com.app.callofcthulhu.MyApp
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.Utility.Companion.getCollectionReferenceForCards
 
@@ -31,7 +32,7 @@ class BasicInfoFragment : Fragment() {
     private lateinit var urodzenieEditText: EditText
     val id = CardDetailsActivity.docId
 
-    private lateinit var sharedViewModel: SharedViewModel
+   // private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +54,7 @@ class BasicInfoFragment : Fragment() {
 
 
 
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        val sharedViewModel = MyApp.sharedViewModel
 
         fun attachTextWatcher(editText: EditText, fieldName: String) {
             editText.addTextChangedListener { editable ->
@@ -85,7 +86,6 @@ class BasicInfoFragment : Fragment() {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val selectedProfession = professions[position]
                     sharedViewModel.updateCardField("profesja", selectedProfession)
-                    Log.e("TEST", "PROFESJA Z SPINNERA: $selectedProfession")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

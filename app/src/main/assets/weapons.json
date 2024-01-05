@@ -1,0 +1,52 @@
+{
+  "weapons": [
+    {
+      "nazwa": "Kastet",
+      "obrazenia": "1k3+1+MO",
+      "ataki": "1",
+      "koszt": "1$",
+      "pociski": "-",
+      "umiejetnosc": "Walka Wręcz (Bijatyka)",
+      "zasieg": "Uderzenie",
+      "zawodnosc": "-"
+    },
+
+
+    {
+      "nazwa": "Pistolet .45",
+      "obrazenia": "1k10+2",
+      "ataki": "1 (3)",
+      "koszt": "40$",
+      "pociski": "7",
+      "umiejetnosc": "Broń Palna(Krótka)",
+      "zasieg": "15m",
+      "zawodnosc": "100"
+    },
+
+    {
+      "nazwa": "Karabin z zamkiem dwutaktowym .30",
+      "obrazenia": "2k6",
+      "ataki": "1",
+      "koszt": "19$",
+      "pociski": "6",
+      "umiejetnosc": "Broń Palna(Karabin)",
+      "zasieg": "50m",
+      "zawodnosc": "98"
+    },
+
+    {
+      "nazwa": "Strzelba kal.12",
+      "obrazenia": "4k6/2k6/1k6",
+      "ataki": "1 lub 2",
+      "koszt": "40$",
+      "pociski": "2",
+      "umiejetnosc": "Broń Palna(Strzelba)",
+      "zasieg": "10/20/50m",
+      "zawodnosc": "100"
+    }
+
+
+
+
+  ]
+}

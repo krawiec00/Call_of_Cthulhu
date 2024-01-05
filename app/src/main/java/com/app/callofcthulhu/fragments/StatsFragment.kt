@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.app.callofcthulhu.CardDetailsActivity
+import com.app.callofcthulhu.MyApp
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.Utility
 
@@ -23,7 +24,7 @@ class StatsFragment : Fragment() {
     private lateinit var buttonArray: Array<ImageButton>
     private lateinit var textViewArray: Array<Pair<TextView, TextView>>
 
-    private lateinit var sharedViewModel: SharedViewModel
+    val sharedViewModel = MyApp.sharedViewModel
     val id = CardDetailsActivity.docId
 
     var randomNumber: Int = 0
@@ -36,7 +37,7 @@ class StatsFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_stats, container, false)
 
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+
 
 
         editTextArray = arrayOf(

@@ -1,6 +1,7 @@
 package com.app.callofcthulhu
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         //wyświetlanie karty
-        cardButton.setOnClickListener() {
+        cardButton.setOnClickListener {
             startActivity(Intent(this@MainActivity, CardDetailsActivity::class.java))
         }
         setupRecyclerView()
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             menuItem?.isVisible = false
                     }
                 }
-                .addOnFailureListener { exception ->
+                .addOnFailureListener {
                     // Wystąpił błąd podczas pobierania danych
                 }
         }
@@ -101,6 +102,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        supportActionBar?.title = "Witaj badaczu"
 
         navigationView.setNavigationItemSelectedListener(this)
         val toggle = ActionBarDrawerToggle(
@@ -162,11 +165,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun passwordReset() {
-
         if (user != null) {
             val email = user.email
             if (email != null) {
-
                 val user = auth.currentUser
                 val db = Firebase.firestore
 
@@ -180,28 +181,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         .collection("actions").add(logData)
                 }
 
-                auth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            logout()
-                            Toast.makeText(
-                                this,
-                                "Wysłano maila z resetem hasła",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Wystąpił problem z wysłaniem maila",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                val confirmationDialog = AlertDialog.Builder(this)
+                confirmationDialog.setTitle("Potwierdzenie")
+                confirmationDialog.setMessage("Czy na pewno chcesz zresetować hasło?")
+                confirmationDialog.setPositiveButton("Tak") { _, _ ->
+                    auth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                logout()
+                                Toast.makeText(
+                                    this,
+                                    "Wysłano maila z resetem hasła",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Wystąpił problem z wysłaniem maila",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    }
+                }
+                confirmationDialog.setNegativeButton("Anuluj") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                confirmationDialog.show()
             }
-
         }
-
     }
+
+
 
 
     private fun deleteUser() {
@@ -210,29 +220,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val collectionRefWeapons = getCollectionReferenceForWeapons()
         val collectionRefSpells = getCollectionReferenceForSpells()
 
+        val confirmationDialog = AlertDialog.Builder(this)
+        confirmationDialog.setTitle("Potwierdzenie usunięcia konta")
+        confirmationDialog.setMessage("Czy na pewno chcesz usunąć swoje konto? Tej operacji nie można cofnąć.")
+        confirmationDialog.setPositiveButton("Tak") { _, _ ->
+            val deleteNotesTask = deleteCollection(collectionRefNotes, 50)
+            val deleteWeaponsTask = deleteCollection(collectionRefWeapons, 50)
+            val deleteSpellsTask = deleteCollection(collectionRefSpells, 50)
+            val deleteCardsTask = deleteCollection(collectionRef, 50)
 
-        val deleteNotesTask = deleteCollection(collectionRefNotes, 50)
-        val deleteWeaponsTask = deleteCollection(collectionRefWeapons, 50)
-        val deleteSpellsTask = deleteCollection(collectionRefSpells, 50)
-        val deleteCardsTask = deleteCollection(collectionRef, 50)
-
-        Tasks.whenAllSuccess<Void>(
-            deleteNotesTask,
-            deleteWeaponsTask,
-            deleteSpellsTask,
-            deleteCardsTask
-        ).addOnSuccessListener {
-            // Po zakończeniu usuwania wszystkich kolekcji, usuń użytkownika
+            Tasks.whenAllSuccess<Void>(
+                deleteNotesTask,
+                deleteWeaponsTask,
+                deleteSpellsTask,
+                deleteCardsTask
+            ).addOnSuccessListener {
+                // Po zakończeniu usuwania wszystkich kolekcji, usuń użytkownika
+                deleteUserAccount()
+            }.addOnFailureListener {
+                // Obsługa błędu podczas usuwania kolekcji
+            }
             deleteUserAccount()
-        }.addOnFailureListener {
-//            // Obsłuż błąd usuwania kolekcji
-//            Toast.makeText(this, "Błąd podczas usuwania kolekcji: $exception", Toast.LENGTH_SHORT)
-//                .show()
-//            Log.e("TEST", "BŁĄD: $exception")
-//            Log.e("TEST", "UZYTKOWNIK: $user")
-
         }
-        deleteUserAccount()
+        confirmationDialog.setNegativeButton("Anuluj") { dialog, _ ->
+            dialog.dismiss()
+        }
+        confirmationDialog.show()
     }
 
     private fun deleteUserAccount() {
@@ -259,15 +272,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun logout() {
         if (auth.currentUser != null) {
-
-            Utility.writeLogToFirebase("Wylogowanie")
-
-            Firebase.auth.signOut()
-            goToLoginPage()
+            val confirmationDialog = AlertDialog.Builder(this)
+            confirmationDialog.setTitle("Potwierdzenie wylogowania")
+            confirmationDialog.setMessage("Czy na pewno chcesz się wylogować?")
+            confirmationDialog.setPositiveButton("Tak") { _, _ ->
+                Utility.writeLogToFirebase("Wylogowanie")
+                Firebase.auth.signOut()
+                goToLoginPage()
+                Toast.makeText(this, "Wylogowano", Toast.LENGTH_SHORT).show()
+            }
+            confirmationDialog.setNegativeButton("Anuluj") { dialog, _ ->
+                dialog.dismiss()
+            }
+            confirmationDialog.show()
         } else {
-            Toast.makeText(baseContext, "niezalogowany", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, "Niezalogowany", Toast.LENGTH_SHORT).show()
         }
-        Toast.makeText(this, "Wylogowano", Toast.LENGTH_SHORT).show()
     }
 
 

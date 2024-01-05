@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.callofcthulhu.CardDetailsActivity
+import com.app.callofcthulhu.MyApp
 import com.app.callofcthulhu.Note
 import com.app.callofcthulhu.NoteDetailsActivity
 import com.app.callofcthulhu.NotesAdapter
@@ -28,7 +29,7 @@ import com.google.firebase.firestore.Query
 
 class StoryFragment : Fragment() {
 
-    private lateinit var sharedViewModel: SharedViewModel
+    val sharedViewModel = MyApp.sharedViewModel
 
     private lateinit var opisEditText: EditText
     private lateinit var ideologiaEditText: EditText
@@ -55,7 +56,7 @@ class StoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_story, container, false)
 
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
 
         opisEditText = view.findViewById(R.id.card_opis)
         ideologiaEditText = view.findViewById(R.id.card_ideologia)

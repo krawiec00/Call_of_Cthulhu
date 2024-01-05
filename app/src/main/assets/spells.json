@@ -1,0 +1,32 @@
+{
+  "spells": [
+
+
+    {
+      "nazwa": "Błogosławieństwo",
+      "koszt": "10 punktów Magii, 1k6 punktów Poczytalności",
+      "czas": "natychmiastowy",
+      "opis": "Błogosławieństwo ma za zadanie wspierać cel zaklęcia i pomagać mu. Może przybrać dwie formy: Odbiorca zyskuje +10 punktów do wybranej cechy na 24 godziny. Punkty te mogą zmieniać niektóre wartości pochodne, np. punkty Wytrzymałości. Nie można zmienić cech MOC ani WYK. • Alternatywnie, odbiorca otrzymuje premiową kość do konkretnej umiejętności na 24 godziny. Cel musi wykonać test Poczytalności (utrata 1/1K6 PP). "
+
+    },
+
+
+    {
+      "nazwa": "Cięcie Licza",
+      "koszt": "2 punkty Magii; 1 punkt Poczytalności",
+      "czas": "1 runda",
+      "opis": "Zmusza ożywione zwłoki do posłuszeństwa poleceniom rzucającego. Jeśli ten wygra przeciwstawny test Mocy z zombie, może wydać mu jedno proste polecenie głosowe, które musi zostać wykonane. Zaklęcie musi być powtórzone, jeśli wymagana jest złożona seria działań (np. wiele poleceń). Zombie wykona polecenie najlepiej, jak potrafi; jednak jeśli zadanie nie zostanie wykonane w ciągu 1K4 rund, zombie nie jest już zmuszony do jego ukończenia."
+    },
+
+
+    {
+      "nazwa": "Głosowe Myśli",
+      "koszt": "1+ punktów Magi 1+ punktów Poczytalności",
+      "czas": "natychmiastowy",
+      "opis": "Pozwala rzucającemu zwokalizować swoje myśli i sprawić, by źródło dźwięku pochodziło nie z jego ust, ale z innego miejsca w jego najbliższym otoczeniu (w promieniu 6 metrów). Każde cztery zdania kosztują 1 punkt Magii i 1 punkt Poczy- talności. Zaklęcie jest często używane do odwrócenia uwagi lub zdezorientowania przeciwnika; cel musi wykonać trudny test INT lub zostanie rozproszony przez głos (ewentualnie otrzymując kość karną do następnej akcji, jeśli jest w trakcie walki lub w innej trudnej sytuacji)."
+    }
+
+
+
+  ]
+}

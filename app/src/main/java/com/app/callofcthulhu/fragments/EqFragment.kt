@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.callofcthulhu.CardDetailsActivity
+import com.app.callofcthulhu.MyApp
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.SharedViewModel
 import com.app.callofcthulhu.Spell
@@ -31,7 +32,7 @@ import com.google.firebase.firestore.Query
 
 class EqFragment : Fragment() {
 
-    private lateinit var sharedViewModel: SharedViewModel
+    val sharedViewModel = MyApp.sharedViewModel
 
     private lateinit var weapontBtn: Button
     private lateinit var spellBtn: Button
@@ -50,7 +51,7 @@ class EqFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_eq, container, false)
 
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+
 
         weapontBtn = view.findViewById(R.id.weapon_btn)
         spellBtn = view.findViewById(R.id.spell_btn)
