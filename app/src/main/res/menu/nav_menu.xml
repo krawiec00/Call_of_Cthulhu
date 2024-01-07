@@ -22,7 +22,7 @@
         <item
             android:id="@+id/nav_panel"
             android:icon="@drawable/baseline_admin_panel_settings_24"
-            android:title="Panel"/>
+            android:title="Panel admina"/>
 <!--        <item-->
 <!--            android:id="@+id/nav_share"-->
 <!--            android:icon="@drawable/nav_share"-->

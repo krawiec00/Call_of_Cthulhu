@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
-    android:padding="5dp"
-    android:theme="@style/Theme.CallOfCthulhu"
+
     tools:context=".CardDetailsActivity"
     >
 
@@ -24,7 +22,8 @@
             android:text="Nowa postać"
             android:textColor="@color/black"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:padding="5dp"/>
 
 
         <LinearLayout
@@ -64,7 +63,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_above="@id/tab_layout"
-        android:layout_below="@id/title_bar_layout" />
+        android:layout_below="@id/title_bar_layout"
+        android:padding="5dp"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
@@ -72,8 +72,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:tabIndicatorColor="@color/purple_200"
-        app:tabTextColor="@color/black"
-        app:tabTextAppearance="@style/MyTabTextStyle">
+        android:padding="5dp"
+        app:tabTextAppearance="@style/MyTabTextStyle"
+        android:background="@color/grey">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"

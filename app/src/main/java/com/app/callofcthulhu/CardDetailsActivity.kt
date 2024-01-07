@@ -1,14 +1,15 @@
 package com.app.callofcthulhu
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
@@ -18,6 +19,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
 class CardDetailsActivity : AppCompatActivity() {
@@ -37,7 +40,11 @@ class CardDetailsActivity : AppCompatActivity() {
     private lateinit var saveCardBtn: ImageButton
     private var imie: String? = null
     private var nazwisko: String? = null
+    private var imageUri: Uri? = null
+    private lateinit var storageReference: StorageReference
+//    private lateinit var progressIndicator: LinearProgressIndicator
 
+    val sharedViewModel = MyApp.sharedViewModel
     companion object {
         var docId: String = ""
     }
@@ -70,11 +77,18 @@ class CardDetailsActivity : AppCompatActivity() {
         }
 
         //viewModel przekazuje dane z modelu, cała instancja card
-        val sharedViewModel = MyApp.sharedViewModel
+
 
         sharedViewModel.card.observe(this) { card ->
             saveCard = card
         }
+
+        sharedViewModel.imageUri.observe(this){
+            imageUri = it
+            Log.e("TEST", "WARTOSC IMAGEURI: $imageUri")
+        }
+
+        storageReference = FirebaseStorage.getInstance().reference;
 
 
         saveCardBtn.setOnClickListener {
@@ -95,7 +109,7 @@ class CardDetailsActivity : AppCompatActivity() {
         viewPager2 = findViewById(R.id.view_pager)
         myViewPagerAdapter = MyViewPagerAdapter(this)
         viewPager2.adapter = myViewPagerAdapter
-
+        viewPager2.offscreenPageLimit = 5
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewPager2.currentItem = tab.position
@@ -134,6 +148,8 @@ class CardDetailsActivity : AppCompatActivity() {
 
         documentReference.set(card)
 
+                val newDocId = documentReference.id
+        Log.e("TEST", "NEW ID: $newDocId")
 
                 if (docId.isNotEmpty()) {
                     Utility.writeLogToFirebase("Aktualizacja karty")
@@ -146,12 +162,31 @@ class CardDetailsActivity : AppCompatActivity() {
                     finish()
                 }
 
+
+        imageUri?.let { uploadImage(it, newDocId) }
+
                 val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Stworzenie karty")
                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundle)
 
 
         }
+
+    private fun uploadImage(file: Uri, fileName: String) {
+        val userId = Firebase.auth.currentUser?.uid.toString()
+        val ref = storageReference.child(userId +"/${fileName}")
+        ref.putFile(file)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Image Uploaded!!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed! ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+//            .addOnProgressListener { taskSnapshot ->
+//                progressIndicator.max = taskSnapshot.totalByteCount.toInt()
+//                progressIndicator.progress = taskSnapshot.bytesTransferred.toInt()
+//            }
+    }
 
 
     private fun deleteCardFromFirebase() {

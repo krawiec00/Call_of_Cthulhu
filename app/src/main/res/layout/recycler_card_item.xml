@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="12dp"
@@ -9,20 +8,38 @@
     android:background="#AAAAAA">
 
     <TextView
+        android:id="@+id/card_imie_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Card title"
-        android:textSize="18sp"
+        android:text="Imie"
+        android:textSize="20sp"
         android:layout_marginVertical="4dp"
-        android:id="@+id/card_imie_view"/>
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/baseline_add_photo_alternate_24"
+        android:scaleType="centerCrop"
+        android:layout_gravity="end"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" />
 
     <TextView
+        android:id="@+id/card_nazwisko_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Card content"
-        android:textSize="18sp"
+        android:text="Nazwisko"
+        android:textSize="20sp"
         android:layout_marginVertical="4dp"
-        android:id="@+id/card_nazwisko_view"
-        android:layout_marginHorizontal="5dp"/>
+        android:layout_toStartOf="@id/card_nazwisko_view"
+        android:layout_toEndOf="@id/card_imie_view"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"/>
 
-</LinearLayout>
+</RelativeLayout>
+
+
+
+

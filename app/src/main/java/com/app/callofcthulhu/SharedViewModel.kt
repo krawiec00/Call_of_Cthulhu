@@ -1,5 +1,6 @@
 package com.app.callofcthulhu
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,14 @@ class SharedViewModel : ViewModel() {
 
     init {
         _card.value = Card()
+    }
+
+    private val _imageUri = MutableLiveData<Uri?>()
+    val imageUri: MutableLiveData<Uri?>
+        get() = _imageUri
+
+    fun updateImageUri(uri: Uri?) {
+        _imageUri.value = uri
     }
 
     fun updateCardField(fieldName: String, fieldValue: Any) {
@@ -119,7 +128,6 @@ class SharedViewModel : ViewModel() {
             }
             "Bron_Palna" -> {
                 if (fieldValue is Int) currentCard.Bron_Palna = fieldValue
-                Log.e("TEST", "BRON PALNA: ${card.value?.Bron_Palna}")
             }
             "Korzystanie_z_Bibliotek" -> {
                 if (fieldValue is Int) currentCard.Korzystanie_z_Bibliotek = fieldValue
@@ -181,7 +189,4 @@ class SharedViewModel : ViewModel() {
         }
     }
 
-    fun areFieldsNotEmpty(vararg fieldNames: String): Boolean {
-        return fieldNames.all { areFieldsNotEmpty(it) }
-    }
 }
