@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="12dp"
     android:layout_marginVertical="8dp"
-    android:backgroundTint="#AAAAAA"
-    android:background="#AAAAAA">
+    android:background="@color/cthulhu_DarkGreen">
 
     <TextView
         android:id="@+id/card_imie_view"
@@ -15,7 +14,8 @@
         android:textSize="20sp"
         android:layout_marginVertical="4dp"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:textColor="@color/white"/>
 
     <ImageView
         android:layout_width="70dp"
@@ -24,12 +24,16 @@
         android:scaleType="centerCrop"
         android:layout_gravity="end"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:id="@+id/mini_image"
+        android:contentDescription="photo of character"
+        />
 
     <TextView
         android:id="@+id/card_nazwisko_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:text="Nazwisko"
         android:textSize="20sp"
         android:layout_marginVertical="4dp"

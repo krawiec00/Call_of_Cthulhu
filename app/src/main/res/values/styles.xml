@@ -11,7 +11,6 @@
 
     <style name="CustomTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@color/cthulhu_Green</item>
-        <!-- Inne zmiany stylów -->
     </style>
 
 

@@ -27,6 +27,10 @@ class SharedViewModel : ViewModel() {
         val currentCard = _card.value ?: return // Jeśli card jest null, przerwij
 
         when (fieldName) {
+
+            "imageUrl" -> {
+                if (fieldValue is String) currentCard.imageUrl = fieldValue
+            }
             "imie" -> {
                 if (fieldValue is String) currentCard.imie = fieldValue
             }

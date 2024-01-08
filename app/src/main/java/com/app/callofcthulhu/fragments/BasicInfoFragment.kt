@@ -1,14 +1,10 @@
 package com.app.callofcthulhu.fragments
 
-import android.app.Activity
+
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
-import com.app.callofcthulhu.SharedViewModel
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,9 +24,6 @@ import com.app.callofcthulhu.MyApp
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.Utility.Companion.getCollectionReferenceForCards
 import com.bumptech.glide.Glide
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.google.firebase.storage.storage
 
 
 
@@ -111,11 +104,7 @@ class BasicInfoFragment : Fragment() {
 
 
 
-        fun attachTextWatcher(editText: EditText, fieldName: String) {
-            editText.addTextChangedListener { editable ->
-                sharedViewModel.updateCardField(fieldName, editable.toString())
-            }
-        }
+
 
 // Wywołanie funkcji attachTextWatcher dla każdego EditText
         attachTextWatcher(imieEditText, "imie")
@@ -168,6 +157,7 @@ class BasicInfoFragment : Fragment() {
                     val plec = document.getString("plec")
                     val mzamieszkania = document.getString("mzamieszkania")
                     val murodzenia = document.getString("murodzenia")
+                    val imageUrl = document.getString("imageUrl")
 
                     // Przypisanie pobranych danych do pól EditText w fragmencie
                     imieEditText.setText(imie)
@@ -178,34 +168,25 @@ class BasicInfoFragment : Fragment() {
                     mieszkanieEditText.setText(mzamieszkania)
                     urodzenieEditText.setText(murodzenia)
 
-
-                    val storageReference = Firebase.storage.reference
-                    val userId = Firebase.auth.currentUser?.uid.toString()
-                    val imageRef = storageReference.child(userId +"/${id}")
-
-
-                    imageRef.downloadUrl.addOnSuccessListener { uri ->
-                        val imageURL = uri.toString()
-
                         // Użycie biblioteki Glide do wyświetlenia obrazu w ImageView
                         Glide.with(this)
-                            .load(imageURL) // źródło obrazu (adres URL)
+                            .load(imageUrl) // źródło obrazu (adres URL)
                             .into(imageView) // ImageView, do którego chcesz załadować obraz
-                    }.addOnFailureListener { exception ->
-                        // Obsługa błędu pobierania adresu URL lub obrazu
-                        Log.e("TAG", "Błąd podczas pobierania adresu URL: $exception")
+                    if (imageUrl != null) {
+                        sharedViewModel.updateCardField("imageUrl", imageUrl)
                     }
-
                 }
-            }.addOnFailureListener { exception ->
-                // Obsługa błędu pobierania danych z Firestore
             }
         }
 
         return view
     }
 
-
+    private fun attachTextWatcher(editText: EditText, fieldName: String) {
+        editText.addTextChangedListener { editable ->
+            sharedViewModel.updateCardField(fieldName, editable.toString())
+        }
+    }
 
 
 

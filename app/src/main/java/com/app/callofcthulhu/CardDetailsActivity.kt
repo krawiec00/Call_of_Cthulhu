@@ -21,6 +21,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.storage
 
 
 class CardDetailsActivity : AppCompatActivity() {
@@ -45,6 +46,7 @@ class CardDetailsActivity : AppCompatActivity() {
 //    private lateinit var progressIndicator: LinearProgressIndicator
 
     val sharedViewModel = MyApp.sharedViewModel
+
     companion object {
         var docId: String = ""
     }
@@ -83,12 +85,11 @@ class CardDetailsActivity : AppCompatActivity() {
             saveCard = card
         }
 
-        sharedViewModel.imageUri.observe(this){
+        sharedViewModel.imageUri.observe(this) {
             imageUri = it
-            Log.e("TEST", "WARTOSC IMAGEURI: $imageUri")
         }
 
-        storageReference = FirebaseStorage.getInstance().reference;
+        storageReference = FirebaseStorage.getInstance().reference
 
 
         saveCardBtn.setOnClickListener {
@@ -136,68 +137,103 @@ class CardDetailsActivity : AppCompatActivity() {
     }
 
     private fun saveCardToFireBase(card: Card) {
-
         val documentReference: DocumentReference = if (isEdited) {
             // Update
             Utility.getCollectionReferenceForCards().document(docId)
-
         } else {
             // Create new
             Utility.getCollectionReferenceForCards().document()
         }
+        val newDocId = documentReference.id
 
-        documentReference.set(card)
+        imageUri?.let { uri ->
+            uploadImage(uri, newDocId) { imageUrl ->
+                // Po zakończeniu uploadImage
+                // Jeśli imageUrl nie jest null, zaktualizuj pole obrazka w karcie
+                card.imageUrl = imageUrl
 
-                val newDocId = documentReference.id
-        Log.e("TEST", "NEW ID: $newDocId")
+                documentReference.set(card)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            saveMessage(docId)
+                        } else {
+                            // Obsługa błędu podczas ustawiania dokumentu
+                            // Tutaj można dodać kod obsługujący błąd
+                        }
+                        sharedViewModel.updateImageUri(null)
+                    }
+            }
+        } ?: run {
 
-                if (docId.isNotEmpty()) {
-                    Utility.writeLogToFirebase("Aktualizacja karty")
-
-                    Toast.makeText(baseContext, "Zaktualizowano kartę", Toast.LENGTH_SHORT).show()
-                } else {
-                    Utility.writeLogToFirebase("Stworzenie karty")
-
-                    Toast.makeText(baseContext, "Dodano kartę", Toast.LENGTH_SHORT).show()
-                    finish()
+            documentReference.set(card)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        saveMessage(docId)
+                    } else {
+                        // Obsługa błędu podczas ustawiania dokumentu
+                        // Tutaj można dodać kod obsługujący błąd
+                    }
                 }
-
-
-        imageUri?.let { uploadImage(it, newDocId) }
-
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Stworzenie karty")
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundle)
-
-
         }
-
-    private fun uploadImage(file: Uri, fileName: String) {
-        val userId = Firebase.auth.currentUser?.uid.toString()
-        val ref = storageReference.child(userId +"/${fileName}")
-        ref.putFile(file)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Image Uploaded!!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed! ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-//            .addOnProgressListener { taskSnapshot ->
-//                progressIndicator.max = taskSnapshot.totalByteCount.toInt()
-//                progressIndicator.progress = taskSnapshot.bytesTransferred.toInt()
-//            }
     }
 
+    private fun uploadImage(file: Uri, fileName: String, callback: (String?) -> Unit) {
+
+        try {
+            val userId = Firebase.auth.currentUser?.uid.toString()
+            val storageReference = Firebase.storage.reference
+            val ref = storageReference.child("$userId/$fileName")
+
+            ref.putFile(file)
+                .addOnSuccessListener { uploadTask ->
+                    uploadTask.storage.downloadUrl
+                        .addOnSuccessListener { uri ->
+                            val imageUrl = uri.toString()
+                            callback(imageUrl) // Wywołanie funkcji zwrotnej z adresem URL obrazka
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "Failed to get image URL! ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            callback(null) // Wywołanie funkcji zwrotnej z wartością null w przypadku niepowodzenia
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed! ${e.message}", Toast.LENGTH_SHORT).show()
+                    callback(null) // Wywołanie funkcji zwrotnej z wartością null w przypadku niepowodzenia
+                }
+        } catch (securityException: SecurityException) {
+            securityException.printStackTrace()
+        }
+    }
+
+    private fun saveMessage(docId: String){
+        if (docId.isNotEmpty()) {
+            Utility.writeLogToFirebase("Aktualizacja karty")
+            Toast.makeText(baseContext, "Zaktualizowano kartę", Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            Utility.writeLogToFirebase("Stworzenie karty")
+            Toast.makeText(baseContext, "Dodano kartę", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+        // Dodaj zdarzenie do Firebase Analytics
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Stworzenie karty")
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundle)
+    }
 
     private fun deleteCardFromFirebase() {
         val documentReference: DocumentReference =
             Utility.getCollectionReferenceForCards().document(docId)
         documentReference.delete()
 
-                Utility.writeLogToFirebase("Usunięcie karty")
+        Utility.writeLogToFirebase("Usunięcie karty")
 
-                Toast.makeText(baseContext, "Usunięto karte", Toast.LENGTH_SHORT).show()
-                finish()
+        Toast.makeText(baseContext, "Usunięto karte", Toast.LENGTH_SHORT).show()
+        finish()
 
 
     }
@@ -208,10 +244,12 @@ class CardDetailsActivity : AppCompatActivity() {
         builder.setMessage("Czy na pewno chcesz usunąć tę kartę?")
 
         builder.setPositiveButton("Tak") { dialog, _ ->
+            deleteImage()
             deleteCardFromFirebase()
             deleteAllNotesForCardFromFirebase(docId)
             deleteAllSpellsForCardFromFirebase(docId)
             deleteAllWeaponsForCardFromFirebase(docId)
+
             dialog.dismiss()
         }
 
@@ -222,6 +260,20 @@ class CardDetailsActivity : AppCompatActivity() {
         val dialog = builder.create()
         dialog.show()
 
+    }
+
+    private fun deleteImage(){
+        val userId = Firebase.auth.currentUser?.uid.toString()
+        val storage = Firebase.storage
+        val storageRef = storage.reference.child("$userId/$docId")
+
+        storageRef.delete()
+            .addOnSuccessListener {
+                Log.d("TAG", "Zdjęcie zostało usunięte.")
+            }
+            .addOnFailureListener { exception ->
+                Log.e("TAG", "Błąd podczas usuwania zdjęcia: $exception")
+            }
     }
 
     private fun deleteAllNotesForCardFromFirebase(cardId: String) {

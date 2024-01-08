@@ -1,6 +1,5 @@
 package com.app.callofcthulhu
 
-import android.net.Uri
 
 class Card {
 
@@ -56,6 +55,7 @@ class Card {
     var przedmioty: String? = null
     var wydatki: String? = null
 
+    var imageUrl: String? = null
 
 //    var weapons: MutableList<Weapon> = mutableListOf()
 //
