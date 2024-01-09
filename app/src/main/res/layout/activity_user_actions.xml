@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:text="placeholder"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:layout_marginBottom="20dp"
             android:padding="10dp"
             android:background="@color/cthulhu_Green"/>
@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:text="Wyczyść logi"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/cthulhu_DarkBlue"/>
 
         <!-- Przycisk do usuwania użytkownika -->
         <Button
@@ -44,10 +45,12 @@
             android:id="@+id/checkbox_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Admin"
+            android:textSize="16sp"
+            android:text="@string/admin"
             android:checked="false"
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            />
 
     </LinearLayout>
 </ScrollView>

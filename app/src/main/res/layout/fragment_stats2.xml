@@ -1,39 +1,59 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity=""
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Umiejętności"
+    android:textSize="30sp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="25dp"
+    android:fontFamily="@font/im_fel_english_regular"
+    android:textStyle="bold"
+    android:textColor="@color/black"/>
 
 
         <Button
+            android:id="@+id/klasa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Punkty klasy"
-            android:id="@+id/klasa"/>
+            android:layout_gravity="center"
+            android:backgroundTint="#5E422F"
+            android:fontFamily="@font/old_standard_tt_bold"
+            android:text="Punkty profesji"
+            android:layout_marginBottom="20dp"/>
 
         <Button
+            android:id="@+id/zainteresowanie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zainteresowanie"
-            android:id="@+id/zainteresowanie"/>
+            android:layout_gravity="center"
+            android:backgroundTint="#5E422F"
+            android:fontFamily="@font/old_standard_tt_bold"
+            android:text="Punkty zainteresowania" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- Tutaj zostaną dynamicznie dodane pola TextView i EditText -->
-        </LinearLayout>
+            android:textSize="16sp"
+            android:fontFamily="@font/im_fel_english_regular"
+            android:text="W tej części tworzenia postaci należy rozdać punkty do umiejętności związanych z wybraną profesją jak i punkty zainteresowania liczone na podstawie inteligencji \n \n
+UWAGA: ponowne wejście do rozdania punktów spowoduje restart całego rozlokowania puli punktów"
+            android:textColor="@color/black" />
 
-        <!-- Tutaj możesz umieścić inne elementy interfejsu użytkownika -->
 
     </LinearLayout>
 

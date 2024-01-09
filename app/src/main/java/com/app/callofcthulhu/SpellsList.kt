@@ -37,7 +37,7 @@ class SpellsList : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, spellNames)
+        val adapter = ArrayAdapter(this, R.layout.custom_list_item, R.id.item_name,  spellNames)
         spellList.adapter = adapter
 
         spellList.setOnItemClickListener { _, _, position, _ ->

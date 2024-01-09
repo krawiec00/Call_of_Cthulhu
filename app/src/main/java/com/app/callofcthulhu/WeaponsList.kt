@@ -7,12 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.app.callofcthulhu.databinding.ActivityWeaponsListBinding
-import com.google.firebase.firestore.FirebaseFirestore
+
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -46,7 +41,7 @@ class WeaponsList : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, weaponNames)
+        val adapter = ArrayAdapter(this, R.layout.custom_list_item, R.id.item_name, weaponNames)
         weaponList.adapter = adapter
 
         weaponList.setOnItemClickListener { _, _, position, _ ->

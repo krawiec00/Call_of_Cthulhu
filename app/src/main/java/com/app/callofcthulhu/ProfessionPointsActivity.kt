@@ -1,15 +1,21 @@
 package com.app.callofcthulhu
 
+import android.graphics.Color
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,7 +58,7 @@ class ProfessionPointsActivity : AppCompatActivity() {
     }
 
 
-    fun fetchSkillsFromFirestore() {
+    private fun fetchSkillsFromFirestore() {
         val fireStore = FirebaseFirestore.getInstance()
         val skillsRef = fireStore.collection("skills").document("skills")
 
@@ -78,30 +84,62 @@ class ProfessionPointsActivity : AppCompatActivity() {
 
                     val linearLayout = findViewById<LinearLayout>(R.id.linearLayout)
                     linearLayout?.removeAllViews()
-                    Log.e("TEST", "commonFields: $commonFields")
-                    commonFields.forEach { fieldName ->
-                        skillsData?.get(fieldName)?.let { fieldValue ->
-                            val textView = TextView(this)
-                            textView.text = fieldName.replace("_", " ") // Ustawienie nazwy pola
+                    commonFields.chunked(2) { chunk ->
+                        val horizontalLinearLayout = LinearLayout(this)
+                        horizontalLinearLayout.orientation = LinearLayout.HORIZONTAL
+                        val layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        layoutParams.setMargins(0, 0, 0, 15)
+                        horizontalLinearLayout.layoutParams = layoutParams
 
-                            val editText = EditText(this)
-                            editText.setText(fieldValue.toString()) // Ustawienie wartości z Firestore
-
-
-                            // Dodanie TextView i EditText do layoutu
-                            linearLayout?.addView(textView)
-                            linearLayout?.addView(editText)
-
-                            // Dodanie TextWatcher do EditText
-                            attachTextWatcher(editText, fieldName)
-                            val fieldValueAsInt = fieldValue.toString().toIntOrNull()
-                            if (fieldValueAsInt != null) {
-                                setEditTextChangeListener(
-                                    editText,
-                                    fieldValueAsInt
+                        chunk.forEach { fieldName ->
+                            skillsData?.get(fieldName)?.let { fieldValue ->
+                                val textView = TextView(this)
+                                textView.textSize = 16f
+                                textView.text = fieldName.replace("_", " ") // Ustawienie nazwy pola
+                                textView.layoutParams = LinearLayout.LayoutParams(
+                                    0,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    1.0f
                                 )
+                                textView.setPadding(20, 20, 20, 20)
+                                textView.setTextColor(Color.BLACK)
+                                val font = ResourcesCompat.getFont(this, R.font.im_fel_english_regular)
+                                textView.typeface = font
+
+                                val editText = EditText(this)
+                                editText.layoutParams = LinearLayout.LayoutParams(
+                                    0,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    1.0f
+                                )
+                                editText.textSize = 18f
+                                editText.inputType = InputType.TYPE_CLASS_NUMBER
+                                editText.gravity = Gravity.CENTER
+                                editText.setBackgroundColor(Color.LTGRAY)
+                                editText.setBackgroundColor(ContextCompat.getColor(this, R.color.transparentWhite))
+                                editText.hint = "Enter value"
+                                val font2 = ResourcesCompat.getFont(this, R.font.old_standard_tt_regular)
+                                editText.typeface = font2
+                                editText.setText(fieldValue.toString()) // Ustawienie wartości z Firestore
+
+                                horizontalLinearLayout.addView(textView)
+                                horizontalLinearLayout.addView(editText)
+
+                                // Dodanie TextWatcher do EditText
+                                attachTextWatcher(editText, fieldName)
+                                val fieldValueAsInt = fieldValue.toString().toIntOrNull()
+                                if (fieldValueAsInt != null) {
+                                    setEditTextChangeListener(
+                                        editText,
+                                        fieldValueAsInt
+                                    )
+                                }
                             }
                         }
+                        linearLayout?.addView(horizontalLinearLayout)
                     }
 
 
@@ -228,7 +266,7 @@ class ProfessionPointsActivity : AppCompatActivity() {
         })
     }
 
-    fun getFieldsFromDocument(document: DocumentSnapshot?): List<String> {
+    private fun getFieldsFromDocument(document: DocumentSnapshot?): List<String> {
         val fields = mutableListOf<String>()
         document?.let {
             val dataMap = it.data

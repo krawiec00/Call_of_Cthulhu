@@ -3,7 +3,8 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/paper">
 
     <LinearLayout
         android:id="@+id/parentLayout"
@@ -33,7 +34,8 @@
                     android:gravity="end"
                     android:text="Punkty zainteresowania: "
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/im_fel_english_regular"/>
 
                 <TextView
                     android:id="@+id/skills_points"
@@ -43,7 +45,8 @@
                     android:gravity="start"
                     android:text=""
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/im_fel_english_regular"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -55,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_marginTop="15dp">
             <!-- Tutaj zostaną dynamicznie dodane pola TextView i EditText -->
         </LinearLayout>
 

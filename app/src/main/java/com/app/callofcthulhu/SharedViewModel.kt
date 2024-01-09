@@ -23,6 +23,12 @@ class SharedViewModel : ViewModel() {
         _imageUri.value = uri
     }
 
+    fun resetCardFields() {
+        val emptyCard = Card() // Tworzy nowy pusty obiekt Card
+        _card.value = emptyCard // Ustawia nowy pusty obiekt jako wartość LiveData
+        _imageUri.value = null // Czyści również Uri związane z obrazem, jeśli jest zapisane
+    }
+
     fun updateCardField(fieldName: String, fieldValue: Any) {
         val currentCard = _card.value ?: return // Jeśli card jest null, przerwij
 

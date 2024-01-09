@@ -46,7 +46,7 @@ class StoryFragment : Fragment() {
     private lateinit var notatkiRecyclerView: RecyclerView
 
 
-    lateinit var recyclerView: RecyclerView
+//    lateinit var recyclerView: RecyclerView
     private lateinit var noteAdapter: NotesAdapter
 
     @SuppressLint("CutPasteId")
@@ -70,7 +70,7 @@ class StoryFragment : Fragment() {
         istotyEditText = view.findViewById(R.id.card_istoty)
         saveNoteBtn = view.findViewById(R.id.save_note_btn)
 
-        recyclerView = view.findViewById(R.id.recycler_view)
+//        recyclerView = view.findViewById(R.id.recycler_view)
 
         notatkiLayout = view.findViewById(R.id.notatki)
         notatkiRecyclerView = view.findViewById(R.id.recycler_view)
@@ -142,9 +142,9 @@ class StoryFragment : Fragment() {
         val options: FirestoreRecyclerOptions<Note> = FirestoreRecyclerOptions.Builder<Note>()
             .setQuery(query, Note::class.java).build()
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        notatkiRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         noteAdapter = NotesAdapter(options, requireContext())
-        recyclerView.adapter = noteAdapter
+        notatkiRecyclerView.adapter = noteAdapter
     }
 
     override fun onStart() {
@@ -152,10 +152,10 @@ class StoryFragment : Fragment() {
         noteAdapter.startListening()
     }
 
-    override fun onStop() {
-        super.onStop()
-        noteAdapter.stopListening()
-    }
+//    override fun onStop() {
+//        super.onStop()
+//        noteAdapter.stopListening()
+//    }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {

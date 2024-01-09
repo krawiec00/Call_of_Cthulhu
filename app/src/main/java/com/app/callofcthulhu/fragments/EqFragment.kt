@@ -132,11 +132,11 @@ class EqFragment : Fragment() {
         spellAdapter.startListening()
     }
 
-    override fun onStop() {
-        super.onStop()
-        weaponAdapter.stopListening()
-        spellAdapter.stopListening()
-    }
+//    override fun onStop() {
+//        super.onStop()
+//        weaponAdapter.stopListening()
+//        spellAdapter.stopListening()
+//    }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {

@@ -18,155 +18,200 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Opis postaci: "
-            android:textSize="20sp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingBottom="5dp"
-            android:textColor="@color/black"/>
+            android:text="Opis postaci: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_opis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871"/>
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ideologia/przekonania: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Ideologia/przekonania: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_ideologia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
-
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ważne osoby: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Ważne osoby: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_wosoby"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Znaczące miejsca: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Znaczące miejsca: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_miejsca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rzeczy osobiste: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Rzeczy osobiste: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_rzeczyo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
-
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Przymioty: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Przymioty: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_przymioty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
-
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Urazy/blizny: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Urazy/blizny: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_urazy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fobie/manie: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Fobie/manie: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_fobie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
-
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tajemne księgi, zaklęcia i artefakty: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Tajemne księgi, zaklęcia i artefakty: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_ksiegi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
-
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Spotkania z dziwnymi istotami: "
-            android:textSize="20sp"
             android:layout_marginVertical="10dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:paddingTop="10dp"
-            android:textColor="@color/black"/>
+            android:text="Spotkania z dziwnymi istotami: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_istoty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77368871" />
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:id="@+id/notatki"
@@ -180,34 +225,32 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Notatki"
-                android:textSize="40sp"
                 android:gravity="center"
+                android:paddingBottom="10dp"
+                android:text="Notatki"
                 android:textColor="@color/black"
-                android:paddingBottom="10dp"/>
+                android:textSize="40sp" />
 
             <ImageButton
                 android:id="@+id/save_note_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Notatka"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
                 android:src="@drawable/baseline_note_add_24"
-                android:layout_gravity="center"/>
+                android:text="Notatka"
+                android:background="@color/transparentWhite"/>
         </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/notatki"
-            android:id="@+id/recycler_view"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
     </LinearLayout>
-
-
-
 
 
 </ScrollView>

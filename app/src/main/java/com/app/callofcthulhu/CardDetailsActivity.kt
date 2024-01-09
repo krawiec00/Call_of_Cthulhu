@@ -134,6 +134,7 @@ class CardDetailsActivity : AppCompatActivity() {
     private fun saveCard() {
 
         saveCard?.let { saveCardToFireBase(it) }
+
     }
 
     private fun saveCardToFireBase(card: Card) {
@@ -151,20 +152,21 @@ class CardDetailsActivity : AppCompatActivity() {
                 // Po zakończeniu uploadImage
                 // Jeśli imageUrl nie jest null, zaktualizuj pole obrazka w karcie
                 card.imageUrl = imageUrl
-
+                imageUri = null
                 documentReference.set(card)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             saveMessage(docId)
+                            sharedViewModel.updateImageUri(null)
+
                         } else {
                             // Obsługa błędu podczas ustawiania dokumentu
                             // Tutaj można dodać kod obsługujący błąd
                         }
-                        sharedViewModel.updateImageUri(null)
+
                     }
             }
         } ?: run {
-
             documentReference.set(card)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -189,7 +191,7 @@ class CardDetailsActivity : AppCompatActivity() {
                     uploadTask.storage.downloadUrl
                         .addOnSuccessListener { uri ->
                             val imageUrl = uri.toString()
-                            callback(imageUrl) // Wywołanie funkcji zwrotnej z adresem URL obrazka
+                            callback(imageUrl)
                         }
                         .addOnFailureListener { e ->
                             Toast.makeText(
@@ -318,6 +320,33 @@ class CardDetailsActivity : AppCompatActivity() {
 
                 }
             }
+    }
+
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Potwierdzenie")
+        builder.setMessage("Czy na pewno chcesz opuścić tę stronę? Upewnij się że zapisałeś zmiany.")
+
+        builder.setPositiveButton("Wyjdź") { _, _ ->
+            super.onBackPressed()
+        }
+
+        builder.setNeutralButton("Zapisz i wyjdź") { _, _ ->
+            saveCard()
+            super.onBackPressed()
+        }
+
+        builder.setNegativeButton("Anuluj") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        sharedViewModel.resetCardFields() // Wywołaj funkcję resetującą dane w SharedViewModel
     }
 
 

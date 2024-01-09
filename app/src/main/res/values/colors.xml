@@ -11,4 +11,5 @@
     <color name="cthulhu_Green">#43786E</color>
     <color name="cthulhu_DarkGreen">#215E52</color>
     <color name="cthulhu_DarkBlue">#024058</color>
+    <color name="transparentWhite">#30FFFFFF</color>
 </resources>

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/paper2">
 
     <TextView
         android:layout_width="match_parent"
@@ -11,7 +12,8 @@
         android:textSize="30sp"
         android:gravity="center"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:fontFamily="@font/im_fel_english_regular"/>
 
 
 
@@ -19,6 +21,8 @@
     <ListView
         android:id="@+id/weapon_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+
+        />
 
 </LinearLayout>

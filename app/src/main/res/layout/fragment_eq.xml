@@ -19,116 +19,144 @@
             android:padding="5dp">
 
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Poziom wydatków"
-               android:textSize="18sp"
-               android:textColor="@color/black"/>
-
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/poziomWydatkow"/>
+                android:fontFamily="@font/im_fel_english_regular"
+                android:text="Poziom wydatków"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/poziomWydatkow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#30FFFFFF"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:inputType="textNoSuggestions"
+                android:textColor="@color/black" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/im_fel_english_regular"
                 android:text="Gotówka"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <EditText
+                android:id="@+id/gotowka"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/gotowka"/>
+                android:background="#30FFFFFF"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:inputType="textNoSuggestions"
+                android:textColor="@color/black" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/im_fel_english_regular"
                 android:text="Dobytek"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <EditText
+                android:id="@+id/dobytek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/dobytek"/>
+                android:background="#30FFFFFF"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:inputType="textNoSuggestions"
+                android:textColor="@color/black" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/im_fel_english_regular"
                 android:text="Ekwipunek"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <EditText
+                android:id="@+id/ekwipunek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/ekwipunek"/>
+                android:background="#30FFFFFF"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                />
 
 
         </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/lista"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="vertical"
-        android:tag="eqList">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lista broni"
-        android:textSize="20sp"
-        android:gravity="center"
-        />
-
-        <Button
-            android:id="@+id/weapon_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Dodaj broń"
-            android:gravity="center"
-            android:layout_gravity="center"/>
-
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/lista" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/lista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lista zaklęć"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:paddingTop="50dp"/>
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:tag="eqList">
 
-        <Button
-            android:id="@+id/spell_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Dodaj zaklęcie"
-            android:gravity="center"
-            android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/im_fel_english_regular"
+                android:gravity="center"
+                android:text="Lista broni"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/weapon_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="#5E422F"
+                android:fontFamily="@font/old_standard_tt_bold"
+                android:gravity="center"
+                android:text="Dodaj broń" />
 
-    </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/lista" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/im_fel_english_regular"
+                android:gravity="center"
+                android:paddingTop="50dp"
+                android:text="Lista zaklęć"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/spell_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="#5E422F"
+                android:fontFamily="@font/old_standard_tt_bold"
+                android:gravity="center"
+                android:text="Dodaj zaklęcie" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

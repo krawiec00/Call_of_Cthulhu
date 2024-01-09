@@ -2,7 +2,8 @@
     <!-- Styl dla tekstu w tabach -->
     <style name="MyTabTextStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">12sp</item> <!-- Rozmiar czcionki -->
-        <!-- Dodaj inne atrybuty stylu, jeśli są potrzebne -->
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/old_standard_tt_bold</item>
     </style>
 
     <style name="NoHighlightSelectedItem">

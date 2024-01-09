@@ -293,7 +293,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setupRecyclerView() {
         val query: Query =
-            getCollectionReferenceForCards().orderBy("imie", Query.Direction.DESCENDING)
+            getCollectionReferenceForCards().orderBy("imie", Query.Direction.ASCENDING)
         val options: FirestoreRecyclerOptions<Card> = FirestoreRecyclerOptions.Builder<Card>()
             .setQuery(query, Card::class.java)
             .build()

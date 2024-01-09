@@ -5,15 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    tools:context=".CardDetailsActivity"
-    >
+    android:background="@drawable/paper"
+    tools:context=".CardDetailsActivity">
 
     <RelativeLayout
         android:id="@+id/title_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#7DA19A">
+        >
 
         <TextView
             android:id="@+id/page_title"
@@ -23,7 +22,8 @@
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:fontFamily="@font/old_standard_tt_regular"/>
 
 
         <LinearLayout
@@ -58,46 +58,64 @@
 
 
 
+    <View
+        android:id="@+id/top_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@id/title_bar_layout"/>
+
+    <!-- ViewPager2 -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_above="@id/tab_layout"
-        android:layout_below="@id/title_bar_layout"
+        android:layout_below="@id/top_line"
         android:padding="5dp"/>
+
+    <!-- Dolna linia -->
+    <View
+        android:id="@+id/bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_above="@id/tab_layout"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:tabIndicatorColor="@color/purple_200"
+        app:tabIndicatorColor="@color/black"
         android:padding="5dp"
+        app:tabTextColor="@color/black"
         app:tabTextAppearance="@style/MyTabTextStyle"
-        android:background="@color/grey">
+        android:background="#00000000"
+        >
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Postać" />
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cechy" />
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Umiej.." />
+            android:text="Umiejętności" />
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ekwip.." />
+            android:text="Ekwipunek" />
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Historia" />
 

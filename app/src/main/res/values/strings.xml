@@ -29,5 +29,6 @@
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="resetuj_has_o">Resetuj hasło</string>
+    <string name="admin">Admin</string>
 
 </resources>

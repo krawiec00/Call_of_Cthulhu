@@ -22,7 +22,7 @@
             android:text="Użytkownicy: "
             android:textSize="20sp"
             android:layout_marginVertical="4dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             />
 
 

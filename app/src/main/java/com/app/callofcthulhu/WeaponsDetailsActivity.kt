@@ -110,7 +110,7 @@ class WeaponsDetailsActivity : AppCompatActivity() {
     }
 
 
-    fun saveWeaponToFireBase(weapon: Weapon){
+    private fun saveWeaponToFireBase(weapon: Weapon){
         val documentReference: DocumentReference = if (weaponId.isNotEmpty()) {
             // Update the note
             Utility.getCollectionReferenceForWeapons().document(weaponId)
@@ -121,7 +121,7 @@ class WeaponsDetailsActivity : AppCompatActivity() {
 
         documentReference.set(weapon).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(baseContext, "Bron dodana", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Broń dodana", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
                 Toast.makeText(baseContext, "Blad przy dodawaniu broni", Toast.LENGTH_SHORT).show()
@@ -134,7 +134,7 @@ class WeaponsDetailsActivity : AppCompatActivity() {
         documentReference.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 //note is deleted
-                Toast.makeText(baseContext, "Weapon deleted successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Usunięto broń", Toast.LENGTH_SHORT).show()
                 Log.d("WIADOMSOC USUWANIA","ID OD USUWANIA TO: $weaponId")
                 finish()
             } else {

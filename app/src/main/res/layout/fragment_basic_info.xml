@@ -15,17 +15,15 @@
         android:padding="5dp">
 
 
-
-
         <!-- Dodane pole na zdjęcie -->
         <ImageView
             android:id="@+id/card_zdjecie"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/baseline_add_photo_alternate_24"
-            android:scaleType="centerCrop"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="Zdjęcie badacza" />
+            android:contentDescription="Zdjęcie badacza"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_add_photo_alternate_24" />
 
         <!-- Przycisk do dodawania/wyboru zdjęcia -->
         <Button
@@ -33,87 +31,163 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Zdjęcie"
-            android:backgroundTint="@color/cthulhu_DarkBlue"/>
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#5E422F"
+            android:fontFamily="@font/old_standard_tt_bold"
+            android:text="Zdjęcie" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/im_fel_english_regular"
+            android:textColor="@color/black"
             android:text="@string/imie"
             android:textSize="20sp" />
+
+
         <EditText
             android:id="@+id/card_imie"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:textColor="@color/black"
+            android:background="#30FFFFFF"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/im_fel_english_regular"
             android:text="@string/nazwisko"
+            android:textColor="@color/black"
             android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_nazwisko"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/im_fel_english_regular"
             android:text="@string/profesja"
+            android:textColor="@color/black"
             android:textSize="20sp" />
+
         <Spinner
             android:id="@+id/card_spinner_profesja"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:paddingTop="15dp"
             android:paddingBottom="10dp"
-            android:paddingTop="15dp" />
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/card_profesja"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/im_fel_english_regular"
             android:text="@string/wiek"
+            android:textColor="@color/black"
             android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_wiek"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/im_fel_english_regular"
             android:text="@string/p_e"
+            android:textColor="@color/black"
             android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_plec"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/im_fel_english_regular"
             android:text="@string/miejsce_zamieszkania"
+            android:textColor="@color/black"
             android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_mZamieszkania"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/im_fel_english_regular"
             android:text="@string/miejsce_urodzenia"
+            android:textColor="@color/black"
             android:textSize="20sp" />
+
         <EditText
             android:id="@+id/card_mUrodzenia"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#30FFFFFF"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 

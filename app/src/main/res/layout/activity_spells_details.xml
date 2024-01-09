@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/paper2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,18 +10,16 @@
         android:orientation="vertical">
 
 
-
-
-            <TextView
-                android:id="@+id/spell_nazwa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="15dp"
-                android:text="placeholder"/>
-
+        <TextView
+            android:id="@+id/spell_nazwa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/im_fel_english_regular"
+            android:text="placeholder"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
 
         <LinearLayout
@@ -39,19 +38,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:fontFamily="@font/old_standard_tt_regular"
                     android:gravity="start"
-                    android:textSize="20sp"
+                    android:text="Koszt: "
                     android:textColor="@color/black"
-                    android:text="Koszt: "/>
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/spell_koszt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:textSize="20sp"
-                android:text="placeholder2"/>
+                <TextView
+                    android:id="@+id/spell_koszt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/old_standard_tt_regular"
+                    android:gravity="left"
+                    android:text="placeholder2"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -66,20 +67,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:fontFamily="@font/old_standard_tt_regular"
                     android:gravity="start"
-                    android:textSize="20sp"
+                    android:text="Czas: "
                     android:textColor="@color/black"
-                    android:text="Czas: "/>
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/spell_czas"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:textSize="20sp"
-                android:text="placeholder3"
-                android:paddingTop="10dp"/>
+                <TextView
+                    android:id="@+id/spell_czas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/old_standard_tt_regular"
+                    android:gravity="left"
+                    android:paddingTop="10dp"
+                    android:text="placeholder3"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -87,19 +90,20 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/black"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:paddingTop="10dp"
                 android:text="Opis:"
-                android:paddingTop="10dp"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/spell_opis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:paddingTop="10dp"
                 android:text="placeholder4"
-                android:paddingTop="10dp"/>
-
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -108,14 +112,22 @@
             android:id="@+id/add_spell_to_card_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#5E422F"
+            android:fontFamily="@font/old_standard_tt_bold"
             android:text="Dodaj do karty" />
 
         <Button
             android:id="@+id/delete_spell_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#5E422F"
+            android:fontFamily="@font/old_standard_tt_bold"
             android:text="Usun bron"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
 
     </LinearLayout>
