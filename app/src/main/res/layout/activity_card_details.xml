@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/paper"
-    tools:context=".CardDetailsActivity">
+    tools:context=".view.card.CardDetailsActivity">
 
     <RelativeLayout
         android:id="@+id/title_bar_layout"

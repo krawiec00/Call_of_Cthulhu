@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name=".MyApp"
+        android:name=".utils.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,56 +18,56 @@
         android:theme="@style/CustomTheme"
         tools:targetApi="31">
         <activity
-            android:name=".InterestPointsActivity"
+            android:name=".view.points.InterestPointsActivity"
             android:exported="false"
              />
         <activity
-            android:name=".ProfessionPointsActivity"
+            android:name=".view.points.ProfessionPointsActivity"
             android:exported="false"
             />
         <activity
-            android:name=".UserActionsActivity"
+            android:name=".view.users.UserActionsActivity"
             android:exported="false"
              />
         <activity
-            android:name=".UsersListActivity"
+            android:name=".view.users.UsersListActivity"
             android:exported="false"
             />
         <activity
-            android:name=".PasswordResetActivity"
+            android:name=".view.authorization.PasswordResetActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.Dark.NoActionBar" />
         <activity
-            android:name=".SpellsDetailsActivity"
+            android:name=".view.spells.SpellsDetailsActivity"
             android:exported="false"
              />
         <activity
-            android:name=".SpellsList"
+            android:name=".view.spells.SpellsList"
             android:exported="false"
              />
         <activity
-            android:name=".WeaponsDetailsActivity"
+            android:name=".view.weapons.WeaponsDetailsActivity"
             android:exported="false"
             />
         <activity
-            android:name=".WeaponsList"
+            android:name=".view.weapons.WeaponsList"
             android:exported="false"
             android:label="@string/title_activity_weapons_list"
              />
         <activity
-            android:name=".NoteDetailsActivity"
+            android:name=".view.notes.NoteDetailsActivity"
             android:exported="false"
              />
         <activity
-            android:name=".CardDetailsActivity"
+            android:name=".view.card.CardDetailsActivity"
             android:exported="false"/>
 
         <activity
-            android:name=".Register"
+            android:name=".view.authorization.RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.Dark.NoActionBar" />
         <activity
-            android:name=".Login"
+            android:name=".view.authorization.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Dark.NoActionBar">
             <intent-filter>
@@ -77,7 +77,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"/>
     </application>
 
