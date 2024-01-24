@@ -33,6 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"/>
 
+
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_note_btn"
             android:layout_width="wrap_content"
@@ -46,7 +48,7 @@
             android:padding="15dp"
             android:contentDescription="@string/addcard"
             app:tint="@android:color/white"/>
-
+        
     </RelativeLayout>
 
     <!-- Navigation Drawer -->

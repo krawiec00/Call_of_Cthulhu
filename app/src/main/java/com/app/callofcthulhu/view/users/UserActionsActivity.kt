@@ -97,7 +97,6 @@ class UserActionsActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         listenerRegistration?.remove()
-        Log.e("TEST", " KOŃCZYMY NASŁUCH")
     }
 
     private fun getActionsForUser(userId: String) {

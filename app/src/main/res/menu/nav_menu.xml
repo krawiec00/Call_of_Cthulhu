@@ -7,6 +7,10 @@
         android:checkableBehavior="none">
 
         <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/baseline_notifications_24"
+            android:title="Powiadiomienia"/>
+        <item
             android:id="@+id/nav_reset"
             android:icon="@drawable/baseline_lock_reset_24"
             android:title="@string/resetuj_has_o"/>

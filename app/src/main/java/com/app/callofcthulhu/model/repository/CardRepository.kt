@@ -98,10 +98,9 @@ class CardRepository {
 
         storageRef.delete()
             .addOnSuccessListener {
-                Log.d("TAG", "Zdjęcie zostało usunięte.")
             }
             .addOnFailureListener { exception ->
-                Log.e("TAG", "Błąd podczas usuwania zdjęcia: $exception")
+
             }
     }
 

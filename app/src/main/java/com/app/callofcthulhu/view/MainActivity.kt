@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -32,6 +33,7 @@ import com.app.callofcthulhu.model.data.Card
 import com.app.callofcthulhu.view.card.CardAdapter
 import com.app.callofcthulhu.view.authorization.LoginActivity
 import com.app.callofcthulhu.view.card.CardDetailsActivity
+import com.app.callofcthulhu.view.card.ShareNotificationActivity
 import com.app.callofcthulhu.view.users.UsersListActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -39,6 +41,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -62,6 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(Intent(this@MainActivity, CardDetailsActivity::class.java))
         }
         setupRecyclerView()
+
 
 
 
@@ -126,6 +130,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.nav_notification -> {
+                val intent = Intent(applicationContext, ShareNotificationActivity::class.java)
+                startActivity(intent)
+            }
+
             R.id.nav_reset -> passwordReset()
 
 
@@ -216,8 +225,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
     }
-
-
 
 
     private fun deleteUser() {

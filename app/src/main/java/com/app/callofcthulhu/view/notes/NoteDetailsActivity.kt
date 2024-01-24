@@ -56,7 +56,7 @@ class NoteDetailsActivity : AppCompatActivity() {
         }
 
         if(isEdited){
-            page_title.setText("Edytuj notatkę")
+            page_title.text = "Edytuj notatkę"
             deleteNoteBtn.visibility = View.VISIBLE
 
         }

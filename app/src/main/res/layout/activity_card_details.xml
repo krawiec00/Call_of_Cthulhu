@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Nowa postać"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="23sp"
             android:textStyle="bold"
             android:padding="5dp"
             android:fontFamily="@font/old_standard_tt_regular"/>
@@ -31,6 +31,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true">
+
+            <ImageButton
+                android:id="@+id/share_card_btn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_share_24"
+                android:visibility="gone"
+                app:tint="@color/black" />
 
             <ImageButton
                 android:id="@+id/delete_card_btn"

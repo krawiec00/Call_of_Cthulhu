@@ -1,6 +1,7 @@
 package com.app.callofcthulhu.view.card
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -16,6 +17,7 @@ import com.app.callofcthulhu.R
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.model.data.Card
 import com.app.callofcthulhu.model.repository.CardRepository
+import com.app.callofcthulhu.view.points.InterestPointsActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.firebase.Firebase
@@ -40,6 +42,7 @@ class CardDetailsActivity : AppCompatActivity() {
     private lateinit var pageTitleTextView: TextView
     private var isEdited: Boolean = false
     private lateinit var deleteCardBtn: ImageButton
+    private lateinit var shareCardBtn: ImageButton
     private lateinit var saveCardBtn: ImageButton
     private var imie: String? = null
     private var nazwisko: String? = null
@@ -61,6 +64,7 @@ class CardDetailsActivity : AppCompatActivity() {
         pageTitleTextView = findViewById(R.id.page_title)
         saveCardBtn = findViewById(R.id.save_note_btn)
         deleteCardBtn = findViewById(R.id.delete_card_btn)
+        shareCardBtn = findViewById(R.id.share_card_btn)
         auth = Firebase.auth
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
@@ -78,6 +82,7 @@ class CardDetailsActivity : AppCompatActivity() {
         if (isEdited) {
             pageTitleTextView.text = "$imie $nazwisko"
             deleteCardBtn.visibility = View.VISIBLE
+            shareCardBtn.visibility = View.VISIBLE
         }
 
         //viewModel przekazuje dane z modelu, cała instancja card
@@ -107,6 +112,13 @@ class CardDetailsActivity : AppCompatActivity() {
 
         deleteCardBtn.setOnClickListener { showDeleteConfirmationDialog() }
 
+        shareCardBtn.setOnClickListener {
+            val intent = Intent(this, ShareCardActivity::class.java)
+            val nazwa = "$imie $nazwisko"
+            intent.putExtra("nazwa", nazwa)
+//            intent.putExtra("nazwisko", nazwisko)
+            startActivity(intent)
+        }
 
         //tabela i fragmenty
         tabLayout = findViewById(R.id.tab_layout)

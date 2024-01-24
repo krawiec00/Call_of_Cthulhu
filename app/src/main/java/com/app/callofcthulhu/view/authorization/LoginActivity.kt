@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.app.callofcthulhu.view.MainActivity
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.model.repository.TokenRepository
 import com.app.callofcthulhu.utils.Utility
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
@@ -89,6 +90,8 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            val tokenRepo = TokenRepository()
+                            tokenRepo.getToken()
                             val user = auth.currentUser
                             if (user != null && user.isEmailVerified) {
                                 // Logowanie powiodło się i e-mail został zweryfikowany
