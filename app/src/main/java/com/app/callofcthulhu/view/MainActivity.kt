@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -33,7 +32,7 @@ import com.app.callofcthulhu.model.data.Card
 import com.app.callofcthulhu.view.card.CardAdapter
 import com.app.callofcthulhu.view.authorization.LoginActivity
 import com.app.callofcthulhu.view.card.CardDetailsActivity
-import com.app.callofcthulhu.view.card.ShareNotificationActivity
+import com.app.callofcthulhu.view.share.ShareNotificationActivity
 import com.app.callofcthulhu.view.users.UsersListActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks

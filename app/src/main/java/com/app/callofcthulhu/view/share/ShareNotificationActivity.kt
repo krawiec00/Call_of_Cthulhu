@@ -1,21 +1,14 @@
-package com.app.callofcthulhu.view.card
+package com.app.callofcthulhu.view.share
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.callofcthulhu.R
-import com.app.callofcthulhu.model.data.Card
 import com.app.callofcthulhu.model.data.Request
-import com.app.callofcthulhu.utils.Utility
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 
 class ShareNotificationActivity : AppCompatActivity() {
 

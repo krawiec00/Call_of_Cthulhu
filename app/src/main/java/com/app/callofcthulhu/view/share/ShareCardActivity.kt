@@ -1,4 +1,4 @@
-package com.app.callofcthulhu.view.card
+package com.app.callofcthulhu.view.share
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +8,7 @@ import com.app.callofcthulhu.services.RetrofitClient
 import com.app.callofcthulhu.databinding.ActivityShareCardBinding
 import com.app.callofcthulhu.model.data.Notification
 import com.app.callofcthulhu.model.data.Request
+import com.app.callofcthulhu.view.card.CardDetailsActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

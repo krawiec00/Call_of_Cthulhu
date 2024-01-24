@@ -1,4 +1,4 @@
-package com.app.callofcthulhu.view.card
+package com.app.callofcthulhu.view.share
 
 import android.content.Context
 import android.view.LayoutInflater

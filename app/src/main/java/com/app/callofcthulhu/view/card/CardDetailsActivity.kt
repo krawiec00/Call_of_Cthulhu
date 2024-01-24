@@ -17,7 +17,7 @@ import com.app.callofcthulhu.R
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.model.data.Card
 import com.app.callofcthulhu.model.repository.CardRepository
-import com.app.callofcthulhu.view.points.InterestPointsActivity
+import com.app.callofcthulhu.view.share.ShareCardActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.firebase.Firebase
