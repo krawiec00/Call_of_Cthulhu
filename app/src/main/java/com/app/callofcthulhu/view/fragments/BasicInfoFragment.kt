@@ -5,6 +5,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import androidx.core.widget.addTextChangedListener
 import com.app.callofcthulhu.view.card.CardDetailsActivity
 import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.app.callofcthulhu.utils.Utility
 import com.bumptech.glide.Glide
 
@@ -40,8 +42,8 @@ class BasicInfoFragment : Fragment() {
     val id = CardDetailsActivity.docId
     private var image: Uri? = null
 
-
-    val sharedViewModel = MyApp.sharedViewModel
+    val sharedViewModel = SharedViewModelInstance.instance
+//    val sharedViewModel = MyApp.sharedViewModel
     private lateinit var imageView: ImageView
 
 
@@ -139,64 +141,11 @@ class BasicInfoFragment : Fragment() {
 
         setupSpinner()
 
-//        sharedViewModel.cardData.observe(viewLifecycleOwner) { card ->
-//            card?.let {
-//                // Aktualizacja interfejsu użytkownika na podstawie danych karty
-//                imieEditText.setText(card.imie)
-//                nazwiskoEditText.setText(card.nazwisko)
-//                profesjaEditText.setText(card.profesja)
-//                wiekEditText.setText(card.wiek)
-//                plecEditText.setText(card.plec)
-//                mieszkanieEditText.setText(card.mZamieszkania)
-//                urodzenieEditText.setText(card.mUrodzenia)
-//
-//                Glide.with(this)
-//                    .load(card.imageUrl) // źródło obrazu (adres URL)
-//                    .into(imageView) // ImageView, do którego chcesz załadować obraz
-//                if (card.imageUrl != null) {
-//                    sharedViewModel.updateCardField("imageUrl", card.imageUrl!!)
-//                }
-//            }
-//        }
-//
-//        if (id.isNotEmpty()) {
-//            sharedViewModel.loadCardData(id)
-//        }
-
 
         if (id.isNotEmpty()) {
             professionSpinner.visibility = View.GONE
             profesjaEditText.visibility = View.VISIBLE
-            val docReference = Utility.getCollectionReferenceForCards().document(id)
-            docReference.get().addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val imie = document.getString("imie")
-                    val nazwisko = document.getString("nazwisko")
-                    val profesja = document.getString("profesja")
-                    val wiek = document.getString("wiek")
-                    val plec = document.getString("plec")
-                    val mzamieszkania = document.getString("mzamieszkania")
-                    val murodzenia = document.getString("murodzenia")
-                    val imageUrl = document.getString("imageUrl")
-
-                    // Przypisanie pobranych danych do pól EditText w fragmencie
-                    imieEditText.setText(imie)
-                    nazwiskoEditText.setText(nazwisko)
-                    profesjaEditText.setText(profesja)
-                    wiekEditText.setText(wiek)
-                    plecEditText.setText(plec)
-                    mieszkanieEditText.setText(mzamieszkania)
-                    urodzenieEditText.setText(murodzenia)
-
-                        // Użycie biblioteki Glide do wyświetlenia obrazu w ImageView
-                        Glide.with(this)
-                            .load(imageUrl) // źródło obrazu (adres URL)
-                            .into(imageView) // ImageView, do którego chcesz załadować obraz
-                    if (imageUrl != null) {
-                        sharedViewModel.updateCardField("imageUrl", imageUrl)
-                    }
-                }
-            }
+            readData()
         }
 
         return view
@@ -207,6 +156,43 @@ class BasicInfoFragment : Fragment() {
             sharedViewModel.updateCardField(fieldName, editable.toString())
         }
     }
+
+    private fun readData() {
+        val docReference = Utility.getCollectionReferenceForCards().document(id)
+        docReference.get().addOnSuccessListener { document ->
+            document?.let {
+                if (it.exists()) {
+                    val fields = mapOf(
+                        "imie" to imieEditText,
+                        "nazwisko" to nazwiskoEditText,
+                        "profesja" to profesjaEditText,
+                        "wiek" to wiekEditText,
+                        "plec" to plecEditText,
+                        "mzamieszkania" to mieszkanieEditText,
+                        "murodzenia" to urodzenieEditText
+                    )
+
+                    fields.forEach { (key, editText) ->
+                        editText.setText(document.getString(key))
+                    }
+
+                    // Obsługa zdjęcia
+                    val imageUrl = document.getString("imageUrl")
+                    Glide.with(this)
+                        .load(imageUrl)
+                        .error(R.drawable.baseline_add_photo_alternate_24)
+                        .into(imageView)
+
+                    imageUrl?.let {
+                        sharedViewModel.updateCardField("imageUrl", it)
+                    }
+                }
+            }
+        }.addOnFailureListener {e ->
+            Log.e("TAG", "ERORR: $e")
+        }
+    }
+
 
 
 }

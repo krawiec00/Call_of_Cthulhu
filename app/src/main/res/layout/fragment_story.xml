@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -150,7 +150,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -190,7 +190,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
 
@@ -210,7 +210,7 @@
             android:layout_height="wrap_content"
             android:background="#30FFFFFF"
             android:fontFamily="@font/old_standard_tt_regular"
-            android:inputType="textNoSuggestions"
+            android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
         <LinearLayout
@@ -228,6 +228,7 @@
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:text="Notatki"
+                android:fontFamily="@font/im_fel_english_regular"
                 android:textColor="@color/black"
                 android:textSize="40sp" />
 

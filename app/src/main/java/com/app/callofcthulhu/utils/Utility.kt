@@ -20,7 +20,7 @@ class Utility {
                 .collection("my_cards")
         }
 
-        fun getCollectionReference(collection: String): CollectionReference{
+        fun getCollectionReference(collection: String): CollectionReference {
             val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
             return FirebaseFirestore.getInstance().collection("cards")
                 .document(currentUser?.uid ?: "")
@@ -50,7 +50,7 @@ class Utility {
         }
 
 
-        fun writeLogToFirebase(logName: String){
+        fun writeLogToFirebase(logName: String) {
             val user = FirebaseAuth.getInstance().currentUser
             val db = Firebase.firestore
 
@@ -66,12 +66,7 @@ class Utility {
         }
 
 
-
-
-
-
     }
-
 
 
 }

@@ -22,6 +22,7 @@ import com.app.callofcthulhu.view.spells.SpellsList
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.utils.Utility.Companion.getCollectionReferenceForCards
 import com.app.callofcthulhu.model.data.Weapon
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.app.callofcthulhu.view.weapons.WeaponsAdapter
 import com.app.callofcthulhu.view.weapons.WeaponsList
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -30,7 +31,8 @@ import com.google.firebase.firestore.Query
 
 class EqFragment : Fragment() {
 
-    val sharedViewModel = MyApp.sharedViewModel
+    //    val sharedViewModel = MyApp.sharedViewModel
+    val sharedViewModel = SharedViewModelInstance.instance
 
     private lateinit var weapontBtn: Button
     private lateinit var spellBtn: Button
@@ -61,7 +63,7 @@ class EqFragment : Fragment() {
             startActivity(intent)
         }
 
-        spellBtn.setOnClickListener(){
+        spellBtn.setOnClickListener() {
             val intent = Intent(activity, SpellsList::class.java)
             startActivity(intent)
         }
@@ -82,7 +84,7 @@ class EqFragment : Fragment() {
         attachTextWatcher(editTextArray[3], "przedmioty")
 
 
-        if(id.isEmpty())
+        if (id.isEmpty())
             eqList.visibility = View.GONE
         else
             readData()
@@ -99,8 +101,8 @@ class EqFragment : Fragment() {
     private fun setupRecyclerView() {
         val userId = CardDetailsActivity.docId
         val query: Query = Utility.getCollectionReferenceForWeapons()
-                .orderBy("nazwa", Query.Direction.DESCENDING)
-                .whereEqualTo("id", userId)
+            .orderBy("nazwa", Query.Direction.DESCENDING)
+            .whereEqualTo("id", userId)
 
         val options: FirestoreRecyclerOptions<Weapon> = FirestoreRecyclerOptions.Builder<Weapon>()
             .setQuery(query, Weapon::class.java)
@@ -168,7 +170,6 @@ class EqFragment : Fragment() {
             }
         }
     }
-
 
 
 }

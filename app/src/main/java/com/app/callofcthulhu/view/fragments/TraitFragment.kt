@@ -13,13 +13,14 @@ import androidx.core.widget.addTextChangedListener
 import com.app.callofcthulhu.view.card.CardDetailsActivity
 import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.app.callofcthulhu.utils.Utility
 
 
 class TraitFragment : Fragment() {
 
-    val sharedViewModel = MyApp.sharedViewModel
-
+//    val sharedViewModel = MyApp.sharedViewModel
+    val sharedViewModel = SharedViewModelInstance.instance
     private lateinit var silaEditText: EditText
     private lateinit var silaTextView: TextView
     private lateinit var sila2TextView: TextView

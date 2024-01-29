@@ -101,7 +101,6 @@ class LoginActivity : AppCompatActivity() {
 
                                 Utility.writeLogToFirebase("Logowanie")
 
-
                                 val bundle = Bundle()
                                 bundle.putString(FirebaseAnalytics.Param.METHOD, "email_password")
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
@@ -113,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 progressBar.visibility = View.GONE
-                                auth.signOut() // Wylogowanie użytkownika, który nie zweryfikował e-maila
+                                auth.signOut()
                             }
                         } else {
                             // Logowanie nie powiodło się

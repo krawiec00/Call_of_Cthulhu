@@ -19,6 +19,7 @@ import com.app.callofcthulhu.model.data.Note
 import com.app.callofcthulhu.view.notes.NoteDetailsActivity
 import com.app.callofcthulhu.view.notes.NotesAdapter
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.utils.Utility.Companion.getCollectionReferenceForCards
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -27,8 +28,8 @@ import com.google.firebase.firestore.Query
 
 class StoryFragment : Fragment() {
 
-    val sharedViewModel = MyApp.sharedViewModel
-
+//    val sharedViewModel = MyApp.sharedViewModel
+    val sharedViewModel = SharedViewModelInstance.instance
     private lateinit var opisEditText: EditText
     private lateinit var ideologiaEditText: EditText
     private lateinit var osobyEditText: EditText

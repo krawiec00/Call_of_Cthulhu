@@ -9,32 +9,25 @@
         <item
             android:id="@+id/nav_notification"
             android:icon="@drawable/baseline_notifications_24"
-            android:title="Powiadiomienia"/>
+            android:title="@string/powiadomienia"/>
         <item
             android:id="@+id/nav_reset"
             android:icon="@drawable/baseline_lock_reset_24"
             android:title="@string/resetuj_has_o"/>
-        <item
-            android:id="@+id/nav_delete"
-            android:icon="@drawable/baseline_delete_forever_24"
-            android:title="Usuń konto"/>
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/baseline_logout_24"
             android:title="Wyloguj"/>
-
         <item
             android:id="@+id/nav_panel"
             android:icon="@drawable/baseline_admin_panel_settings_24"
             android:title="Panel admina"/>
-<!--        <item-->
-<!--            android:id="@+id/nav_share"-->
-<!--            android:icon="@drawable/nav_share"-->
-<!--            android:title="Share"/>-->
-<!--        <item-->
-<!--            android:id="@+id/nav_about"-->
-<!--            android:icon="@drawable/nav_about"-->
-<!--            android:title="About Us"/>-->
+        <item
+            android:id="@+id/nav_delete"
+            android:icon="@drawable/baseline_delete_forever_24"
+            android:title="Usuń konto"/>
+
     </group>
 
 </menu>

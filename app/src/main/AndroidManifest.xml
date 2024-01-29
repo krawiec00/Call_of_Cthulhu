@@ -38,7 +38,7 @@
         <activity
             android:name=".view.authorization.PasswordResetActivity"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Dark.NoActionBar" />
+            android:theme="@style/CustomLogin" />
         <activity
             android:name=".view.spells.SpellsDetailsActivity"
             android:exported="false" />
@@ -61,11 +61,11 @@
         <activity
             android:name=".view.authorization.RegisterActivity"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Dark.NoActionBar" />
+            android:theme="@style/CustomLogin" />
         <activity
             android:name=".view.authorization.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.Material3.Dark.NoActionBar">
+            android:theme="@style/CustomLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

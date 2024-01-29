@@ -8,13 +8,30 @@
     android:layout_height="match_parent"
     android:paddingStart="32dp"
     android:paddingEnd="32dp"
+    android:background="@drawable/loginback_clean"
     tools:context=".view.authorization.RegisterActivity">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:padding="24dp"
+            android:background="@drawable/custom_cardview">
+
 
     <TextView
         android:text="@string/register"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>
@@ -61,16 +78,25 @@
         android:text="@string/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/cthulhu_DarkGreen"
+        android:textColor="@color/white"/>
 
-    <TextView
-        android:id="@+id/loginNow"
-        android:text="Masz konto? Przejdź do logowania"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="24dp"
-        android:gravity="center" />
+            <TextView
+                android:id="@+id/loginNow"
+                android:text="Masz konto? Przejdź do logowania"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
 
 </LinearLayout>

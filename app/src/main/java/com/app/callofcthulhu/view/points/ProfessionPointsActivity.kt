@@ -14,8 +14,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -27,8 +27,11 @@ class ProfessionPointsActivity : AppCompatActivity() {
     private lateinit var profesja: String
     var professionsFields: List<String> = listOf()
     var skillsFields: List<String> = listOf()
-    val sharedViewModel = MyApp.sharedViewModel
+
+    //    val sharedViewModel = MyApp.sharedViewModel
     private lateinit var skillPoints: TextView
+
+    val sharedViewModel = SharedViewModelInstance.instance
 
     var availablePoints: Int = 0
     var originalValues = mutableMapOf<EditText, Int>()
@@ -59,27 +62,21 @@ class ProfessionPointsActivity : AppCompatActivity() {
 
     private fun fetchSkillsFromFirestore() {
         val fireStore = FirebaseFirestore.getInstance()
-        val skillsRef = fireStore.collection("skills").document("skills")
-
+        val skillsCollection = fireStore.collection("skills").document("skills")
         val professionCollection = fireStore.collection("professions").document(profesja)
 
         professionCollection.get().addOnSuccessListener { professionDocument ->
             professionsFields = getFieldsFromDocument(professionDocument)
 
-
-
-
-            skillsRef.get().addOnSuccessListener { documentSnapshot ->
+            skillsCollection.get().addOnSuccessListener { documentSnapshot ->
 
                 skillsFields = getFieldsFromDocument(documentSnapshot)
-
 
                 if (documentSnapshot.exists()) {
                     val skillsData = documentSnapshot.data // Pobranie danych z dokumentu
 
                     val commonFields =
                         skillsFields.intersect(professionsFields.toSet()).toList().sorted()
-
 
                     val linearLayout = findViewById<LinearLayout>(R.id.linearLayout)
                     linearLayout?.removeAllViews()
@@ -105,7 +102,8 @@ class ProfessionPointsActivity : AppCompatActivity() {
                                 )
                                 textView.setPadding(20, 20, 20, 20)
                                 textView.setTextColor(Color.BLACK)
-                                val font = ResourcesCompat.getFont(this,
+                                val font = ResourcesCompat.getFont(
+                                    this,
                                     R.font.im_fel_english_regular
                                 )
                                 textView.typeface = font
@@ -120,11 +118,15 @@ class ProfessionPointsActivity : AppCompatActivity() {
                                 editText.inputType = InputType.TYPE_CLASS_NUMBER
                                 editText.gravity = Gravity.CENTER
                                 editText.setBackgroundColor(Color.LTGRAY)
-                                editText.setBackgroundColor(ContextCompat.getColor(this,
-                                    R.color.transparentWhite
-                                ))
+                                editText.setBackgroundColor(
+                                    ContextCompat.getColor(
+                                        this,
+                                        R.color.transparentWhite
+                                    )
+                                )
                                 editText.hint = "Enter value"
-                                val font2 = ResourcesCompat.getFont(this,
+                                val font2 = ResourcesCompat.getFont(
+                                    this,
                                     R.font.old_standard_tt_regular
                                 )
                                 editText.typeface = font2

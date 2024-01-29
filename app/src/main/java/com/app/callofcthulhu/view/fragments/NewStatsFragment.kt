@@ -7,19 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import com.app.callofcthulhu.view.card.CardDetailsActivity
 import com.app.callofcthulhu.view.points.InterestPointsActivity
-import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.view.points.ProfessionPointsActivity
 import com.app.callofcthulhu.R
-import com.google.firebase.firestore.DocumentSnapshot
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 
 
-class StatsFragment2 : Fragment() {
+class NewStatsFragment : Fragment() {
 
 
-    //private lateinit var sharedViewModel: SharedViewModel
+    val sharedViewModel = SharedViewModelInstance.instance
 
     val id = CardDetailsActivity.docId
 
@@ -30,7 +28,6 @@ class StatsFragment2 : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_stats2, container, false)
 
-        val sharedViewModel = MyApp.sharedViewModel
 
         val professionBtn = view.findViewById<Button>(R.id.klasa)
 

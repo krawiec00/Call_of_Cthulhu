@@ -14,5 +14,9 @@
         <item name="android:statusBarColor">@color/cthulhu_Green</item>
     </style>
 
+    <style name="CustomLogin" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:statusBarColor">@color/cthulhu_DarkGreen</item>
+    </style>
+
 
 </resources>

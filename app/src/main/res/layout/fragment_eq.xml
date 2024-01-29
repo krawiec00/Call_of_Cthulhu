@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:background="#30FFFFFF"
                 android:fontFamily="@font/old_standard_tt_regular"
-                android:inputType="textNoSuggestions"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black" />
 
 
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:background="#30FFFFFF"
                 android:fontFamily="@font/old_standard_tt_regular"
-                android:inputType="textNoSuggestions"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black" />
 
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:background="#30FFFFFF"
                 android:fontFamily="@font/old_standard_tt_regular"
-                android:inputType="textNoSuggestions"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black" />
 
 

@@ -30,5 +30,6 @@
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="resetuj_has_o">Resetuj hasło</string>
     <string name="admin">Admin</string>
+    <string name="powiadomienia">Powiadomienia</string>
 
 </resources>

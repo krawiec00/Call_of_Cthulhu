@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
@@ -65,53 +66,25 @@ class RegisterActivity : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Rejestracja powiodła się
                             val user = auth.currentUser
                             user?.sendEmailVerification()
                                 ?.addOnCompleteListener { emailTask ->
                                     if (emailTask.isSuccessful) {
                                         Toast.makeText(
                                             baseContext,
-                                            "Email verification sent to ${user.email}",
+                                            "Wysłano mail wereyfikacyjny do ${user.email}",
                                             Toast.LENGTH_SHORT
                                         ).show()
-
-                                        val db = Firebase.firestore
-                                        val userData = hashMapOf(
-                                            "userId" to user.uid,
-                                            "email" to user.email,
-                                            "role" to "user"
-                                        )
-
-                                        // Dodawanie dokumentu użytkownika
-                                        db.collection("user_logs").document(user.uid)
-                                            .set(userData)
-                                            .addOnSuccessListener {
-                                                // Dodawanie aktywności rejestracji do podkolekcji 'actions'
-                                                val logData = hashMapOf(
-                                                    "actionName" to "Rejestracja",
-                                                    "timestamp" to FieldValue.serverTimestamp()
-                                                )
-
-                                                db.collection("user_logs").document(user.uid)
-                                                    .collection("actions").add(logData)
-                                            }
-
-                                        val bundle = Bundle()
-                                        bundle.putString(FirebaseAnalytics.Param.METHOD, "email_password")
-                                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
-
+                                        registerInFirebase(user)
                                     } else {
-                                        // Obsługa błędu podczas wysyłania maila z potwierdzeniem
                                         Toast.makeText(
                                             baseContext,
-                                            "Failed to send verification email.",
+                                            "Błąd z wysłaniem maila weryfikacyjnego.",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
                                 }
                             progressBar.visibility = View.GONE
-                            // Przejdź do ekranu logowania po rejestracji
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                             finish()
@@ -127,4 +100,37 @@ class RegisterActivity : AppCompatActivity() {
 
 
     }
+
+    private fun register() {
+
+    }
+
+    private fun registerInFirebase(user: FirebaseUser) {
+        val db = Firebase.firestore
+        val userData = hashMapOf(
+            "userId" to user.uid,
+            "email" to user.email,
+            "role" to "user"
+        )
+
+        // Dodawanie dokumentu użytkownika
+        db.collection("user_logs").document(user.uid)
+            .set(userData)
+            .addOnSuccessListener {
+                // Dodawanie aktywności rejestracji do podkolekcji 'actions'
+                val logData = hashMapOf(
+                    "actionName" to "Rejestracja",
+                    "timestamp" to FieldValue.serverTimestamp()
+                )
+
+                db.collection("user_logs").document(user.uid)
+                    .collection("actions").add(logData)
+            }
+
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.METHOD, "email_password")
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
+    }
+
+
 }

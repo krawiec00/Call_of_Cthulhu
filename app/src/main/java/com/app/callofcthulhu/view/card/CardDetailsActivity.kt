@@ -17,6 +17,7 @@ import com.app.callofcthulhu.R
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.model.data.Card
 import com.app.callofcthulhu.model.repository.CardRepository
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.app.callofcthulhu.view.share.ShareCardActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -50,7 +51,8 @@ class CardDetailsActivity : AppCompatActivity() {
     private lateinit var storageReference: StorageReference
     //    private lateinit var progressIndicator: LinearProgressIndicator
     private val cardRepository = CardRepository()
-    val sharedViewModel = MyApp.sharedViewModel
+//    val sharedViewModel = MyApp.sharedViewModel
+    val sharedViewModel = SharedViewModelInstance.instance
 
     companion object {
         var docId: String = ""
@@ -209,7 +211,7 @@ class CardDetailsActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        sharedViewModel.resetCardFields() // Wywołaj funkcję resetującą dane w SharedViewModel
+        SharedViewModelInstance.clearInstance()
     }
 
 

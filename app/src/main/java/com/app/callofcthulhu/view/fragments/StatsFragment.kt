@@ -13,6 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import com.app.callofcthulhu.view.card.CardDetailsActivity
 import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.app.callofcthulhu.utils.Utility
 
 
@@ -21,11 +22,10 @@ class StatsFragment : Fragment() {
     private lateinit var editTextArray: Array<EditText>
     private lateinit var buttonArray: Array<ImageButton>
     private lateinit var textViewArray: Array<Pair<TextView, TextView>>
-
-    val sharedViewModel = MyApp.sharedViewModel
+    val sharedViewModel = SharedViewModelInstance.instance
     val id = CardDetailsActivity.docId
 
-    var randomNumber: Int = 0
+    private var randomNumber: Int = 0
 
 
     override fun onCreateView(
@@ -186,7 +186,7 @@ class StatsFragment : Fragment() {
                 editText.setText(randomNumber.toString())
             }
             else
-                Toast.makeText(context, "NIE MOŻNA ROZWINĄĆ bo $check", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Nie mozna rozwinąć = $check", Toast.LENGTH_SHORT).show()
 
         }
 

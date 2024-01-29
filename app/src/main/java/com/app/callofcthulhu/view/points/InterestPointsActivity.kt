@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -27,8 +28,10 @@ class InterestPointsActivity : AppCompatActivity() {
     private lateinit var profesja: String
     var professionsFields: List<String> = listOf()
     var skillsFields: List<String> = listOf()
-    val sharedViewModel = MyApp.sharedViewModel
+//    val sharedViewModel = MyApp.sharedViewModel
     private lateinit var skillPoints: TextView
+
+    val sharedViewModel = SharedViewModelInstance.instance
 
     var availablePoints: Int = 0
     var originalValues = mutableMapOf<EditText, Int>()

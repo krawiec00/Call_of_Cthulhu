@@ -56,9 +56,20 @@ class ShareCardActivity : AppCompatActivity() {
                                 val userId = document.id
                                 val deviceToken = document.getString("Token")
                                 if (deviceToken != null) {
-                                    sendNotificationToServer(deviceToken, "Udostępnieno kartę", "Użytkownik $userEmail udostępnił ci swoją karte postaci")
+                                    sendNotificationToServer(
+                                        deviceToken,
+                                        "Udostępniono kartę",
+                                        "Użytkownik $userEmail udostępnił ci swoją karte postaci"
+                                    )
                                     val nazwa = intent.getStringExtra("nazwa").toString()
-                                    val request = Request(currentUser?.uid.toString(),userEmail ,userId, docId, "Pending", nazwa )
+                                    val request = Request(
+                                        currentUser?.uid.toString(),
+                                        userEmail,
+                                        userId,
+                                        docId,
+                                        "Pending",
+                                        nazwa
+                                    )
                                     saveRequestToFirebase(request)
                                 }
                             }
@@ -73,13 +84,14 @@ class ShareCardActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveRequestToFirebase(request: Request){
+    private fun saveRequestToFirebase(request: Request) {
         val documentReference = FirebaseFirestore.getInstance().collection("requests").document()
         documentReference.set(request).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(baseContext, "Dodano request", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Udostępniono kartę", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(baseContext, "Blad przy dodawaniu request", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Blad przy udostępnianiu", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -89,11 +101,14 @@ class ShareCardActivity : AppCompatActivity() {
         val notificationData = Notification(token, title, body)
         RetrofitClient.apiService.sendNotification(notificationData)
             .enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
                     if (response.isSuccessful) {
                         Log.e("TAG", "WYSŁANO")
                     } else {
-                        Log.e("TAG", "NOPE")
+                        Log.e("TAG", "BŁĄD")
                     }
                 }
 
@@ -102,7 +117,6 @@ class ShareCardActivity : AppCompatActivity() {
                 }
             })
     }
-
 
 
 }
