@@ -132,10 +132,10 @@ class StoryFragment : Fragment() {
         }
     }
 
-    fun setupRecyclerView() {
+    private fun setupRecyclerView() {
         val userId = CardDetailsActivity.docId
         val query: Query = Utility.getCollectionReferenceForNotes()
-            .orderBy("title", Query.Direction.DESCENDING)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .whereEqualTo("id", userId) // Dodaj warunek na pole 'id'
 
         val options: FirestoreRecyclerOptions<Note> = FirestoreRecyclerOptions.Builder<Note>()

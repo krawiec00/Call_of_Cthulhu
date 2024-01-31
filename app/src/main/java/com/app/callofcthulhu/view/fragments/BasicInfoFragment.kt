@@ -42,7 +42,7 @@ class BasicInfoFragment : Fragment() {
     val id = CardDetailsActivity.docId
     private var image: Uri? = null
 
-    val sharedViewModel = SharedViewModelInstance.instance
+    var sharedViewModel = SharedViewModelInstance.instance
 //    val sharedViewModel = MyApp.sharedViewModel
     private lateinit var imageView: ImageView
 

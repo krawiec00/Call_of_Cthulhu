@@ -31,5 +31,6 @@
     <string name="resetuj_has_o">Resetuj hasło</string>
     <string name="admin">Admin</string>
     <string name="powiadomienia">Powiadomienia</string>
+    <string name="placeholder">placeholder</string>
 
 </resources>

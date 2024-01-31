@@ -1,21 +1,26 @@
 package com.app.callofcthulhu.view.weapons
 
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.app.callofcthulhu.view.card.CardDetailsActivity.Companion.docId
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.model.data.Card
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.model.data.Weapon
+import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.google.firebase.firestore.DocumentReference
 
 class WeaponsDetailsActivity : AppCompatActivity() {
 
+    val sharedViewModel = SharedViewModelInstance.instance
 
     private var weaponNazwa: String? = null
     private var weaponObrazenia: String? = null
@@ -26,7 +31,6 @@ class WeaponsDetailsActivity : AppCompatActivity() {
     private var weaponZasieg: String? = null
     private var weaponZawodnosc: String? = null
 
-
     private lateinit var nameTextView: TextView
     private lateinit var weaponId: String
     private lateinit var damageTextView: TextView
@@ -36,6 +40,9 @@ class WeaponsDetailsActivity : AppCompatActivity() {
     private lateinit var umiejetnoscTextView: TextView
     private lateinit var zasiegTextView: TextView
     private lateinit var zawodnoscTextView: TextView
+    private lateinit var skillTextView: TextView
+    private lateinit var skillValueTextView: TextView
+    private lateinit var skillLayout: LinearLayout
 
     private var added: Boolean = false
 
@@ -44,7 +51,19 @@ class WeaponsDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_weapons_details)
 
 
+        nameTextView = findViewById(R.id.weapon_nazwa)
+        damageTextView = findViewById(R.id.weapon_obrazenia)
+        atakiTextView = findViewById(R.id.weapon_ataki)
+        kosztTextView = findViewById(R.id.weapon_koszt)
+        pociskiTextView = findViewById(R.id.weapon_pociski)
+        umiejetnoscTextView = findViewById(R.id.weapon_umiejetnosci)
+        zasiegTextView = findViewById(R.id.weapon_zasieg)
+        zawodnoscTextView = findViewById(R.id.weapon_zawodnosc)
+        skillTextView = findViewById(R.id.weapon_skill)
+        skillValueTextView = findViewById(R.id.weapon_skill_value)
+        skillLayout = findViewById(R.id.layout_weapons_fields)
 
+        added = intent.getBooleanExtra("added", false)
         weaponNazwa = intent.getStringExtra("nazwa") ?: ""
         weaponObrazenia = intent.getStringExtra("obrazenia") ?: ""
         weaponAtaki = intent.getStringExtra("ataki") ?: ""
@@ -55,25 +74,53 @@ class WeaponsDetailsActivity : AppCompatActivity() {
         weaponZawodnosc = intent.getStringExtra("zawodnosc") ?: ""
         weaponId = intent.getStringExtra("id") ?: ""
 
-        added = intent.getBooleanExtra("added", false)
-
-        nameTextView = findViewById(R.id.weapon_nazwa)
-        damageTextView = findViewById(R.id.weapon_obrazenia)
-        atakiTextView = findViewById(R.id.weapon_ataki)
-        kosztTextView = findViewById(R.id.weapon_koszt)
-        pociskiTextView = findViewById(R.id.weapon_pociski)
-        umiejetnoscTextView = findViewById(R.id.weapon_umiejetnosci)
-        zasiegTextView = findViewById(R.id.weapon_zasieg)
-        zawodnoscTextView = findViewById(R.id.weapon_zawodnosc)
-
 
         val addToCardButton: Button = findViewById(R.id.add_to_card_button)
         val deleteWeaponButton: Button = findViewById(R.id.delete_weapon_button)
+        val useWeaponButton: Button = findViewById(R.id.use_weapon_button)
 
         if(added){
             addToCardButton.visibility = View.GONE
             deleteWeaponButton.visibility = View.VISIBLE
+
         }
+        val card = sharedViewModel.card.value
+        val bronPalna = card?.Bron_Palna
+
+
+
+        when(weaponUmiejetnosc){
+            "Broń Palna(Krótka)" -> {skillTextView.text = weaponUmiejetnosc
+            skillValueTextView.text = bronPalna.toString()
+                useWeaponButton.visibility = View.VISIBLE
+                skillLayout.visibility = View.VISIBLE
+            }
+        else -> skillTextView.text = null
+        }
+
+        useWeaponButton.setOnClickListener{
+            if(bronPalna!=0){
+                val result: String?
+                val randomNumber = (1..100).random()
+                result = if(randomNumber<= bronPalna!!) {
+                    "SUKCES"
+                } else{
+                    "PORAŻKA"
+                }
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Losowanie umiejętności")
+                builder.setMessage("Wylosowano: $randomNumber \n" +
+                        "Umiejętność: $bronPalna \n" +
+                        "$result")
+
+                builder.setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+
+                builder.show()
+            }
+            }
+
 
         nameTextView.text = weaponNazwa
         damageTextView.text = weaponObrazenia

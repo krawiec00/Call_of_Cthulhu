@@ -1,6 +1,7 @@
 package com.app.callofcthulhu.view.share
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,16 +22,17 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int, request: Request) {
         holder.fromUserMail.text = request.userMail
         holder.cardName.text = request.cardName
-        val currentPosition = holder.absoluteAdapterPosition
+
         holder.btnAction.setOnClickListener {
+            val currentPosition = holder.bindingAdapterPosition
             if (currentPosition != RecyclerView.NO_POSITION) {
                 copyCard(request)
-
-                //   deleteRequest(currentPosition)
+                   deleteRequest(currentPosition)
             }
         }
 
         holder.btnDelete.setOnClickListener {
+            val currentPosition = holder.bindingAdapterPosition
             if (currentPosition != RecyclerView.NO_POSITION) {
                 deleteRequest(currentPosition)
             }
@@ -53,17 +55,21 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
 
 
     private fun deleteRequest(position: Int) {
-        // Pobranie ID dokumentu
-        val documentId = snapshots.getSnapshot(position).id
-
-        FirebaseFirestore.getInstance().collection("requests")
-            .document(documentId)
-            .delete()
-            .addOnSuccessListener {
-                // Powiadom RecyclerView o usunięciu elementu
-                notifyItemRemoved(position)
-            }
+        val documentSnapshot = snapshots.getSnapshot(position)
+        try {
+            documentSnapshot.reference.delete()
+                .addOnSuccessListener {
+                    // Sukces, np. wyświetlenie komunikatu
+                }
+                .addOnFailureListener { e ->
+                    Log.e("TAG", "EXCEPTION: $e")
+                }
+        }
+        catch (e: Exception) {
+            Toast.makeText(context, "Wystąpił błąd: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
+
 
 
     private fun copyCard(request: Request) {

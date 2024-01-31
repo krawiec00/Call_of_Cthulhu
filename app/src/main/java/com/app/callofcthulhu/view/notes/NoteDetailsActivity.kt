@@ -14,6 +14,7 @@ import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.view.card.CardDetailsActivity.Companion.docId
 import com.app.callofcthulhu.model.data.Note
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 
 
 class NoteDetailsActivity : AppCompatActivity() {
@@ -81,6 +82,7 @@ class NoteDetailsActivity : AppCompatActivity() {
             title = noteTitle
             content = noteContent
             id = docId
+            timestamp = FieldValue.serverTimestamp()
         }
 
         saveNoteToFireBase(note)
@@ -97,10 +99,15 @@ class NoteDetailsActivity : AppCompatActivity() {
 
         documentReference.set(note).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(baseContext, "Notatka dodana", Toast.LENGTH_SHORT).show()
-                finish()
+                if(noteId.isEmpty()) {
+                    Toast.makeText(baseContext, "Notatka dodana", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                else{
+                    Toast.makeText(baseContext, "Zaktualizowano notatke", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(baseContext, "Usunięto notatkę", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Błąd dodania notatki", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -109,11 +116,10 @@ class NoteDetailsActivity : AppCompatActivity() {
         val documentReference: DocumentReference = Utility.getCollectionReferenceForNotes().document(noteId)
         documentReference.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                //note is deleted
-                Toast.makeText(baseContext, "Note deleted successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Usunięto notatkę", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                Toast.makeText(baseContext, "Note failed to delete", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Błąd usuwania", Toast.LENGTH_SHORT).show()
 
             }
         }

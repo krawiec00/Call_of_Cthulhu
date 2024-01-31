@@ -263,8 +263,49 @@
             android:backgroundTint="#5E422F"
             android:fontFamily="@font/old_standard_tt_bold"
             android:text="Usuń bron"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
 
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:id="@+id/layout_weapons_fields"
+            android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@+id/weapon_skill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:gravity="start"
+            android:text="@string/placeholder"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/weapon_skill_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:gravity="start"
+                android:paddingTop="10dp"
+                android:text="@string/placeholder"
+                android:textSize="20sp"
+                android:layout_marginLeft="15dp"/>
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/use_weapon_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#5E422F"
+            android:fontFamily="@font/old_standard_tt_bold"
+            android:text="Rzut umiejętności"
+            android:visibility="gone"
+            />
     </LinearLayout>
 </RelativeLayout>
