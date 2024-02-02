@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/im_fel_english_regular"
+        android:text="Placeholder"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:id="@+id/skill_name"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:padding="10dp">
+
+        <!-- Kwadratowy EditText -->
+        <EditText
+            android:id="@+id/skill_value"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_background"
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/skill_little_value"
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/skill_little_value2"
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/old_standard_tt_regular"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <ImageButton
+            android:id="@+id/button_skill_check"
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:background="#2FFFFFFF"
+            android:src="@drawable/dice_20" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <ImageButton
+            android:id="@+id/button_upgrade"
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:background="#2FFFFFFF"
+            android:src="@drawable/bookvec"
+            android:layout_gravity="end" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

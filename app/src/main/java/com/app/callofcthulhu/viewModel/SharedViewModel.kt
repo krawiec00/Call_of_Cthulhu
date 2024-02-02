@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.callofcthulhu.model.data.Card
+import com.app.callofcthulhu.model.data.Skills
 
 
 class SharedViewModel : ViewModel() {
@@ -15,7 +16,17 @@ class SharedViewModel : ViewModel() {
 
     init {
         _card.value = Card()
+
     }
+
+    private val _skills = MutableLiveData<Skills?>()
+    val skills: MutableLiveData<Skills?>
+        get() = _skills
+
+    init {
+        _skills.value = Skills()
+    }
+
 
     private val _imageUri = MutableLiveData<Uri?>()
     val imageUri: MutableLiveData<Uri?>
@@ -23,6 +34,25 @@ class SharedViewModel : ViewModel() {
 
     fun updateImageUri(uri: Uri?) {
         _imageUri.value = uri
+    }
+
+    fun updateSkillField(fieldName: String, fieldValue: Any) {
+        val currentSkills = _skills.value ?: return
+
+        val newSkills = when (fieldName) {
+            "bronPalna" -> currentSkills.copy(bronPalna = fieldValue as? Int)
+            "korzystanieZBibliotek" -> currentSkills.copy(korzystanieZBibliotek = fieldValue as? Int)
+            "nasluchiwanie" -> currentSkills.copy(nasluchiwanie = fieldValue as? Int)
+            "nawigacja" -> currentSkills.copy(nawigacja = fieldValue as? Int)
+            "perswazja" -> currentSkills.copy(perswazja = fieldValue as? Int)
+            "pierwszaPomoc" -> currentSkills.copy(pierwszaPomoc = fieldValue as? Int)
+            "psychologia" -> currentSkills.copy(psychologia = fieldValue as? Int)
+            "spostrzegawczosc" -> currentSkills.copy(spostrzegawczosc = fieldValue as? Int)
+            "sztukaPrzetrwania" -> currentSkills.copy(sztukaPrzetrwania = fieldValue as? Int)
+            "wiedzaONaturze" -> currentSkills.copy(wiedzaONaturze = fieldValue as? Int)
+            else -> currentSkills
+        }
+        _skills.value = newSkills
     }
 
     fun updateCardField(fieldName: String, fieldValue: Any) {
@@ -62,16 +92,6 @@ class SharedViewModel : ViewModel() {
             "fobie" -> currentCard.copy(fobie = fieldValue as? String)
             "ksiegi" -> currentCard.copy(ksiegi = fieldValue as? String)
             "istoty" -> currentCard.copy(istoty = fieldValue as? String)
-            "Bron_Palna" -> currentCard.copy(Bron_Palna = fieldValue as? Int)
-            "Korzystanie_z_Bibliotek" -> currentCard.copy(Korzystanie_z_Bibliotek = fieldValue as? Int)
-            "Nasluchiwanie" -> currentCard.copy(Nasluchiwanie = fieldValue as? Int)
-            "Nawigacja" -> currentCard.copy(Nawigacja = fieldValue as? Int)
-            "Perswazja" -> currentCard.copy(Perswazja = fieldValue as? Int)
-            "Pierwsza_Pomoc" -> currentCard.copy(Pierwsza_Pomoc = fieldValue as? Int)
-            "Psychologia" -> currentCard.copy(Psychologia = fieldValue as? Int)
-            "Spostrzegawczosc" -> currentCard.copy(Spostrzegawczosc = fieldValue as? Int)
-            "Sztuka_Przetrwania" -> currentCard.copy(Sztuka_Przetrwania = fieldValue as? Int)
-            "Wiedza_o_Naturze" -> currentCard.copy(Wiedza_o_Naturze = fieldValue as? Int)
             "gotowka" -> currentCard.copy(gotowka = fieldValue as? String)
             "dobytek" -> currentCard.copy(dobytek = fieldValue as? String)
             "przedmioty" -> currentCard.copy(przedmioty = fieldValue as? String)

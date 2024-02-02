@@ -38,6 +38,8 @@ class ProfessionPointsActivity : AppCompatActivity() {
 
     val compareList: Array<String> = arrayOf("sila", "wyksztalcenie")
 
+    val fieldNamesMap = InterestPointsActivity().fieldNamesMap
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profession_points)
@@ -94,7 +96,8 @@ class ProfessionPointsActivity : AppCompatActivity() {
                             skillsData?.get(fieldName)?.let { fieldValue ->
                                 val textView = TextView(this)
                                 textView.textSize = 16f
-                                textView.text = fieldName.replace("_", " ") // Ustawienie nazwy pola
+                                val friendlyName = fieldNamesMap[fieldName] ?: fieldName
+                                textView.text = friendlyName
                                 textView.layoutParams = LinearLayout.LayoutParams(
                                     0,
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -214,7 +217,7 @@ class ProfessionPointsActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 val value = if (input.isNotBlank()) input.toIntOrNull() ?: 0 else 0
-                sharedViewModel.updateCardField(fieldName, value)
+                sharedViewModel.updateSkillField(fieldName, value)
             }
         })
     }

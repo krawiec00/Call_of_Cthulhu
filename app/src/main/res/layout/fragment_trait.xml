@@ -36,15 +36,7 @@
             <!-- Kwadratowy EditText -->
             <EditText
                 android:id="@+id/card_sila"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/old_standard_tt_regular"
-                android:gravity="center"
-                android:inputType="number"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                style="@style/CommonEditText" />
 
             <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
             <LinearLayout
@@ -55,25 +47,11 @@
 
                 <TextView
                     android:id="@+id/sila"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
 
                 <TextView
                     android:id="@+id/sila2"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
             </LinearLayout>
 
             <!-- ImageButton -->
@@ -83,6 +61,13 @@
                 android:layout_height="45dp"
                 android:background="#2FFFFFFF"
                 android:src="@drawable/dice2" />
+            <ImageButton
+                android:id="@+id/button_1"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="#2FFFFFFF"
+                android:src="@drawable/dice_20"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -106,15 +91,7 @@
             <!-- Kwadratowy EditText -->
             <EditText
                 android:id="@+id/card_kondycja"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/old_standard_tt_regular"
-                android:gravity="center"
-                android:inputType="number"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                style="@style/CommonEditText"/>
 
             <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
             <LinearLayout
@@ -125,25 +102,11 @@
 
                 <TextView
                     android:id="@+id/kondycja"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
 
                 <TextView
                     android:id="@+id/kondycja2"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
             </LinearLayout>
 
             <!-- ImageButton -->
@@ -153,6 +116,13 @@
                 android:layout_height="45dp"
                 android:background="#2FFFFFFF"
                 android:src="@drawable/dice2" />
+            <ImageButton
+                android:id="@+id/button_2"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="#2FFFFFFF"
+                android:src="@drawable/dice_20"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -176,15 +146,7 @@
             <!-- Kwadratowy EditText -->
             <EditText
                 android:id="@+id/card_bciala"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/old_standard_tt_regular"
-                android:gravity="center"
-                android:inputType="number"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                style="@style/CommonEditText"/>
 
             <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
             <LinearLayout
@@ -195,25 +157,11 @@
 
                 <TextView
                     android:id="@+id/bciala"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView" />
 
                 <TextView
                     android:id="@+id/bciala2"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView" />
             </LinearLayout>
 
             <!-- ImageButton -->
@@ -223,6 +171,13 @@
                 android:layout_height="45dp"
                 android:background="#2FFFFFFF"
                 android:src="@drawable/dice2" />
+            <ImageButton
+                android:id="@+id/button_3"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="#2FFFFFFF"
+                android:src="@drawable/dice_20"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -246,15 +201,7 @@
             <!-- Kwadratowy EditText -->
             <EditText
                 android:id="@+id/card_zrecznosc"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/old_standard_tt_regular"
-                android:gravity="center"
-                android:inputType="number"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                style="@style/CommonEditText" />
 
             <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
             <LinearLayout
@@ -265,25 +212,11 @@
 
                 <TextView
                     android:id="@+id/zrecznosc"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView" />
 
                 <TextView
                     android:id="@+id/zrecznosc2"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
             </LinearLayout>
 
             <!-- ImageButton -->
@@ -293,6 +226,13 @@
                 android:layout_height="45dp"
                 android:background="#2FFFFFFF"
                 android:src="@drawable/dice2" />
+            <ImageButton
+                android:id="@+id/button_4"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="#2FFFFFFF"
+                android:src="@drawable/dice_20"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <!-- WYGLĄD -->
@@ -315,15 +255,7 @@
             <!-- Kwadratowy EditText -->
             <EditText
                 android:id="@+id/card_wyglad"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/old_standard_tt_regular"
-                android:gravity="center"
-                android:inputType="number"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                style="@style/CommonEditText"/>
 
             <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
             <LinearLayout
@@ -334,25 +266,11 @@
 
                 <TextView
                     android:id="@+id/wyglad"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView" />
 
                 <TextView
                     android:id="@+id/wyglad2"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView" />
             </LinearLayout>
 
             <!-- ImageButton -->
@@ -362,6 +280,13 @@
                 android:layout_height="45dp"
                 android:background="#2FFFFFFF"
                 android:src="@drawable/dice2" />
+            <ImageButton
+                android:id="@+id/button_5"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="#2FFFFFFF"
+                android:src="@drawable/dice_20"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <!-- INTELIGENCJA -->
@@ -384,15 +309,7 @@
 
             <EditText
                 android:id="@+id/card_inteligencja"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/old_standard_tt_regular"
-                android:gravity="center"
-                android:inputType="number"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                style="@style/CommonEditText"/>
 
             <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
             <LinearLayout
@@ -403,25 +320,11 @@
 
                 <TextView
                     android:id="@+id/inteligencja"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
 
                 <TextView
                     android:id="@+id/inteligencja2"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView" />
             </LinearLayout>
 
             <!-- ImageButton -->
@@ -431,6 +334,13 @@
                 android:layout_height="45dp"
                 android:background="#2FFFFFFF"
                 android:src="@drawable/dice2" />
+            <ImageButton
+                android:id="@+id/button_6"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="#2FFFFFFF"
+                android:src="@drawable/dice_20"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -454,14 +364,7 @@
 
             <EditText
                 android:id="@+id/card_moc"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/old_standard_tt_regular"
-                android:gravity="center"
-                android:inputType="number"
-                android:textSize="24sp" />
+                style="@style/CommonEditText" />
 
             <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
             <LinearLayout
@@ -472,25 +375,11 @@
 
                 <TextView
                     android:id="@+id/moc"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
 
                 <TextView
                     android:id="@+id/moc2"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
             </LinearLayout>
 
             <!-- ImageButton -->
@@ -500,6 +389,13 @@
                 android:layout_height="45dp"
                 android:background="#2FFFFFFF"
                 android:src="@drawable/dice2" />
+            <ImageButton
+                android:id="@+id/button_7"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="#2FFFFFFF"
+                android:src="@drawable/dice_20"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -523,15 +419,7 @@
 
             <EditText
                 android:id="@+id/card_wyk"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/old_standard_tt_regular"
-                android:gravity="center"
-                android:inputType="number"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                style="@style/CommonEditText"/>
 
             <!-- TextView'y ułożone jeden pod drugim, zajmujące połowę wysokości -->
             <LinearLayout
@@ -542,25 +430,11 @@
 
                 <TextView
                     android:id="@+id/wyk"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
 
                 <TextView
                     android:id="@+id/wyk2"
-                    android:layout_width="100dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/old_standard_tt_regular"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    style="@style/CommonTextView"/>
             </LinearLayout>
 
             <!-- ImageButton -->
@@ -570,13 +444,21 @@
                 android:layout_height="45dp"
                 android:background="#2FFFFFFF"
                 android:src="@drawable/dice2" />
+            <ImageButton
+                android:id="@+id/button_8"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="#2FFFFFFF"
+                android:src="@drawable/dice_20"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <!-- TextViews -->
             <LinearLayout
@@ -743,7 +625,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/im_fel_english_regular"
+                    android:fontFamily="@font/old_standard_tt_regular"
                     android:gravity="center"
                     android:text="MAX M"
                     android:textColor="@color/black"
@@ -764,7 +646,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/im_fel_english_regular"
+                    android:fontFamily="@font/old_standard_tt_regular"
                     android:gravity="center"
                     android:text="MAX M"
                     android:textColor="@color/black"

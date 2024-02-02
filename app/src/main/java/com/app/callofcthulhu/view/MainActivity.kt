@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_reset -> passwordReset()
 
 
-            R.id.nav_delete -> deleteUser()
+            R.id.nav_delete -> deleteAllUserData()
 
 
             R.id.nav_logout -> logout()
@@ -182,18 +182,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (user != null) {
             val email = user.email
             if (email != null) {
-                val user = auth.currentUser
-                val db = Firebase.firestore
 
-                val logData = hashMapOf(
-                    "actionName" to "Reset hasła",
-                    "timestamp" to FieldValue.serverTimestamp()
-                )
 
-                if (user != null) {
-                    db.collection("user_logs").document(user.uid)
-                        .collection("actions").add(logData)
-                }
+                Utility.writeLogToFirebase("Reset hasła")
 
                 val confirmationDialog = AlertDialog.Builder(this)
                 confirmationDialog.setTitle("Potwierdzenie")
@@ -226,38 +217,51 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-    private fun deleteUser() {
-        val collectionRef = getCollectionReferenceForCards()
-        val collectionRefNotes = getCollectionReferenceForNotes()
-        val collectionRefWeapons = getCollectionReferenceForWeapons()
-        val collectionRefSpells = getCollectionReferenceForSpells()
-
+    private fun deleteAllUserData() {
         val confirmationDialog = AlertDialog.Builder(this)
         confirmationDialog.setTitle("Potwierdzenie usunięcia konta")
         confirmationDialog.setMessage("Czy na pewno chcesz usunąć swoje konto? Tej operacji nie można cofnąć.")
         confirmationDialog.setPositiveButton("Tak") { _, _ ->
-            val deleteNotesTask = deleteCollection(collectionRefNotes, 50)
-            val deleteWeaponsTask = deleteCollection(collectionRefWeapons, 50)
-            val deleteSpellsTask = deleteCollection(collectionRefSpells, 50)
-            val deleteCardsTask = deleteCollection(collectionRef, 50)
+            val collectionRef = getCollectionReferenceForCards()
+            collectionRef.get().addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val skillsRef = collectionRef.document(document.id).collection("Skills")
+                    deleteCollection(skillsRef, 50).addOnCompleteListener {
+                        // Po usunięciu podkolekcji `Skills` usuń dokument `Card`
+                        collectionRef.document(document.id).delete()
+                    }
+                }
 
-            Tasks.whenAllSuccess<Void>(
-                deleteNotesTask,
-                deleteWeaponsTask,
-                deleteSpellsTask,
-                deleteCardsTask
-            ).addOnSuccessListener {
-                // Po zakończeniu usuwania wszystkich kolekcji, usuń użytkownika
-                deleteUserAccount()
-            }.addOnFailureListener {
-                // Obsługa błędu podczas usuwania kolekcji
+                // Usuwanie innych kolekcji i konta użytkownika po usunięciu wszystkich `Cards`
+                deleteOtherCollectionsAndUserAccount()
             }
-            deleteUserAccount()
         }
         confirmationDialog.setNegativeButton("Anuluj") { dialog, _ ->
             dialog.dismiss()
         }
         confirmationDialog.show()
+    }
+
+    private fun deleteOtherCollectionsAndUserAccount() {
+        val collectionRefNotes = getCollectionReferenceForNotes()
+        val collectionRefWeapons = getCollectionReferenceForWeapons()
+        val collectionRefSpells = getCollectionReferenceForSpells()
+
+        val deleteNotesTask = deleteCollection(collectionRefNotes, 50)
+        val deleteWeaponsTask = deleteCollection(collectionRefWeapons, 50)
+        val deleteSpellsTask = deleteCollection(collectionRefSpells, 50)
+
+        Tasks.whenAllSuccess<Void>(
+            deleteNotesTask,
+            deleteWeaponsTask,
+            deleteSpellsTask
+        ).addOnSuccessListener {
+            // Po zakończeniu usuwania wszystkich kolekcji, usuń użytkownika
+            deleteUserAccount()
+        }.addOnFailureListener {
+
+        }
+        deleteUserAccount()
     }
 
     private fun deleteUserAccount() {
@@ -266,14 +270,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         userProfile?.delete()?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-
                 goToLoginPage()
                 Toast.makeText(this, "Usunięto konto", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Błąd podczas usuwania", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Błąd podczas usuwania konta", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 
 
     private fun goToLoginPage() {

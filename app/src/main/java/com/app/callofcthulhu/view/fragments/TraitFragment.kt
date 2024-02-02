@@ -1,5 +1,6 @@
 package com.app.callofcthulhu.view.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,7 +20,7 @@ import com.app.callofcthulhu.utils.Utility
 
 class TraitFragment : Fragment() {
 
-//    val sharedViewModel = MyApp.sharedViewModel
+    //    val sharedViewModel = MyApp.sharedViewModel
     val sharedViewModel = SharedViewModelInstance.instance
     private lateinit var silaEditText: EditText
     private lateinit var silaTextView: TextView
@@ -63,6 +64,9 @@ class TraitFragment : Fragment() {
 
     private lateinit var ruchEditText: EditText
     private lateinit var ranaCheckBox: CheckBox
+
+    private lateinit var buttonArray: Array<ImageButton>
+    private lateinit var editTextArray: Array<EditText>
 
     val id = CardDetailsActivity.docId
 
@@ -118,7 +122,23 @@ class TraitFragment : Fragment() {
         maxZycieTextView = view.findViewById(R.id.maxzycie)
         maxMagiaTextView = view.findViewById(R.id.maxmagia)
 
+        buttonArray = arrayOf(
+            view.findViewById(R.id.button_1),
+            view.findViewById(R.id.button_2),
+            view.findViewById(R.id.button_3),
+            view.findViewById(R.id.button_4),
+            view.findViewById(R.id.button_5),
+            view.findViewById(R.id.button_6),
+            view.findViewById(R.id.button_7),
+            view.findViewById(R.id.button_8)
+        )
 
+        editTextArray = arrayOf(
+            silaEditText, kondycjaEditText, bcialaEditText, zrecznoscEditText,
+            wygladEditText, intEditText, mocEditText, wykEditText,
+            zycieEditText, poczytalnoscEditText, szczecieEditText, magiaEditText,
+            ruchEditText
+        )
 
 
 // Wywołanie funkcji attachTextWatcher dla każdego EditText
@@ -220,7 +240,6 @@ class TraitFragment : Fragment() {
             val randomNumber = (3..18).random() * 5
             szczecieEditText.setText(randomNumber.toString())
 
-
             zycieEditText.isFocusable = false
             magiaEditText.isFocusable = false
             poczytalnoscEditText.isFocusable = false
@@ -284,7 +303,6 @@ class TraitFragment : Fragment() {
                                 }
                             }
 
-                            // Obsłuż inne typy pól jeśli istnieją
                             else -> {
                                 val intValue = document.getLong(field)?.toInt()
                                 intValue?.let {
@@ -315,15 +333,39 @@ class TraitFragment : Fragment() {
             buttonMoc.visibility = View.GONE
             buttonWyksztalcenie.visibility = View.GONE
 
+            for (button in buttonArray) {
+                button.visibility = View.VISIBLE
+            }
+            for (i in buttonArray.indices) {
+                val button = buttonArray[i]
+                val editText = editTextArray[i]
+
+                button.setOnClickListener {
+                    val value = editText.text.toString().toIntOrNull() ?: 0
+
+                    val check = (1..100).random()
+                    var message = ""
+                    message = if (check <= value)
+                        "Umiejętność: $value \nWylosowano: $check \nSukces"
+                    else
+                        "Umiejętność: $value \nWylosowano: $check \nPorażka"
+
+                    val alertDialogBuilder = AlertDialog.Builder(requireContext())
+                    alertDialogBuilder
+                        .setTitle("Rzut na umiejętność")
+                        .setMessage(message)
+                        .setPositiveButton("OK") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
+            }
         }
-
-
 
         return view
     }
 
-    //----------------------------------------------------------------------------------------
-    //przenosi dane do ViewModelu
+
     private fun attachTextWatcher(editText: TextView, fieldName: String) {
         editText.addTextChangedListener { editable ->
             val input = editable.toString()
@@ -354,7 +396,7 @@ class TraitFragment : Fragment() {
 
     private fun updateMaxMagia() {
         var value = mocEditText.text.toString().toIntOrNull() ?: 0
-        if(id.isEmpty())
+        if (id.isEmpty())
             poczytalnoscEditText.setText(value.toString())
         value /= 5
         if (id.isEmpty()) {

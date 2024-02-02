@@ -84,8 +84,8 @@ class WeaponsDetailsActivity : AppCompatActivity() {
             deleteWeaponButton.visibility = View.VISIBLE
 
         }
-        val card = sharedViewModel.card.value
-        val bronPalna = card?.Bron_Palna
+        val card = sharedViewModel.skills.value
+        val bronPalna = card?.bronPalna
 
 
 

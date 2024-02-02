@@ -36,6 +36,21 @@ class InterestPointsActivity : AppCompatActivity() {
     var availablePoints: Int = 0
     var originalValues = mutableMapOf<EditText, Int>()
 
+    val fieldNamesMap = mapOf(
+        "bronPalna" to "Broń Palna",
+        "korzystanieZBibliotek" to "Korzystanie z bibliotek",
+        "nasluchiwanie" to "Nasłuchiwanie",
+        "nawigacja" to "Nawigacja",
+        "perswazja" to "Perswazja",
+        "pierwszaPomoc" to "Pierwsza pomoc",
+        "psychologia" to "Psychologia",
+        "spostrzegawczosc" to "Spostrzegawczość",
+        "sztukaPrzetrwania" to "Sztuka przetrwania",
+        "wiedzaONaturze" to "Wiedza o Naturze"
+
+
+    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +110,8 @@ class InterestPointsActivity : AppCompatActivity() {
                             skillsData?.get(fieldName)?.let { fieldValue ->
                                 val textView = TextView(this)
                                 textView.textSize = 16f
-                                textView.text = fieldName.replace("_", " ") // Ustawienie nazwy pola
+                                val friendlyName = fieldNamesMap[fieldName] ?: fieldName
+                                textView.text = friendlyName
                                 textView.layoutParams = LinearLayout.LayoutParams(
                                     0,
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -169,7 +185,7 @@ class InterestPointsActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 val value = if (input.isNotBlank()) input.toIntOrNull() ?: 0 else 0
-                sharedViewModel.updateCardField(fieldName, value)
+                sharedViewModel.updateSkillField(fieldName, value)
             }
         })
     }
@@ -238,6 +254,8 @@ class InterestPointsActivity : AppCompatActivity() {
         }
         return fields
     }
+
+
 
 
 }

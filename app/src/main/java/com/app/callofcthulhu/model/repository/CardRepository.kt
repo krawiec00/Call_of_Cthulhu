@@ -6,6 +6,7 @@ import com.app.callofcthulhu.view.card.CardDetailsActivity
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.utils.Utility.Companion.getCollectionReferenceForCards
 import com.app.callofcthulhu.model.data.Card
+import com.app.callofcthulhu.model.data.Skills
 import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -24,7 +25,6 @@ class CardRepository {
         } else {
             getCollectionReferenceForCards().document()
         }
-        documentReference.set(card)
         val newDocId = documentReference.id
         imageUri?.let { uri ->
             uploadImage(uri, newDocId) { imageUrl ->
@@ -33,12 +33,28 @@ class CardRepository {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             sharedViewModel.updateImageUri(null)
+                            val skills = sharedViewModel.skills.value ?: return@addOnCompleteListener
+                            saveSkillsToFirebase(skills, newDocId)
                         }
                     }
             }
         } ?: run {
-            documentReference.set(card)
+            documentReference.set(card).addOnSuccessListener {
+                val skills = sharedViewModel.skills.value ?: return@addOnSuccessListener
+                saveSkillsToFirebase(skills, newDocId)
+            }
         }
+    }
+
+    private fun saveSkillsToFirebase(skills: Skills, cardId: String) {
+        val skillsRef = getCollectionReferenceForCards().document(cardId).collection("Skills").document(cardId)
+        skillsRef.set(skills)
+            .addOnSuccessListener {
+                // Obsługa sukcesu
+            }
+            .addOnFailureListener {
+                // Obsługa błędu
+            }
     }
 
     private fun uploadImage(file: Uri, fileName: String, callback: (String?) -> Unit) {
@@ -68,10 +84,14 @@ class CardRepository {
     }
 
     fun deleteCardFromFirebase() {
-        val documentReference: DocumentReference =
-            getCollectionReferenceForCards().document(CardDetailsActivity.docId)
-        documentReference.delete()
-        Utility.writeLogToFirebase("Usunięcie karty")
+        val skillReference: DocumentReference = getCollectionReferenceForCards().document(CardDetailsActivity.docId).collection("Skills")
+            .document(CardDetailsActivity.docId)
+        skillReference.delete().addOnSuccessListener {
+            val documentReference: DocumentReference =
+                getCollectionReferenceForCards().document(CardDetailsActivity.docId)
+            documentReference.delete()
+            Utility.writeLogToFirebase("Usunięcie karty")
+        }
     }
 
     fun deleteImage() {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_option_save"
+        android:icon="@drawable/baseline_done_25"
+        android:title="Zapisz"
+       />
+    <item
+        android:id="@+id/menu_option_delete"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="Usuń"
+        />
+    <item
+        android:id="@+id/menu_option_share"
+        android:title="Udostępnij kartę"
+        android:icon="@drawable/baseline_share_24"/>
+</menu>

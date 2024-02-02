@@ -4,8 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -27,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.lang.Exception
 
 
 class CardDetailsActivity : AppCompatActivity() {
@@ -42,31 +46,28 @@ class CardDetailsActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var pageTitleTextView: TextView
     private var isEdited: Boolean = false
-    private lateinit var deleteCardBtn: ImageButton
-    private lateinit var shareCardBtn: ImageButton
     private lateinit var saveCardBtn: ImageButton
     private var imie: String? = null
     private var nazwisko: String? = null
     private var imageUri: Uri? = null
     private lateinit var storageReference: StorageReference
+
     //    private lateinit var progressIndicator: LinearProgressIndicator
     private val cardRepository = CardRepository()
-//    val sharedViewModel = MyApp.sharedViewModel
     val sharedViewModel = SharedViewModelInstance.instance
 
     companion object {
         var docId: String = ""
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "DiscouragedPrivateApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_details)
 
         pageTitleTextView = findViewById(R.id.page_title)
         saveCardBtn = findViewById(R.id.save_note_btn)
-        deleteCardBtn = findViewById(R.id.delete_card_btn)
-        shareCardBtn = findViewById(R.id.share_card_btn)
+        val imageViewMenu = findViewById<ImageView>(R.id.view_menu)
         auth = Firebase.auth
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
@@ -79,15 +80,13 @@ class CardDetailsActivity : AppCompatActivity() {
             isEdited = true
         }
 
-//        imieEditText.setText(imie)
-//        nazwiskoEditText.setText(nazwisko)
         if (isEdited) {
             pageTitleTextView.text = "$imie $nazwisko"
-            deleteCardBtn.visibility = View.VISIBLE
-            shareCardBtn.visibility = View.VISIBLE
+            imageViewMenu.visibility = View.VISIBLE
+            saveCardBtn.visibility = View.GONE
+
         }
 
-        //viewModel przekazuje dane z modelu, cała instancja card
 
 
         sharedViewModel.card.observe(this) { card ->
@@ -112,16 +111,6 @@ class CardDetailsActivity : AppCompatActivity() {
             }
         }
 
-        deleteCardBtn.setOnClickListener { showDeleteConfirmationDialog() }
-
-        shareCardBtn.setOnClickListener {
-            val intent = Intent(this, ShareCardActivity::class.java)
-            val nazwa = "$imie $nazwisko"
-            intent.putExtra("nazwa", nazwa)
-//            intent.putExtra("nazwisko", nazwisko)
-            startActivity(intent)
-        }
-
         //tabela i fragmenty
         tabLayout = findViewById(R.id.tab_layout)
         viewPager2 = findViewById(R.id.view_pager)
@@ -143,6 +132,54 @@ class CardDetailsActivity : AppCompatActivity() {
                 tabLayout.getTabAt(position)!!.select()
             }
         })
+
+
+        imageViewMenu.setOnClickListener { view ->
+            val popupMenu = PopupMenu(view.context, view)
+            popupMenu.menuInflater.inflate(R.menu.menu_options, popupMenu.menu)
+
+            // Ustaw nasłuchiwacz na wybór opcji
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.menu_option_save -> {
+                        val requiredFields = listOf("imie", "nazwisko")
+                        if (sharedViewModel.areFieldsNotEmpty(requiredFields)) {
+                            saveCard()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Imię i nazwisko nie może być puste",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        true
+                    }
+                    R.id.menu_option_delete -> {
+                        showDeleteConfirmationDialog()
+                        true
+                    }
+                    R.id.menu_option_share -> {
+                        val intent = Intent(this, ShareCardActivity::class.java)
+                        val nazwa = "$imie $nazwisko"
+                        intent.putExtra("nazwa", nazwa)
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            try{
+                val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+                fieldMPopup.isAccessible = true
+                val mPopup = fieldMPopup.get(popupMenu)
+                mPopup.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java).invoke(mPopup, true)
+            }
+            catch (e: Exception){
+                Log.e("TAG", "Error popupmenu: $e")
+            }
+
+            popupMenu.show()
+        }
 
 
     }

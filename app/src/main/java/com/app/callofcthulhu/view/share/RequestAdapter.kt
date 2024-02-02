@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.model.data.Request
+import com.app.callofcthulhu.utils.Utility
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -27,7 +28,7 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
             val currentPosition = holder.bindingAdapterPosition
             if (currentPosition != RecyclerView.NO_POSITION) {
                 copyCard(request)
-                   deleteRequest(currentPosition)
+                deleteRequest(currentPosition)
             }
         }
 
@@ -59,17 +60,14 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
         try {
             documentSnapshot.reference.delete()
                 .addOnSuccessListener {
-                    // Sukces, np. wyświetlenie komunikatu
                 }
                 .addOnFailureListener { e ->
                     Log.e("TAG", "EXCEPTION: $e")
                 }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Toast.makeText(context, "Wystąpił błąd: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
-
 
 
     private fun copyCard(request: Request) {
@@ -86,10 +84,10 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
                         val cardData = document.data
                         // Wywołanie saveCard z funkcją completion
                         saveCard(cardData) { newCardId ->
-                            // Teraz możesz użyć newCardId do wywołania kopjujDokumenty
                             saveCardContent(request, "my_notes", newCardId)
                             saveCardContent(request, "my_weapons", newCardId)
                             saveCardContent(request, "my_spells", newCardId)
+                            copySkills(fromUserId, docId, newCardId)
                             // ...dalsze operacje
                         }
                     } else {
@@ -99,16 +97,52 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
                 .addOnFailureListener {
                     // Obsługa błędu
                 }
+
+
         }
     }
 
+    private fun copySkills(fromUserId: String, sourceCardId: String, destinationCardId: String) {
+        FirebaseFirestore.getInstance().collection("cards")
+            .document(fromUserId)
+            .collection("my_cards").document(sourceCardId)
+            .collection("Skills") // Podkolekcja "Skills" w źródłowej karcie
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot.documents) {
+                    val skillData = document.data
+                    saveSkill(destinationCardId, destinationCardId, skillData)
+                }
+            }
+            .addOnFailureListener {
 
-    private fun saveCard(cardData: Map<String, Any>?, completion: (String) -> Unit) {
+            }
+    }
+
+    private fun saveSkill(
+        destinationCardId: String,
+        skillDocumentName: String,
+        skillData: Map<String, Any>?
+    ) {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        val newDocRef = FirebaseFirestore.getInstance().collection("cards")
+        FirebaseFirestore.getInstance().collection("cards")
             .document(currentUserId)
-            .collection("my_cards").document()
+            .collection("my_cards").document(destinationCardId)
+            .collection("Skills")
+            .document(skillDocumentName)
+            .set(skillData!!)
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
+    }
+
+    private fun saveCard(cardData: Map<String, Any>?, completion: (String) -> Unit) {
+
+        val newDocRef = Utility.getCollectionReferenceForCards().document()
 
         newDocRef.set(cardData!!)
             .addOnSuccessListener {
@@ -154,7 +188,6 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
                 }
         }
     }
-
 
 
 }
