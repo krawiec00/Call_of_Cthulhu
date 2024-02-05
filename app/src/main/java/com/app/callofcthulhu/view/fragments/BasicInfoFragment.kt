@@ -24,6 +24,8 @@ import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.app.callofcthulhu.utils.Utility
+import com.app.callofcthulhu.view.points.ProfessionPointsActivity
+import com.app.callofcthulhu.view.profession.ProfessionList
 import com.bumptech.glide.Glide
 
 
@@ -33,7 +35,7 @@ class BasicInfoFragment : Fragment() {
     private lateinit var imieEditText: EditText
     private lateinit var nazwiskoEditText: EditText
     private lateinit var profesjaEditText: EditText
-    private lateinit var professionSpinner: Spinner
+//    private lateinit var professionSpinner: Spinner
     private lateinit var wiekEditText: EditText
     private lateinit var plecEditText: EditText
     private lateinit var mieszkanieEditText: EditText
@@ -43,7 +45,6 @@ class BasicInfoFragment : Fragment() {
     private var image: Uri? = null
 
     var sharedViewModel = SharedViewModelInstance.instance
-//    val sharedViewModel = MyApp.sharedViewModel
     private lateinit var imageView: ImageView
 
 
@@ -85,9 +86,12 @@ class BasicInfoFragment : Fragment() {
         imageView = view.findViewById(R.id.card_zdjecie)
 
         zdjecieButton = view.findViewById(R.id.btn_dodaj_zdjecie)
+        val profBtn = view.findViewById<Button>(R.id.prof_btn)
 
-
-
+        profBtn.setOnClickListener{
+            val intent = Intent(requireContext(), ProfessionList::class.java)
+            startActivity(intent)
+        }
 
 
 
@@ -109,44 +113,20 @@ class BasicInfoFragment : Fragment() {
         attachTextWatcher(urodzenieEditText, "mUrodzenia")
 
 
+        if (id.isNotEmpty()) {
+            profBtn.visibility = View.GONE
+            profesjaEditText.visibility = View.VISIBLE
+            readData()
+        }
 
-        fun setupSpinner() {
-            // Inicjalizacja Spinnera i adaptera
-            professionSpinner = view.findViewById(R.id.card_spinner_profesja)
-            val professions =
-                arrayOf("Detektyw Policyjny", "Duchowny", "Zolnierz") // Twoja lista profesji
-            val adapter =
-                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, professions)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            professionSpinner.adapter = adapter
-
-            // Listener dla wyboru elementu w Spinnerze
-            professionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    val selectedProfession = professions[position]
-                    sharedViewModel.updateCardField("profesja", selectedProfession)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Obsługa sytuacji, gdy nie jest wybrany żaden element
-                }
+        else{
+            sharedViewModel.professionId.observe(viewLifecycleOwner) { professionId ->
+                profesjaEditText.setText(professionId)
             }
         }
 
 
-        setupSpinner()
 
-
-        if (id.isNotEmpty()) {
-            professionSpinner.visibility = View.GONE
-            profesjaEditText.visibility = View.VISIBLE
-            readData()
-        }
 
         return view
     }

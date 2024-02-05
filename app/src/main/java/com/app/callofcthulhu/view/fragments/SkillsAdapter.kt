@@ -4,17 +4,13 @@ import android.app.AlertDialog
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.model.data.SkillItem
@@ -137,7 +133,9 @@ class SkillsAdapter(private val context: Context, private val skillItems: List<S
 
 
     }
-
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
     private fun saveCheckedStateToLocalMemory(cardId: String, skillName: String, isChecked: Boolean) {
         val sharedPrefs = context.getSharedPreferences("SkillPrefs", Context.MODE_PRIVATE)
         val key = "$cardId-$skillName" // Tworzy unikalny klucz

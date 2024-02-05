@@ -8,16 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.app.callofcthulhu.view.card.CardDetailsActivity
-import com.app.callofcthulhu.view.points.InterestPointsActivity
 import com.app.callofcthulhu.view.points.ProfessionPointsActivity
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.utils.SharedViewModelInstance
+import com.app.callofcthulhu.view.points.InterestPointsActivity
 
 
 class NewStatsFragment : Fragment() {
 
 
     val sharedViewModel = SharedViewModelInstance.instance
+
 
     val id = CardDetailsActivity.docId
 
@@ -36,6 +37,7 @@ class NewStatsFragment : Fragment() {
             intent.putExtra("sila", sharedViewModel.card.value?.sila)
             intent.putExtra("wyksztalcenie", sharedViewModel.card.value?.wyksztalcenie)
             intent.putExtra("profesja", sharedViewModel.card.value?.profesja)
+            intent.putExtra("zrecznosc", sharedViewModel.card.value?.zrecznosc)
             startActivity(intent)
         }
 
@@ -45,14 +47,18 @@ class NewStatsFragment : Fragment() {
             val intent = Intent(requireContext(), InterestPointsActivity::class.java)
             intent.putExtra("inteligencja", sharedViewModel.card.value?.inteligencja)
             intent.putExtra("profesja", sharedViewModel.card.value?.profesja)
+
             startActivity(intent)
         }
+
+
+
 
         return view
     }
 
 
-//
+
 
 
 }

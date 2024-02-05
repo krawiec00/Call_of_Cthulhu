@@ -12,6 +12,8 @@ import com.google.firebase.firestore.firestore
 
 class Utility {
 
+
+
     companion object {
         fun getCollectionReferenceForCards(): CollectionReference {
             val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
@@ -65,6 +67,34 @@ class Utility {
             }
         }
 
+        val fieldNamesMap = mapOf(
+            "bronPalna" to "Broń palna",
+            "korzystanieZBibliotek" to "Korzystanie z bibliotek",
+            "nasluchiwanie" to "Nasłuchiwanie",
+            "nawigacja" to "Nawigacja",
+            "perswazja" to "Perswazja",
+            "pierwszaPomoc" to "Pierwsza pomoc",
+            "psychologia" to "Psychologia",
+            "spostrzegawczosc" to "Spostrzegawczość",
+            "sztukaPrzetrwania" to "Sztuka przetrwania",
+            "wiedzaONaturze" to "Wiedza o naturze",
+            "mechanika" to "Mechanika",
+            "plywanie" to "Pływanie",
+            "ukrywanie" to "Ukrywanie",
+            "walkaWrecz" to "Walka wręcz",
+            "sila" to "Siła",
+            "zrecznosc" to "Zręczność",
+            "jezykObcy" to "Język obcy",
+            "unik" to "Unik",
+            "charakteryzacja" to "Charakteryzacja",
+            "prawo" to "Prawo",
+            "gadanina" to "Gadanina",
+            "urokOsobisty" to "Urok osobisty",
+            "zastraszanie" to "Zastraszanie",
+            "historia" to "Historia",
+            "ksiegowosc" to "Księgowość",
+
+        )
 
     }
 

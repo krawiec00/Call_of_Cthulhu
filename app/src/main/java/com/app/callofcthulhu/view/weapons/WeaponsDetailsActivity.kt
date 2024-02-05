@@ -45,6 +45,7 @@ class WeaponsDetailsActivity : AppCompatActivity() {
     private lateinit var skillLayout: LinearLayout
 
     private var added: Boolean = false
+    var skillValue: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +83,8 @@ class WeaponsDetailsActivity : AppCompatActivity() {
         if(added){
             addToCardButton.visibility = View.GONE
             deleteWeaponButton.visibility = View.VISIBLE
-
+            useWeaponButton.visibility = View.VISIBLE
+            skillLayout.visibility = View.VISIBLE
         }
         val card = sharedViewModel.skills.value
         val bronPalna = card?.bronPalna
@@ -90,19 +92,23 @@ class WeaponsDetailsActivity : AppCompatActivity() {
 
 
         when(weaponUmiejetnosc){
-            "Broń Palna(Krótka)" -> {skillTextView.text = weaponUmiejetnosc
-            skillValueTextView.text = bronPalna.toString()
-                useWeaponButton.visibility = View.VISIBLE
-                skillLayout.visibility = View.VISIBLE
+            "Broń Palna" -> {skillTextView.text = weaponUmiejetnosc
+            skillValueTextView.text = card?.bronPalna.toString()
+                skillValue = card?.bronPalna ?: 0
+            }
+            "Walka Wręcz" -> {
+                skillTextView.text = weaponUmiejetnosc
+                skillValueTextView.text = card?.walkaWrecz.toString()
+                skillValue = card?.walkaWrecz ?: 0
             }
         else -> skillTextView.text = null
         }
 
         useWeaponButton.setOnClickListener{
-            if(bronPalna!=0){
+            if(skillValue!=0){
                 val result: String?
                 val randomNumber = (1..100).random()
-                result = if(randomNumber<= bronPalna!!) {
+                result = if(randomNumber<= skillValue) {
                     "SUKCES"
                 } else{
                     "PORAŻKA"
@@ -110,7 +116,7 @@ class WeaponsDetailsActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Losowanie umiejętności")
                 builder.setMessage("Wylosowano: $randomNumber \n" +
-                        "Umiejętność: $bronPalna \n" +
+                        "Umiejętność: $skillValue \n" +
                         "$result")
 
                 builder.setPositiveButton("OK") { dialog, _ ->

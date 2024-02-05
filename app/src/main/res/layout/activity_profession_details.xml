@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.profession.ProfessionDetails"
+    android:padding="5dp"
+    android:background="@drawable/paper2">
+
+    <TextView
+        android:id="@+id/labelPunktyZmienne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wybór statystyki do puli punktów umiejętności "
+        android:textSize="18sp"
+        android:fontFamily="@font/old_standard_tt_regular"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:id="@+id/containerPunktyZmienne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/labelPunktyZmienne"
+        android:orientation="vertical"
+        android:fontFamily="@font/old_standard_tt_regular"/>
+
+    <TextView
+        android:id="@+id/labelUmiejetnosciZmienne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/containerPunktyZmienne"
+        android:text="Umiejętności do wyboru"
+        android:textSize="18sp"
+        android:fontFamily="@font/old_standard_tt_regular"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:id="@+id/containerUmiejetnosciZmienne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/labelUmiejetnosciZmienne"
+        android:orientation="vertical"
+        android:fontFamily="@font/old_standard_tt_regular"/>
+
+    <TextView
+        android:id="@+id/labelUmiejetnosciDowolne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/containerUmiejetnosciZmienne"
+        android:text="Umiejętności dowolne dla profesji"
+        android:textSize="18sp"
+        android:fontFamily="@font/old_standard_tt_regular"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:id="@+id/containerUmiejetnosciDowolne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/labelUmiejetnosciDowolne"
+        android:orientation="vertical"
+        android:fontFamily="@font/old_standard_tt_regular"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zatwierdź"
+        android:id="@+id/updateProf"
+        android:layout_below="@+id/containerUmiejetnosciDowolne"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/old_standard_tt_regular"
+        android:backgroundTint="@color/cthulhu_DarkBlue"
+        />
+
+</RelativeLayout>

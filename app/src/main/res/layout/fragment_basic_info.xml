@@ -85,15 +85,15 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/card_spinner_profesja"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#30FFFFFF"
-            android:fontFamily="@font/old_standard_tt_regular"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:textColor="@color/black" />
+<!--        <Spinner-->
+<!--            android:id="@+id/card_spinner_profesja"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#30FFFFFF"-->
+<!--            android:fontFamily="@font/old_standard_tt_regular"-->
+<!--            android:paddingTop="15dp"-->
+<!--            android:paddingBottom="10dp"-->
+<!--            android:textColor="@color/black" />-->
 
         <EditText
             android:id="@+id/card_profesja"
@@ -106,7 +106,14 @@
             android:inputType="textNoSuggestions"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:visibility="gone" />
+ />
+        <Button
+            android:id="@+id/prof_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wybór profesji"
+            android:backgroundTint="#5E422F"
+            android:layout_marginBottom="15dp"/>
 
         <TextView
             android:layout_width="match_parent"

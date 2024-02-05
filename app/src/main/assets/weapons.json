@@ -6,7 +6,7 @@
       "ataki": "1",
       "koszt": "1$",
       "pociski": "-",
-      "umiejetnosc": "Walka Wręcz (Bijatyka)",
+      "umiejetnosc": "Walka Wręcz",
       "zasieg": "Uderzenie",
       "zawodnosc": "-"
     },
@@ -18,7 +18,7 @@
       "ataki": "1 (3)",
       "koszt": "40$",
       "pociski": "7",
-      "umiejetnosc": "Broń Palna(Krótka)",
+      "umiejetnosc": "Broń Palna",
       "zasieg": "15m",
       "zawodnosc": "100"
     },
@@ -29,7 +29,7 @@
       "ataki": "1",
       "koszt": "19$",
       "pociski": "6",
-      "umiejetnosc": "Broń Palna(Karabin)",
+      "umiejetnosc": "Broń Palna",
       "zasieg": "50m",
       "zawodnosc": "98"
     },
@@ -40,7 +40,7 @@
       "ataki": "1 lub 2",
       "koszt": "40$",
       "pociski": "2",
-      "umiejetnosc": "Broń Palna(Strzelba)",
+      "umiejetnosc": "Broń Palna",
       "zasieg": "10/20/50m",
       "zawodnosc": "100"
     }

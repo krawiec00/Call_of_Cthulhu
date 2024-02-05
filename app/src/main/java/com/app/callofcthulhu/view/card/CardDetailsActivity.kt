@@ -15,12 +15,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.model.data.Card
 import com.app.callofcthulhu.model.repository.CardRepository
 import com.app.callofcthulhu.utils.SharedViewModelInstance
+import com.app.callofcthulhu.utils.ProfessionSingleton
 import com.app.callofcthulhu.view.share.ShareCardActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -249,6 +249,7 @@ class CardDetailsActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         SharedViewModelInstance.clearInstance()
+        ProfessionSingleton.resetProfessionInstance()
     }
 
 

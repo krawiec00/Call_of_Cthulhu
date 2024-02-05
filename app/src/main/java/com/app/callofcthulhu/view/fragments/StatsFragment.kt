@@ -25,7 +25,7 @@ class StatsFragment : Fragment() {
     val id = CardDetailsActivity.docId
     private lateinit var recyclerView: RecyclerView
     private var skillsAdapter: SkillsAdapter? = null
-    private val fieldNamesMap = InterestPointsActivity().fieldNamesMap
+    private val fieldNamesMap = Utility.fieldNamesMap
 
 
     override fun onCreateView(

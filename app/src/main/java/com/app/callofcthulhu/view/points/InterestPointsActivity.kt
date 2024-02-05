@@ -12,11 +12,13 @@ import android.view.Gravity
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.app.callofcthulhu.utils.MyApp
 import com.app.callofcthulhu.R
 import com.app.callofcthulhu.utils.SharedViewModelInstance
+import com.app.callofcthulhu.utils.Utility
+import com.app.callofcthulhu.utils.ProfessionSingleton
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -26,9 +28,7 @@ class InterestPointsActivity : AppCompatActivity() {
     private var inteligencja: Int = 0
 
     private lateinit var profesja: String
-    var professionsFields: List<String> = listOf()
-    var skillsFields: List<String> = listOf()
-//    val sharedViewModel = MyApp.sharedViewModel
+    private var skillsFields: List<String> = listOf()
     private lateinit var skillPoints: TextView
 
     val sharedViewModel = SharedViewModelInstance.instance
@@ -36,20 +36,7 @@ class InterestPointsActivity : AppCompatActivity() {
     var availablePoints: Int = 0
     var originalValues = mutableMapOf<EditText, Int>()
 
-    val fieldNamesMap = mapOf(
-        "bronPalna" to "Broń Palna",
-        "korzystanieZBibliotek" to "Korzystanie z bibliotek",
-        "nasluchiwanie" to "Nasłuchiwanie",
-        "nawigacja" to "Nawigacja",
-        "perswazja" to "Perswazja",
-        "pierwszaPomoc" to "Pierwsza pomoc",
-        "psychologia" to "Psychologia",
-        "spostrzegawczosc" to "Spostrzegawczość",
-        "sztukaPrzetrwania" to "Sztuka przetrwania",
-        "wiedzaONaturze" to "Wiedza o Naturze"
-
-
-    )
+    val fieldNamesMap = Utility.fieldNamesMap
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,112 +56,106 @@ class InterestPointsActivity : AppCompatActivity() {
 
     }
 
-    fun fetchSkillsFromFirestore() {
+    private fun fetchSkillsFromFirestore() {
         val fireStore = FirebaseFirestore.getInstance()
         val skillsRef = fireStore.collection("skills").document("skills")
+        val profession = ProfessionSingleton.getProfessionInstance()
 
-        val professionCollection = fireStore.collection("professions").document(profesja)
+        skillsRef.get().addOnSuccessListener { documentSnapshot ->
+            skillsFields = getFieldsFromDocument(documentSnapshot)
 
-        professionCollection.get().addOnSuccessListener { professionDocument ->
-            professionsFields = getFieldsFromDocument(professionDocument)
+            if (documentSnapshot.exists()) {
+                val skillsData = documentSnapshot.data // Pobranie danych z dokumentu
 
-
-
-
-            skillsRef.get().addOnSuccessListener { documentSnapshot ->
-
-                skillsFields = getFieldsFromDocument(documentSnapshot)
-
-
-                if (documentSnapshot.exists()) {
-                    val skillsData = documentSnapshot.data // Pobranie danych z dokumentu
-
-                    val differentFields =
-                        skillsFields.subtract(professionsFields.toSet()).toList().sorted()
-
-
-                    val linearLayout = findViewById<LinearLayout>(R.id.linearLayout)
-                    linearLayout?.removeAllViews()
-
-                    differentFields.chunked(2) { chunk ->
-                        val horizontalLinearLayout = LinearLayout(this)
-                        horizontalLinearLayout.orientation = LinearLayout.HORIZONTAL
-                        val layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                        )
-                        layoutParams.setMargins(0, 0, 0, 15)
-                        horizontalLinearLayout.layoutParams = layoutParams
-
-                        chunk.forEach { fieldName ->
-                            skillsData?.get(fieldName)?.let { fieldValue ->
-                                val textView = TextView(this)
-                                textView.textSize = 16f
-                                val friendlyName = fieldNamesMap[fieldName] ?: fieldName
-                                textView.text = friendlyName
-                                textView.layoutParams = LinearLayout.LayoutParams(
-                                    0,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    1.0f
-                                )
-                                textView.setPadding(20, 20, 20, 20)
-                                textView.setTextColor(Color.BLACK)
-                                val font = ResourcesCompat.getFont(this,
-                                    R.font.im_fel_english_regular
-                                )
-                                textView.typeface = font
-
-                                val editText = EditText(this)
-                                editText.layoutParams = LinearLayout.LayoutParams(
-                                    0,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    1.0f
-                                )
-                                editText.textSize = 18f
-                                editText.inputType = InputType.TYPE_CLASS_NUMBER
-                                editText.gravity = Gravity.CENTER
-                                editText.setBackgroundColor(Color.LTGRAY)
-                                editText.setBackgroundColor(ContextCompat.getColor(this,
-                                    R.color.transparentWhite
-                                ))
-                                editText.hint = "Enter value"
-                                val font2 = ResourcesCompat.getFont(this,
-                                    R.font.old_standard_tt_regular
-                                )
-                                editText.typeface = font2
-                                editText.setText(fieldValue.toString()) // Ustawienie wartości z Firestore
-
-                                horizontalLinearLayout.addView(textView)
-                                horizontalLinearLayout.addView(editText)
-
-                                // Dodanie TextWatcher do EditText
-                                attachTextWatcher(editText, fieldName)
-                                val fieldValueAsInt = fieldValue.toString().toIntOrNull()
-                                if (fieldValueAsInt != null) {
-                                    setEditTextChangeListener(
-                                        editText,
-                                        fieldValueAsInt
-                                    )
-                                }
-                            }
-                        }
-                        linearLayout?.addView(horizontalLinearLayout)
+                val differentFields =
+                    profession?.umiejetnosciStale?.let {
+                        skillsFields.subtract(it.toSet()).toList().sorted()
                     }
 
-                    availablePoints = inteligencja * 2
-                    skillPoints.text = availablePoints.toString()
+                val linearLayout = findViewById<LinearLayout>(R.id.linearLayout)
+                linearLayout?.removeAllViews()
 
+                differentFields?.chunked(2) { chunk ->
+                    val horizontalLinearLayout = LinearLayout(this)
+                    horizontalLinearLayout.orientation = LinearLayout.HORIZONTAL
+                    val layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    layoutParams.setMargins(0, 0, 0, 15)
+                    horizontalLinearLayout.layoutParams = layoutParams
 
-                } else {
-                    // Obsługa przypadku gdy dokument nie istnieje
+                    chunk.forEach { fieldName ->
+                        skillsData?.get(fieldName)?.let { fieldValue ->
+                            val textView = TextView(this)
+                            textView.textSize = 16f
+                            val friendlyName = fieldNamesMap[fieldName] ?: fieldName
+                            textView.text = friendlyName
+                            textView.layoutParams = LinearLayout.LayoutParams(
+                                0,
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                1.0f
+                            )
+                            textView.setPadding(20, 20, 20, 20)
+                            textView.setTextColor(Color.BLACK)
+                            val font = ResourcesCompat.getFont(
+                                this,
+                                R.font.im_fel_english_regular
+                            )
+                            textView.typeface = font
+
+                            val editText = EditText(this)
+                            editText.layoutParams = LinearLayout.LayoutParams(
+                                0,
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                1.0f
+                            )
+                            editText.textSize = 18f
+                            editText.inputType = InputType.TYPE_CLASS_NUMBER
+                            editText.gravity = Gravity.CENTER
+                            editText.setBackgroundColor(Color.LTGRAY)
+                            editText.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    this,
+                                    R.color.transparentWhite
+                                )
+                            )
+                            editText.hint = "Enter value"
+                            val font2 = ResourcesCompat.getFont(
+                                this,
+                                R.font.old_standard_tt_regular
+                            )
+                            editText.typeface = font2
+                            editText.setText(fieldValue.toString()) // Ustawienie wartości z Firestore
+
+                            horizontalLinearLayout.addView(textView)
+                            horizontalLinearLayout.addView(editText)
+
+                            // Dodanie TextWatcher do EditText
+                            attachTextWatcher(editText, fieldName)
+                            val fieldValueAsInt = fieldValue.toString().toIntOrNull()
+                            if (fieldValueAsInt != null) {
+                                setEditTextChangeListener(
+                                    editText,
+                                    fieldValueAsInt
+                                )
+                            }
+                        }
+                    }
+                    linearLayout?.addView(horizontalLinearLayout)
                 }
 
+                availablePoints = inteligencja * 2
+                skillPoints.text = availablePoints.toString()
 
-            }.addOnFailureListener { exception ->
-                // Obsługa błędów pobierania danych z Firestore
+            } else {
+                // Obsługa przypadku gdy dokument nie istnieje
             }
+        }.addOnFailureListener { exception ->
+            // Obsługa błędów pobierania danych z Firestore
         }
     }
+
 
     private fun attachTextWatcher(editText: EditText, fieldName: String) {
         editText.addTextChangedListener(object : TextWatcher {
@@ -194,11 +175,10 @@ class InterestPointsActivity : AppCompatActivity() {
         originalValues[editText] = editText.text.toString().toIntOrNull() ?: 0
 
         val handler = Handler(Looper.getMainLooper())
-        val delay: Long = 1000 // Opóźnienie w milisekundach (tutaj 1000ms = 1s)
+        val delay: Long = 1500
 
         editText.addTextChangedListener(object : TextWatcher {
-            private var changed = false
-            private var lastValidValue = originalValues[editText] ?: 0
+            private var runnable: Runnable? = null
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Niepotrzebne działanie przed zmianą
@@ -209,40 +189,34 @@ class InterestPointsActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (!changed) {
-                    changed = true
-                    handler.removeCallbacksAndMessages(null) // Usunięcie wcześniejszych zadań handlera
+                // Usunięcie wszelkich wcześniejszych zadań, aby uniknąć wielokrotnego sprawdzania
+                runnable?.let { handler.removeCallbacks(it) }
 
-                    handler.postDelayed({
-                        val newValue = s.toString().toIntOrNull() ?: 0
-                        val originalValue = originalValues[editText] ?: 0
+                runnable = Runnable {
+                    val newValue = s.toString().toIntOrNull() ?: 0
+                    val originalValue = originalValues[editText] ?: 0
 
-                        val difference = newValue - originalValue
+                    val difference = newValue - originalValue
 
-                        if (newValue in minAllowedValue..100) {
-                            val newAvailablePoints = availablePoints - difference
+                    if (newValue in minAllowedValue..100) {
+                        val newAvailablePoints = availablePoints - difference
 
-                            if (newAvailablePoints >= 0) {
-                                availablePoints = newAvailablePoints
-                                originalValues[editText] = newValue
-                                lastValidValue = newValue
-                            } else {
-                                editText.setText(lastValidValue.toString())
-                            }
+                        if (newAvailablePoints >= 0) {
+                            availablePoints = newAvailablePoints
+                            originalValues[editText] = newValue
                         } else {
-                            editText.setText(lastValidValue.toString())
+                            editText.setText(originalValues[editText].toString())
                         }
+                    } else {
+                        editText.setText(originalValues[editText].toString())
+                    }
 
-                        if (availablePoints < 0) {
-                            availablePoints += difference
-                        }
-                        skillPoints.text = availablePoints.toString()
-                        changed = false
-                    }, delay)
-                }
+                    skillPoints.text = availablePoints.toString()
+                }.also { handler.postDelayed(it, delay) }
             }
         })
     }
+
 
     fun getFieldsFromDocument(document: DocumentSnapshot?): List<String> {
         val fields = mutableListOf<String>()
@@ -254,8 +228,6 @@ class InterestPointsActivity : AppCompatActivity() {
         }
         return fields
     }
-
-
 
 
 }

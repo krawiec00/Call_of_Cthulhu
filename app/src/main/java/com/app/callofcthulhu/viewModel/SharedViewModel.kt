@@ -1,6 +1,7 @@
 package com.app.callofcthulhu.viewModel
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,6 +37,14 @@ class SharedViewModel : ViewModel() {
         _imageUri.value = uri
     }
 
+
+    private val _professionId = MutableLiveData<String>()
+    val professionId: LiveData<String> = _professionId
+    fun updateProfessionId(newProfessionId: String) {
+        _professionId.value = newProfessionId
+    }
+
+
     fun updateSkillField(fieldName: String, fieldValue: Any) {
         val currentSkills = _skills.value ?: return
 
@@ -50,6 +59,19 @@ class SharedViewModel : ViewModel() {
             "spostrzegawczosc" -> currentSkills.copy(spostrzegawczosc = fieldValue as? Int)
             "sztukaPrzetrwania" -> currentSkills.copy(sztukaPrzetrwania = fieldValue as? Int)
             "wiedzaONaturze" -> currentSkills.copy(wiedzaONaturze = fieldValue as? Int)
+            "plywanie" -> currentSkills.copy(plywanie = fieldValue as? Int)
+            "ukrywanie" -> currentSkills.copy(ukrywanie = fieldValue as? Int)
+            "walkaWrecz" -> currentSkills.copy(walkaWrecz = fieldValue as? Int)
+            "mechanika" -> currentSkills.copy(mechanika = fieldValue as? Int)
+            "jezykObcy" -> currentSkills.copy(jezykObcy = fieldValue as? Int)
+            "unik" -> currentSkills.copy(unik = fieldValue as? Int)
+            "charakteryzacja" -> currentSkills.copy(charakteryzacja = fieldValue as? Int)
+            "prawo" -> currentSkills.copy(prawo = fieldValue as? Int)
+            "gadanina" -> currentSkills.copy(gadanina = fieldValue as? Int)
+            "urokOsobisty" -> currentSkills.copy(urokOsobisty = fieldValue as? Int)
+            "zastraszanie" -> currentSkills.copy(zastraszanie = fieldValue as? Int)
+            "historia" -> currentSkills.copy(historia = fieldValue as? Int)
+            "ksiegowosc" -> currentSkills.copy(ksiegowosc = fieldValue as? Int)
             else -> currentSkills
         }
         _skills.value = newSkills
