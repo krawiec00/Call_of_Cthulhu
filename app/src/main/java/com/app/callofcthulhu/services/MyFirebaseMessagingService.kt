@@ -2,10 +2,13 @@ package com.app.callofcthulhu.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.app.callofcthulhu.R
+import com.app.callofcthulhu.view.share.ShareNotificationActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -35,13 +38,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val notificationChannel = NotificationChannel(notificationChannelId, "Powiadomienia FCM", NotificationManager.IMPORTANCE_DEFAULT)
         notificationManager.createNotificationChannel(notificationChannel)
 
+        // Utwórz Intencję, która otworzy odpowiednią aktywność po kliknięciu powiadomienia
+        val intent = Intent(this, ShareNotificationActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+
         val notificationBuilder = NotificationCompat.Builder(this, notificationChannelId)
             .setContentTitle(title)
             .setContentText(body)
-            .setSmallIcon(R.drawable.baseline_add_24) // Ustaw ikonę powiadomienia
+            .setSmallIcon(R.drawable.cthluhlu_logo) // Ustaw ikonę powiadomienia
             .setAutoCancel(true)
+            .setContentIntent(pendingIntent) // Ustaw Intencję na powiadomienie
 
         notificationManager.notify(0, notificationBuilder.build())
     }
-
 }
+
+

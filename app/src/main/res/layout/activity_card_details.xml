@@ -22,7 +22,9 @@
             android:textSize="23sp"
             android:textStyle="bold"
             android:padding="5dp"
-            android:fontFamily="@font/old_standard_tt_regular"/>
+            android:fontFamily="@font/old_standard_tt_regular"
+            android:singleLine="true"
+            android:ellipsize="end" />
 
 
         <LinearLayout

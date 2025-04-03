@@ -11,6 +11,7 @@ import com.app.callofcthulhu.model.data.Request
 import com.app.callofcthulhu.view.card.CardDetailsActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import okhttp3.ResponseBody
@@ -54,21 +55,23 @@ class ShareCardActivity : AppCompatActivity() {
                         } else {
                             for (document in documents) {
                                 val userId = document.id
-                                val deviceToken = document.getString("Token")
-                                if (deviceToken != null) {
+                                val deviceTokens = document.get("tokens") as? List<String>
+                                if (!deviceTokens.isNullOrEmpty()) {
                                     sendNotificationToServer(
-                                        deviceToken,
+                                        deviceTokens,
                                         "Udostępniono kartę",
-                                        "Użytkownik $userEmail udostępnił ci swoją karte postaci"
+                                        "Użytkownik $userEmail udostępnił ci swoją kartę postaci"
                                     )
                                     val nazwa = intent.getStringExtra("nazwa").toString()
+                                    val timestamp = intent.getStringExtra("timestamp")
                                     val request = Request(
                                         currentUser?.uid.toString(),
                                         userEmail,
                                         userId,
                                         docId,
                                         "Pending",
-                                        nazwa
+                                        nazwa,
+                                        timestamp
                                     )
                                     saveRequestToFirebase(request)
                                 }
@@ -97,25 +100,27 @@ class ShareCardActivity : AppCompatActivity() {
 
     }
 
-    private fun sendNotificationToServer(token: String, title: String, body: String) {
-        val notificationData = Notification(token, title, body)
-        RetrofitClient.apiService.sendNotification(notificationData)
-            .enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.isSuccessful) {
-                        Log.e("TAG", "WYSŁANO")
-                    } else {
-                        Log.e("TAG", "BŁĄD")
+    private fun sendNotificationToServer(tokens: List<String>, title: String, body: String) {
+        for (token in tokens) {
+            val notificationData = Notification(token, title, body)
+            RetrofitClient.apiService.sendNotification(notificationData)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.e("TAG", "WYSŁANO")
+                        } else {
+                            Log.e("TAG", "BŁĄD")
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.e("API Error", "Error sending API request", t)
-                }
-            })
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.e("API Error", "Error sending API request", t)
+                    }
+                })
+        }
     }
 
 

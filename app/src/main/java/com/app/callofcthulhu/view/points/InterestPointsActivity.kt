@@ -175,7 +175,7 @@ class InterestPointsActivity : AppCompatActivity() {
         originalValues[editText] = editText.text.toString().toIntOrNull() ?: 0
 
         val handler = Handler(Looper.getMainLooper())
-        val delay: Long = 1500
+        val delay: Long = 2000
 
         editText.addTextChangedListener(object : TextWatcher {
             private var runnable: Runnable? = null

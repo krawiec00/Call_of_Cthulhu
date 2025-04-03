@@ -1,7 +1,9 @@
 package com.app.callofcthulhu.model.repository
 
 
+import android.annotation.SuppressLint
 import android.net.Uri
+import android.util.Log
 import com.app.callofcthulhu.view.card.CardDetailsActivity
 import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.utils.Utility.Companion.getCollectionReferenceForCards
@@ -11,15 +13,29 @@ import com.app.callofcthulhu.utils.SharedViewModelInstance
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.storage
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 class CardRepository {
 
 
+    @SuppressLint("SimpleDateFormat")
     fun saveCardToFireBase(card: Card, imageUri: Uri?) {
         val sharedViewModel = SharedViewModelInstance.instance
         val id = CardDetailsActivity.docId
+
+        val currentDate = Date()
+
+// Tworzenie obiektu SimpleDateFormat z określonym formatem
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+
+// Formatowanie daty jako string zgodnie z określonym szablonem
+        val dateString = dateFormat.format(currentDate)
+
         val documentReference: DocumentReference = if (id.isNotEmpty()) {
             getCollectionReferenceForCards().document(id)
         } else {
@@ -29,6 +45,7 @@ class CardRepository {
         imageUri?.let { uri ->
             uploadImage(uri, newDocId) { imageUrl ->
                 card.imageUrl = imageUrl
+                card.timestamp = dateString
                 documentReference.set(card)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -39,6 +56,7 @@ class CardRepository {
                     }
             }
         } ?: run {
+            card.timestamp = dateString
             documentReference.set(card).addOnSuccessListener {
                 val skills = sharedViewModel.skills.value ?: return@addOnSuccessListener
                 saveSkillsToFirebase(skills, newDocId)
@@ -116,6 +134,29 @@ class CardRepository {
                 }
             }
         }
+    }
+
+    fun deleteShareRequest(cardId: String){
+        val db = FirebaseFirestore.getInstance()
+        val requestsCollectionRef = db.collection("requests")
+
+        // Tworzenie zapytania z warunkiem, aby pobrać dokumenty, których pole "docId" jest równe wartości docIdToDelete
+        requestsCollectionRef.whereEqualTo("docId", cardId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                // Iteracja przez wyniki zapytania
+                for (document in querySnapshot.documents) {
+                    // Usunięcie każdego dokumentu z kolekcji "requests"
+                    document.reference.delete()
+                        .addOnSuccessListener {
+                        }
+                        .addOnFailureListener { e ->
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("TAG", "Błąd podczas pobierania dokumentów: $e")
+            }
     }
 
 

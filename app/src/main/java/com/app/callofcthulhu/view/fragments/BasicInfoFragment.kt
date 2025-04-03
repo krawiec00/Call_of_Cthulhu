@@ -27,6 +27,7 @@ import com.app.callofcthulhu.utils.Utility
 import com.app.callofcthulhu.view.points.ProfessionPointsActivity
 import com.app.callofcthulhu.view.profession.ProfessionList
 import com.bumptech.glide.Glide
+import java.io.IOException
 
 
 class BasicInfoFragment : Fragment() {
@@ -35,7 +36,8 @@ class BasicInfoFragment : Fragment() {
     private lateinit var imieEditText: EditText
     private lateinit var nazwiskoEditText: EditText
     private lateinit var profesjaEditText: EditText
-//    private lateinit var professionSpinner: Spinner
+
+    //    private lateinit var professionSpinner: Spinner
     private lateinit var wiekEditText: EditText
     private lateinit var plecEditText: EditText
     private lateinit var mieszkanieEditText: EditText
@@ -46,21 +48,32 @@ class BasicInfoFragment : Fragment() {
 
     var sharedViewModel = SharedViewModelInstance.instance
     private lateinit var imageView: ImageView
-
+    private val MAX_IMAGE_SIZE_BYTES: Long = 20 * 1024 * 1024
 
     private val activityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            result.data?.let {
-                image = it.data
-                image?.let { selectedImage ->
-                    Glide.with(this).load(selectedImage).into(imageView)
-                    sharedViewModel.updateImageUri(image)
+            result.data?.let { intent ->
+                // Sprawdź wielkość przesyłanego pliku
+                try {
+                    val selectedImageUri = intent.data
+                    if (selectedImageUri != null && selectedImageUri != image) {
+                        val inputStream = requireContext().contentResolver.openInputStream(selectedImageUri)
+                        if (inputStream != null && inputStream.available() <= MAX_IMAGE_SIZE_BYTES) {
+                            image = selectedImageUri
+                            Glide.with(this).load(image).into(imageView)
+                            sharedViewModel.updateImageUri(image)
+                        } else {
+                            Toast.makeText(context, "Za duży plik", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
             }
         } else {
-            Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Nie wybrano zdjęcia", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -88,7 +101,7 @@ class BasicInfoFragment : Fragment() {
         zdjecieButton = view.findViewById(R.id.btn_dodaj_zdjecie)
         val profBtn = view.findViewById<Button>(R.id.prof_btn)
 
-        profBtn.setOnClickListener{
+        profBtn.setOnClickListener {
             val intent = Intent(requireContext(), ProfessionList::class.java)
             startActivity(intent)
         }
@@ -117,12 +130,11 @@ class BasicInfoFragment : Fragment() {
             profBtn.visibility = View.GONE
             profesjaEditText.visibility = View.VISIBLE
             readData()
-        }
-
-        else{
+        } else {
             sharedViewModel.professionId.observe(viewLifecycleOwner) { professionId ->
                 profesjaEditText.setText(professionId)
             }
+            profesjaEditText.isFocusable = false
         }
 
 
@@ -168,11 +180,10 @@ class BasicInfoFragment : Fragment() {
                     }
                 }
             }
-        }.addOnFailureListener {e ->
+        }.addOnFailureListener { e ->
             Log.e("TAG", "ERORR: $e")
         }
     }
-
 
 
 }

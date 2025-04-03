@@ -108,7 +108,7 @@ class LoginActivity : AppCompatActivity() {
                                 // E-mail nie został zweryfikowany, uniemożliwienie logowania
                                 Toast.makeText(
                                     baseContext,
-                                    "Please verify your email before logging in.",
+                                    "Zweryfikuj adres email",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 progressBar.visibility = View.GONE

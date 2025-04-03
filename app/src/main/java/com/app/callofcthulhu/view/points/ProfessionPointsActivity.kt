@@ -214,11 +214,10 @@ class ProfessionPointsActivity : AppCompatActivity() {
         originalValues[editText] = editText.text.toString().toIntOrNull() ?: 0
 
         val handler = Handler(Looper.getMainLooper())
-        val delay: Long = 1000 // Opóźnienie w milisekundach (tutaj 1000ms = 1s)
+        val delay: Long = 2000
 
         editText.addTextChangedListener(object : TextWatcher {
-            private var changed = false
-            private var lastValidValue = originalValues[editText] ?: 0
+            private var runnable: Runnable? = null
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Niepotrzebne działanie przed zmianą
@@ -229,37 +228,30 @@ class ProfessionPointsActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (!changed) {
-                    changed = true
-                    handler.removeCallbacksAndMessages(null) // Usunięcie wcześniejszych zadań handlera
+                // Usunięcie wszelkich wcześniejszych zadań, aby uniknąć wielokrotnego sprawdzania
+                runnable?.let { handler.removeCallbacks(it) }
 
-                    handler.postDelayed({
-                        val newValue = s.toString().toIntOrNull() ?: 0
-                        val originalValue = originalValues[editText] ?: 0
+                runnable = Runnable {
+                    val newValue = s.toString().toIntOrNull() ?: 0
+                    val originalValue = originalValues[editText] ?: 0
 
-                        val difference = newValue - originalValue
+                    val difference = newValue - originalValue
 
-                        if (newValue in minAllowedValue..100) {
-                            val newAvailablePoints = availablePoints - difference
+                    if (newValue in minAllowedValue..100) {
+                        val newAvailablePoints = availablePoints - difference
 
-                            if (newAvailablePoints >= 0) {
-                                availablePoints = newAvailablePoints
-                                originalValues[editText] = newValue
-                                lastValidValue = newValue
-                            } else {
-                                editText.setText(lastValidValue.toString())
-                            }
+                        if (newAvailablePoints >= 0) {
+                            availablePoints = newAvailablePoints
+                            originalValues[editText] = newValue
                         } else {
-                            editText.setText(lastValidValue.toString())
+                            editText.setText(originalValues[editText].toString())
                         }
+                    } else {
+                        editText.setText(originalValues[editText].toString())
+                    }
 
-                        if (availablePoints < 0) {
-                            availablePoints += difference
-                        }
-                        skillPoints.text = availablePoints.toString()
-                        changed = false
-                    }, delay)
-                }
+                    skillPoints.text = availablePoints.toString()
+                }.also { handler.postDelayed(it, delay) }
             }
         })
     }

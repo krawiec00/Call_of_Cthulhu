@@ -1,5 +1,6 @@
 package com.app.callofcthulhu.view.share
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,11 +25,13 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
         holder.fromUserMail.text = request.userMail
         holder.cardName.text = request.cardName
 
+
         holder.btnAction.setOnClickListener {
             val currentPosition = holder.bindingAdapterPosition
             if (currentPosition != RecyclerView.NO_POSITION) {
-                copyCard(request)
-                deleteRequest(currentPosition)
+                checkChange(request, currentPosition)
+//                copyCard(request)
+//                deleteRequest(currentPosition)
             }
         }
 
@@ -69,6 +72,35 @@ class RequestAdapter(options: FirestoreRecyclerOptions<Request>, var context: Co
         }
     }
 
+    private fun checkChange(request: Request, currentPosition: Int) {
+        val fromUserId = request.fromUserId
+        val docId = request.docId
+
+        if (fromUserId != null && docId != null) {
+            FirebaseFirestore.getInstance().collection("cards")
+                .document(fromUserId)
+                .collection("my_cards").document(docId).get().addOnSuccessListener { document ->
+                    val timestampValue = document.getString("timestamp")
+                    if (timestampValue != request.timestamp) {
+                        val builder = AlertDialog.Builder(context)
+                        builder.setTitle("Powiadomienie")
+                            .setMessage("Udostępniona karta może posiadać zmienione dane od czasu jej udostępnienia, czy chcesz zaakceptować mimo to?")
+                            .setPositiveButton("Tak") { dialog, which ->
+                                copyCard(request)
+                                deleteRequest(currentPosition)
+                            }
+                            .setNegativeButton("Nie") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            .show()
+                    } else {
+                        copyCard(request)
+                        deleteRequest(currentPosition)
+                    }
+
+                }
+        }
+    }
 
     private fun copyCard(request: Request) {
         val fromUserId = request.fromUserId

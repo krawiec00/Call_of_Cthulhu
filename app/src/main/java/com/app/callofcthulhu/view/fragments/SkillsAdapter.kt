@@ -115,10 +115,18 @@ class SkillsAdapter(private val context: Context, private val skillItems: List<S
             val value = skillItem.skillValue
             val check = (1..100).random()
             var message = ""
-            message = if (check <= value)
+            message = if (check <= value) {
                 "Umiejętność: $value \nWylosowano: $check \nSukces"
-            else
+            } else {
                 "Umiejętność: $value \nWylosowano: $check \nPorażka"
+            }
+
+            // Aktualizacja stanu CheckBox po Sukcesie
+            if (check <= value) {
+                holder.checkBox.isChecked = true
+                skillItem.isChecked = true
+                saveCheckedStateToLocalMemory(cardId, skillItem.technicalName, true)
+            }
 
             val alertDialogBuilder = AlertDialog.Builder(holder.itemView.context)
             alertDialogBuilder
@@ -128,8 +136,8 @@ class SkillsAdapter(private val context: Context, private val skillItems: List<S
                     dialog.dismiss()
                 }
                 .show()
-
         }
+
 
 
     }

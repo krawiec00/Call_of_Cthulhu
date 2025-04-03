@@ -34,6 +34,7 @@ class CardAdapter(options: FirestoreRecyclerOptions<Card>, var context: Context)
             val intent = Intent(context, CardDetailsActivity::class.java)
             intent.putExtra("imie", card.imie)
             intent.putExtra("nazwisko", card.nazwisko)
+            intent.putExtra("timestamp", card.timestamp)
             val docId = this.snapshots.getSnapshot(position).id
             intent.putExtra("docId", docId)
             context.startActivity(intent)

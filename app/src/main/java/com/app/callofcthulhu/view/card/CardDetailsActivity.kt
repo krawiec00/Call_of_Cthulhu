@@ -25,6 +25,7 @@ import com.app.callofcthulhu.view.share.ShareCardActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -48,6 +49,7 @@ class CardDetailsActivity : AppCompatActivity() {
     private var isEdited: Boolean = false
     private lateinit var saveCardBtn: ImageButton
     private var imie: String? = null
+    private var timestamp: String? = null
     private var nazwisko: String? = null
     private var imageUri: Uri? = null
     private lateinit var storageReference: StorageReference
@@ -74,6 +76,7 @@ class CardDetailsActivity : AppCompatActivity() {
         //pobrane dane do wyświetlenia do edycji
         imie = intent.getStringExtra("imie")
         nazwisko = intent.getStringExtra("nazwisko")
+        timestamp = intent.getStringExtra("timestamp")
         docId = intent.getStringExtra("docId") ?: ""
 
         if (docId.isNotEmpty()) {
@@ -154,27 +157,31 @@ class CardDetailsActivity : AppCompatActivity() {
                         }
                         true
                     }
+
                     R.id.menu_option_delete -> {
                         showDeleteConfirmationDialog()
                         true
                     }
+
                     R.id.menu_option_share -> {
                         val intent = Intent(this, ShareCardActivity::class.java)
                         val nazwa = "$imie $nazwisko"
                         intent.putExtra("nazwa", nazwa)
+                        intent.putExtra("timestamp", timestamp)
                         startActivity(intent)
                         true
                     }
+
                     else -> false
                 }
             }
-            try{
+            try {
                 val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
                 fieldMPopup.isAccessible = true
                 val mPopup = fieldMPopup.get(popupMenu)
-                mPopup.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java).invoke(mPopup, true)
-            }
-            catch (e: Exception){
+                mPopup.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                    .invoke(mPopup, true)
+            } catch (e: Exception) {
                 Log.e("TAG", "Error popupmenu: $e")
             }
 
@@ -210,6 +217,7 @@ class CardDetailsActivity : AppCompatActivity() {
             cardRepository.deleteFromFirebase(docId, "my_weapons")
             cardRepository.deleteFromFirebase(docId, "my_spells")
             cardRepository.deleteFromFirebase(docId, "my_notes")
+            cardRepository.deleteShareRequest(docId)
             Toast.makeText(baseContext, "Usunięto karte", Toast.LENGTH_SHORT).show()
             finish()
             dialog.dismiss()

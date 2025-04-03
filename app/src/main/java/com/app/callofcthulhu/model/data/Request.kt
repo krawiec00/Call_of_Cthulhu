@@ -6,6 +6,7 @@ data class Request( var fromUserId: String? = null,
                     var toUserId: String? = null,
                     var docId: String? = null,
                     var status: String? = null,
-                    var cardName: String? = null)
+                    var cardName: String? = null,
+                    var timestamp: String? = null)
 
 

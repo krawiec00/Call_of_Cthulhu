@@ -126,7 +126,7 @@
             android:layout_marginTop="5dp"
             android:backgroundTint="#5E422F"
             android:fontFamily="@font/old_standard_tt_bold"
-            android:text="Usun bron"
+            android:text="Usuń zaklęcie"
             android:visibility="invisible" />
 
 

@@ -29,6 +29,7 @@ import com.app.callofcthulhu.utils.Utility.Companion.getCollectionReferenceForNo
 import com.app.callofcthulhu.utils.Utility.Companion.getCollectionReferenceForSpells
 import com.app.callofcthulhu.utils.Utility.Companion.getCollectionReferenceForWeapons
 import com.app.callofcthulhu.model.data.Card
+import com.app.callofcthulhu.model.repository.TokenRepository
 import com.app.callofcthulhu.view.card.CardAdapter
 import com.app.callofcthulhu.view.authorization.LoginActivity
 import com.app.callofcthulhu.view.card.CardDetailsActivity
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var auth: FirebaseAuth
     private lateinit var recyclerView: RecyclerView
     private lateinit var cardAdapter: CardAdapter
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val uid = user?.uid
 
-        val db = FirebaseFirestore.getInstance()
+
 
         if (uid != null) {
             val userLogRef = db.collection("user_logs").document(uid)
@@ -293,9 +295,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             confirmationDialog.setMessage("Czy na pewno chcesz się wylogować?")
             confirmationDialog.setPositiveButton("Tak") { _, _ ->
                 Utility.writeLogToFirebase("Wylogowanie")
-                Firebase.auth.signOut()
-                goToLoginPage()
-                Toast.makeText(this, "Wylogowano", Toast.LENGTH_SHORT).show()
+                
+
+                val tokenRepo = TokenRepository()
+                tokenRepo.removeToken {
+                    // Po zakończeniu operacji usuwania tokenu, wyloguj użytkownika
+                    Firebase.auth.signOut()
+                    goToLoginPage()
+                    Toast.makeText(this, "Wylogowano", Toast.LENGTH_SHORT).show()
+                }
             }
             confirmationDialog.setNegativeButton("Anuluj") { dialog, _ ->
                 dialog.dismiss()
@@ -305,6 +313,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Toast.makeText(baseContext, "Niezalogowany", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+
+
 
 
     private fun setupRecyclerView() {

@@ -43,8 +43,7 @@ data class Card(
     var przedmioty: String? = null,
     var wydatki: String? = null,
 
-    var imageUrl: String? = null
-) {
+    var imageUrl: String? = null,
 
-
-}
+    var timestamp: String? = null
+)
